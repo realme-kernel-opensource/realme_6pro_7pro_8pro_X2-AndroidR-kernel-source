@@ -1,0 +1,12 @@
+#ifdef OPLUS_FEATURE_HEALTHINFO
+#//wenbin.liu@PSW.Kernel.MM, 2018/05/23, Add for Healthinfo monitor
+config OPPO_HEALTHINFO
+bool "config oppo healthinfo"
+help
+    define this config to init oppo healthinfo.
+config CAMERA_OPT
+	bool "config camera opt"
+	default n
+	help
+	  reduce camera provider task runnable time
+#endif /* OPLUS_FEATURE_HEALTHINFO */

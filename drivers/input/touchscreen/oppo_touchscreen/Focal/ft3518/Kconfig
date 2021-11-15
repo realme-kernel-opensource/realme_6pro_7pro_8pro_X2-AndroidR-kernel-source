@@ -1,0 +1,9 @@
+config TOUCHPANEL_FOCAL_FT3518
+	bool "TP Focal_FT3518 IC enable or not for OPPO"
+	---help---
+	say Y to enable driver for Touchpanel using Focal FT3518
+
+config TOUCHPANEL_FOCAL_FT3518_GPIO_DEBUG
+	bool "TP Focal_FT3518 IC gpio debug enable or not"
+	---help---
+	say Y to enable gpio debug for Touchpanel Focal FT3518

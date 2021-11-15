@@ -1,0 +1,79 @@
+# SPDX-License-Identifier: GPL-2.0-only
+# Copyright (C) 2018-2020 Oplus. All rights reserved.
+config OPLUS_SYSTEM_KERNEL
+  bool "config oplus system feature "
+  default y
+  help
+	define this config to add oplus sytstem kernel feature
+
+config OPPO_ARCH_FILE
+  bool "for build directory oppo"
+  ---help---
+  say Y to buid in
+
+config OPPO_COMMON_SOFT
+  bool "config oppo common software"
+  select OPPO_ARCH_FILE
+  help
+	define this config to get project verion from sharemem.
+	Maybe this value is from CDT or dynamic identify by hardware
+	id.
+
+config OPPO_DEVICE_IFNO
+  tristate "config oppo devinfo"
+  select OPPO_ARCH_FILE
+  help
+	define this config to compile devinfo.c for device register
+		.
+
+config OPLUS_FEATURE_DETAILHEAD
+  tristate "config detail kmsg"
+    help
+        define this config to add cpu number and current id and current comm to kmsg
+
+source "drivers/soc/oplus/system/feedback/Kconfig"
+source "drivers/soc/oplus/system/uboot_log/Kconfig"
+source "drivers/soc/oplus/system/shutdown_detect/Kconfig"
+source "drivers/soc/oplus/system/slabtrace/Kconfig"
+source "drivers/soc/oplus/system/oplus_project/Kconfig"
+source "drivers/soc/oplus/system/qcom_minidump/Kconfig"
+source "drivers/soc/oplus/system/hung_task_enhance/Kconfig"
+source "drivers/soc/oplus/system/oppo_phoenix/Kconfig"
+source "drivers/soc/oplus/system/oppo_pmic_monitor/Kconfig"
+source "drivers/soc/oplus/system/oppo_saupwk/Kconfig"
+source "drivers/soc/oplus/system/project_info/Kconfig"
+source "drivers/soc/oplus/system/cmdline_parser/Kconfig"
+source "drivers/soc/oplus/system/dump_device_info/Kconfig"
+source "drivers/soc/oplus/system/mdmrst/Kconfig"
+source "drivers/soc/oplus/system/full_aging/Kconfig"
+#ifdef OPLUS_FEATURE_ESIM
+#ChenGuoyao@NETWORK.SIM,2020/06/10, Add for eSIM
+source "drivers/soc/oplus/system/oppo_gpio/Kconfig"
+#endif /* OPLUS_FEATURE_ESIM */
+#ifdef OPLUS_FEATURE_QCOM_PMICWD
+#ZhangFei@BSP.Kernel.Stability, 2020/04/03, Add for qcom pmic watchdog
+source "drivers/soc/oplus/system/qcom_pmicwd/Kconfig"
+#endif /* OPLUS_FEATURE_QCOM_PMICWD */
+
+#ifdef OPLUS_FEATURE_MM_FEEDBACK
+#Zhao.Pan@MULTIMEDIA.AUDIODRIVER.KERNEL, 2020/08/08, Add for multimedia kevent feedback driver
+source "drivers/soc/oplus/system/oplus_mm_fb/Kconfig"
+#endif /* OPLUS_FEATURE_MM_FEEDBACK */
+
+#ifdef OPLUS_FEATURE_QCOM_WATCHDOG
+#yanghao@BSP.Kernel.Stability, 2020/04/03, Add for qcom pmic watchdog
+source "drivers/soc/oplus/system/qcom_watchdog/Kconfig"
+#endif /* OPLUS_FEATURE_QCOM_WATCHDOG */
+
+#ifdef OPLUS_FEATURE_ACM
+#Yuwei.Guan@BSP.Kernel.FS,2020/07/08, Add for acm
+source "drivers/soc/oplus/system/acm/Kconfig"
+#endif /* OPLUS_FEATURE_ACM */
+#ifdef OPLUS_FEATURE_THEIA
+#yanggang@BSP.Kernel.Stability,2020/07/08, Add for theia
+source "drivers/soc/oplus/system/theia/Kconfig"
+#endif /* OPLUS_FEATURE_THEIA */
+#ifdef OPLUS_FEATURE_MISC
+#terry.zhong@OPTI.Kernel.Stability, 2020/09/7, enable oplus misc feature
+source "drivers/soc/oplus/system/misc/Kconfig"
+#endif /* OPLUS_FEATURE_MISC */

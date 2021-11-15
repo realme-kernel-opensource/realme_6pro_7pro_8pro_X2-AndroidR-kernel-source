@@ -1,0 +1,7 @@
+#ChenGuoyao@NETWORK.IMS 2020/06/10, Add for control oppo gpio
+#change 'y' to 'n', if you want fo close this controller
+config OPLUS_OPPO_GPIO
+    bool "oppo gpio controller"
+    default n
+    help
+      define this config to control oppo gpio.

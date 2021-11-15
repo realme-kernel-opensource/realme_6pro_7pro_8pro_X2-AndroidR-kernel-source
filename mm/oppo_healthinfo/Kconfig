@@ -1,0 +1,8 @@
+#ifdef OPLUS_FEATURE_HEALTHINFO
+#/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-07-07, add alloc wait monitor support*/
+config OPPO_MEM_MONITOR
+	bool "memory monitor "
+	default n
+	help
+	 memory monitor.
+#endif /* OPLUS_FEATURE_HEALTHINFO */

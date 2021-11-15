@@ -1,0 +1,16 @@
+#ifdef VENDOR_EDIT
+#Huacai.Zhou@PSW.BSP.kernel.Peformance, 2018/06/18, add foreground process opt support
+config FG_TASK_UID
+	bool "Enable /proc/fg_info/ if EXPERT"
+	default y
+	help
+	  Add foreground process optimize support to promote performance .
+#endif /*VENDOR_EDIT*/
+#ifdef VENDOR_EDIT
+#Liujie.Xie@TECH.Kernel.Sched, 2020/05/20, add jank monitor opt support
+config OPPO_JANK_INFO
+	bool "Enable /proc/pid/jank_info if EXPERT"
+	default n
+	help
+	  Add jank monitor opt support .
+#endif /*VENDOR_EDIT*/

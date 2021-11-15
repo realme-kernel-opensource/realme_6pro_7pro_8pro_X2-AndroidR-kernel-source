@@ -1,0 +1,8 @@
+#wen.luo@BSP.Kernel.Stability 2020/03/25 add for oplus kernel system
+source "drivers/soc/oplus/system/Kconfig"
+#endif /* VENDOR_EDIT */
+
+#ifdef OPLUS_FEATURE_LOWMEM_DBG
+#Hailong.Liu@BSP.Kernel.MM, 2020/06/19, Add for dump memory usage when lowmmem occurs.
+source "drivers/soc/oplus/lowmem_dbg/Kconfig"
+##endif /* OPLUS_FEATURE_LOWMEM_DBG */
