@@ -51,7 +51,6 @@
 						"bcl-lvl2";
 			#thermal-sensor-cells = <1>;
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl 
 			status = "disabled";
 //#endif
 		};
@@ -516,7 +515,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl
 /*
 	pm6150l-bcl-lvl0 {
 		polling-delay-passive = <100>;

@@ -4,10 +4,8 @@
 * Description: For Nuvoton N76E003 MCU
 * Version   : 1.0
 * Date      : 2018-03-12
-* Author    : SJC@PhoneSW.BSP
 * ------------------------------ Revision History: --------------------------------
 * <version>       <date>        	<author>              		<desc>
-* Revision 1.0    2018-03-12  	SJC@PhoneSW.BSP    		Created for new architecture
 ***********************************************************************************/
 
 #define VOOC_MCU_N76E

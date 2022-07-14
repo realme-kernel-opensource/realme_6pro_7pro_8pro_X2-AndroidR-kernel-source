@@ -16,7 +16,6 @@
 #define NF_STOP 5	/* Deprecated, for userspace nf_queue compatibility. */
 
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 #define NF_IMQ_QUEUE 6
 #define NF_MAX_VERDICT NF_IMQ_QUEUE
 #else /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */

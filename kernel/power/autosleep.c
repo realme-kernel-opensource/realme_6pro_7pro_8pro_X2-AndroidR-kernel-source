@@ -25,7 +25,6 @@ static DEFINE_MUTEX(autosleep_lock);
 static struct wakeup_source *autosleep_ws;
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.CHG.Basic,  2018/11/19, add for analysis power coumption.
 static void wakelock_printk(struct work_struct *work);
 static struct workqueue_struct *wakelock_printk_work_queue = NULL;
 static DECLARE_DELAYED_WORK(wakelock_printk_work, wakelock_printk);
@@ -122,7 +121,6 @@ int pm_autosleep_set_state(suspend_state_t state)
 #endif
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.CHG.Basic,  2018/11/19, add for analysis power coumption.
 		wakelock_printk_control(0);
 #endif /* VENDOR_EDIT */
 
@@ -145,7 +143,6 @@ int pm_autosleep_set_state(suspend_state_t state)
 	mutex_unlock(&autosleep_lock);
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.CHG.Basic,  2018/11/19, add for analysis power coumption.
 	wakelock_printk_control(1); 
 #endif /* VENDOR_EDIT */
 
@@ -155,7 +152,6 @@ int pm_autosleep_set_state(suspend_state_t state)
 int __init pm_autosleep_init(void)
 {
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.CHG.Basic,  2018/11/19, add for analysis power coumption.
 	wakelock_printk_work_queue = create_singlethread_workqueue("wakelock_printk");
 	if (wakelock_printk_work_queue == NULL)
 		printk(KERN_INFO "%s: failed to create work queue\n", __func__);

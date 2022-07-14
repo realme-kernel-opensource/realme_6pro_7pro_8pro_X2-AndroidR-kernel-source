@@ -28,7 +28,6 @@
  */
 
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 static const struct nf_queue_handler __rcu *queue_imq_handler __read_mostly;
 
 void nf_register_queue_imq_handler(const struct nf_queue_handler *qh)
@@ -130,7 +129,6 @@ unsigned int nf_queue_nf_hook_drop(struct net *net)
 EXPORT_SYMBOL_GPL(nf_queue_nf_hook_drop);
 
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
 				  const struct nf_hook_entries *entries,
 				  unsigned int index, unsigned int verdict)
@@ -147,14 +145,12 @@ static int __nf_queue(struct sk_buff *skb, const struct nf_hook_state *state,
 	struct net *net = state->net;
 
 	#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-	//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 	unsigned int queuetype = verdict & NF_VERDICT_MASK;
 	unsigned int queuenum  = verdict >> NF_VERDICT_QBITS;
 	#endif /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
 
 	/* QUEUE == DROP if no one is waiting, to be safe. */
 	#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-	//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 	if (queuetype == NF_IMQ_QUEUE) {
 		qh = rcu_dereference(queue_imq_handler);
 	} else {
@@ -214,7 +210,6 @@ int nf_queue(struct sk_buff *skb, struct nf_hook_state *state,
 	int ret;
 
 	#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-	//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 	ret = __nf_queue(skb, state, entries, index, verdict);
 	#else /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
 	ret = __nf_queue(skb, state, entries, index, verdict >> NF_VERDICT_QBITS);
@@ -222,7 +217,6 @@ int nf_queue(struct sk_buff *skb, struct nf_hook_state *state,
 
 	if (ret < 0) {
 		#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-		//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 		/* IMQ Bypass */
 		if (ret == -ECANCELED && skb->imq_flags == 0) {
 			return 1;
@@ -314,7 +308,6 @@ next_hook:
 		local_bh_enable();
 		break;
 	#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-	//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 	case NF_IMQ_QUEUE:
 	#endif /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
 	case NF_QUEUE:

@@ -721,7 +721,7 @@
 				config {
 					pins = "gpio44", "gpio45";
 					drive-strength = <2>;
-					bias-pull-down;  /*xing.xiong@BSP.Kernel.Debug, 2019/06/22, Modify for avoid noise, change from no-pull to bias-pull-down*/
+					bias-pull-down;
 				};
 			};
 
@@ -735,7 +735,7 @@
 					pins = "gpio44", "gpio45";
 					drive-strength = <2>;
 					input-enable;
-					bias-pull-down; /*xing.xiong@BSP.Kernel.Debug, 2019/06/22, Modify for avoid noise, change from no-pull to bias-pull-down*/
+					bias-pull-down;
 				};
 			};
 		};

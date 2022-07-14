@@ -1,4 +1,4 @@
-/* Copyright (c) 2002,2007-2020, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2002,2007-2019, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -342,7 +342,6 @@ struct kgsl_device {
 	/* store current L3 vote to determine if we should change our vote */
 	unsigned int cur_l3_pwrlevel;
         #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-        // MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
         bool snapshot_control;
         int snapshotfault;
         #endif /* OPLUS_FEATURE_GPU_MINIDUMP */
@@ -445,13 +444,13 @@ struct kgsl_context {
 #define pr_context(_d, _c, fmt, args...) \
 		dev_err((_d)->dev, "%s[%d]: " fmt, \
 		_context_comm((_c)), \
-		pid_nr((_c)->proc_priv->pid), ##args)
+		(_c)->proc_priv->pid, ##args)
 
 /**
  * struct kgsl_process_private -  Private structure for a KGSL process (across
  * all devices)
  * @priv: Internal flags, use KGSL_PROCESS_* values
- * @pid: Identification structure for the task owner of the process
+ * @pid: ID for the task owner of the process
  * @comm: task name of the process
  * @mem_lock: Spinlock to protect the process memory lists
  * @refcount: kref object for reference counting the process
@@ -469,7 +468,7 @@ struct kgsl_context {
  */
 struct kgsl_process_private {
 	unsigned long priv;
-	struct pid *pid;
+	pid_t pid;
 	char comm[TASK_COMM_LEN];
 	spinlock_t mem_lock;
 	struct kref refcount;
@@ -552,7 +551,6 @@ struct kgsl_snapshot {
 	bool gmu_fault;
 	bool recovered;
         #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-        // MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
         char snapshot_hashid[96];
         #endif /* OPLUS_FEATURE_GPU_MINIDUMP */
 };
@@ -595,7 +593,7 @@ static inline void kgsl_process_sub_stats(struct kgsl_process_private *priv,
 	struct mm_struct *mm;
 
 	atomic64_sub(size, &priv->stats[type].cur);
-	pid_struct = find_get_pid(pid_nr(priv->pid));
+	pid_struct = find_get_pid(priv->pid);
 	if (pid_struct) {
 		task = get_pid_task(pid_struct, PIDTYPE_PID);
 		if (task) {

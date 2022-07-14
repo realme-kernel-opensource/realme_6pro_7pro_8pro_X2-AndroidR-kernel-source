@@ -193,6 +193,8 @@ static void cam_cci_dump_registers(struct cci_device *cci_dev,
 	uint32_t read_val = 0;
 	uint32_t i = 0;
 	uint32_t reg_offset = 0;
+	uint32_t read_buf_level = 0;
+	uint32_t read_data_reg_offset = 0x0;
 	void __iomem *base = cci_dev->soc_info.reg_map[0].mem_base;
 
 	/* CCI Top Registers */
@@ -207,8 +209,19 @@ static void cam_cci_dump_registers(struct cci_device *cci_dev,
 	/* CCI Master registers */
 	CAM_INFO(CAM_CCI, "****CCI MASTER %d Registers ****",
 		master);
+	read_buf_level = cam_io_r_mb(base +
+	CCI_I2C_M0_READ_BUF_LEVEL_ADDR + master * 0x100);
+	read_data_reg_offset = CCI_I2C_M0_READ_DATA_ADDR + master * 0x100;
 	for (i = 0; i < DEBUG_MASTER_REG_COUNT; i++) {
 		reg_offset = DEBUG_MASTER_REG_START + master*0x100 + i * 4;
+         /*
+		 * Don't read from READ_DATA_ADDR if
+		 * i2c read fifo is empty, this may lead to
+		 * read underflow status bits getting set
+		 */
+		if ((read_buf_level == 0) &&
+			(reg_offset == read_data_reg_offset))
+			continue;
 		read_val = cam_io_r_mb(base + reg_offset);
 		CAM_INFO(CAM_CCI, "offset = 0x%X value = 0x%X",
 			reg_offset, read_val);
@@ -1352,7 +1365,6 @@ static int32_t cam_cci_i2c_write(struct v4l2_subdev *sd,
 	struct cci_device *cci_dev;
 	enum cci_i2c_master_t master;
 #ifdef VENDOR_EDIT
-//lixin@camera, 20191202, add for define number of attempts
 	int retry;
 #endif
 
@@ -1417,7 +1429,6 @@ static int32_t cam_cci_i2c_write(struct v4l2_subdev *sd,
 	}
 	rc = cam_cci_data_queue(cci_dev, c_ctrl, queue, sync_en);
 #ifdef VENDOR_EDIT
-//lixin@camera, 20191202, add for try again after failed to call cam_cci_data_queue
 	for (retry = 3; retry > 0 && rc < 0; retry--) {
 		rc = cam_cci_data_queue(cci_dev, c_ctrl, queue, sync_en);
 		CAM_ERR(CAM_SENSOR,"Try cam_cci_data_queue again : %d",

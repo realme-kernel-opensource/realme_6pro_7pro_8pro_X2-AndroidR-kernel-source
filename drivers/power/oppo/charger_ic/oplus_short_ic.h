@@ -4,10 +4,8 @@
 * Description: For short circuit battery check
 * Version   : 1.0
 * Date      : 2018-05-24
-* Author    : tongfeng.Huang@PhoneSW.BSP		   	
 * ------------------------------ Revision History: --------------------------------
 * <version>       <date>        	<author>              		<desc>
-* Revision 1.0    2018-05-24  	tongfeng.Huang@PhoneSW.BSP    		Created for new short IC
 ***********************************************************************************/
 
 #ifndef _OPLUS_SHORT_IC_H_

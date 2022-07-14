@@ -155,7 +155,6 @@ struct request {
 #endif /*OPLUS_FEATURE_IOMONITOR*/
 
 #ifdef VENDOR_EDIT
-/*Hank.liu@PSW.BSP Kernel IO Latency  2019-03-19,Add some info in each request*/
 	ktime_t block_io_start;  //save block io start ktime
 	ktime_t ufs_io_start; //save ufs io start ktime
 	u64 flash_io_latency; //save mmc host command latency
@@ -174,7 +173,6 @@ struct request {
 	struct bio *biotail;
 
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	struct list_head fg_list;
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 	/*
@@ -429,7 +427,6 @@ struct request_queue {
 	 */
 	struct list_head	queue_head;
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	struct list_head	fg_head;
 	int fg_count;
 	int both_count;
@@ -564,7 +561,6 @@ struct request_queue {
 
 	unsigned int		nr_sorted;
 #ifndef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Modify for ioqueue
 	unsigned int		in_flight[2];
 #else /* OPLUS_FEATURE_HEALTHINFO */
@@ -661,7 +657,6 @@ struct request_queue {
 	u64			write_hints[BLK_MAX_WRITE_HINTS];
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW)
-	/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	bool			turbo_write_dev;
 #endif
 };
@@ -778,7 +773,6 @@ static inline void queue_flag_clear(unsigned int flag, struct request_queue *q)
 }
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 static inline void ohm_ioqueue_add_inflight(struct request_queue *q,
@@ -2079,7 +2073,6 @@ static const u_int64_t latency_x_axis_us[] = {
 	9000,
 	10000
 #ifdef VENDOR_EDIT
-//yh@BSP.Storage.UFS, 2019-02-19 add for ufs fw upgrade/health info
 	,20000
 	,40000
 	,60000

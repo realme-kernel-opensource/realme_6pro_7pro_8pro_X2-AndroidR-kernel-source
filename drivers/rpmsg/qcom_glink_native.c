@@ -1967,7 +1967,6 @@ static void qcom_glink_cancel_rx_work(struct qcom_glink *glink)
 		kfree(dcmd);
 }
 #ifdef  OPLUS_FEATURE_MODEM_DATA_NWPOWER
-//Ruansong@PSW.NW.DATA.2120730, 2019/07/11 add for RM_TAG_POWER_DEBUG
 #define GLINK_NATIVE_IRQ_NUM_MAX 10
 #define GLINK_NATIVE_IRQ_NAME_LEN 24
 static char glink_native_irq_names[GLINK_NATIVE_IRQ_NUM_MAX][GLINK_NATIVE_IRQ_NAME_LEN];
@@ -1987,7 +1986,6 @@ struct qcom_glink *qcom_glink_native_probe(struct device *dev,
 	int ret;
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
-//Ruansong@PSW.NW.DATA.2120730, 2019/07/11 add for RM_TAG_POWER_DEBUG
 		static int glink_native_irq_index = 1;
 		char *glink_native_irq_name = glink_native_irq_names[0];
 		snprintf(glink_native_irq_names[0], GLINK_NATIVE_IRQ_NAME_LEN, "glink-native");
@@ -2055,7 +2053,6 @@ struct qcom_glink *qcom_glink_native_probe(struct device *dev,
 		irqflags = IRQF_NO_SUSPEND | IRQF_SHARED;
 		
 #ifndef OPLUS_FEATURE_MODEM_DATA_NWPOWER
-//Ruansong@PSW.NW.DATA.2120730, 2019/07/11 add for RM_TAG_POWER_DEBUG
 	ret = devm_request_irq(dev, irq,
 			       qcom_glink_native_intr,
 			       irqflags,

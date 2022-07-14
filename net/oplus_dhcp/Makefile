@@ -8,13 +8,11 @@
 #**
 #** Version: 1.0
 #** Date :   2020-05-09
-#** Author:  LianGenglin@CONNECTIVITY.WIFI.INTERNET
 #** TAG  :   OPLUS_FEATURE_DHCP_CONFLICT
 #**
 #** ---------------------Revision History: ---------------------
 #**  <author>                      <data>     <version >   <desc>
 #** ---------------------------------------------------------------
-#**  LianGenglin@CONNECTIVITY.WIFI.INTERNET  2020/05/09  1.0          build this module
 #**
 #************************************************************************************/
 

@@ -41,17 +41,14 @@
 #include "walt.h"
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 #include <linux/oppo_special_opt/oppo_special_opt.h>
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 extern unsigned int walt_scale_demand_divisor;
 bool ux_task_misfit(struct task_struct *p, int cpu);
 #define scale_demand(d) ((d)/walt_scale_demand_divisor)
 #endif /* OPLUS_FEATURE_UIFIRST */
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// wenbin.liu@PSW.BSP.MM, 2018/05/02
 // Add for get cpu load
 #ifdef CONFIG_OPPO_HEALTHINFO
 #include <soc/oplus/oppo_healthinfo.h>
@@ -59,7 +56,6 @@ bool ux_task_misfit(struct task_struct *p, int cpu);
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 #include <linux/uifirst/uifirst_sched_common.h>
 #endif /* OPLUS_FEATURE_UIFIRST */
 
@@ -921,7 +917,6 @@ static void update_tg_load_avg(struct cfs_rq *cfs_rq, int force)
 #endif /* CONFIG_SMP */
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 extern void  update_jank_trace_info(struct task_struct *tsk, int trace_type, unsigned int cpu, u64 delta);
 #endif
@@ -960,7 +955,6 @@ static void update_curr(struct cfs_rq *cfs_rq)
 		cpuacct_charge(curtask, delta_exec);
 		account_group_exec_runtime(curtask, delta_exec);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		update_jank_trace_info(curtask, JANK_TRACE_RUNNING, cpu_of(rq_of(cfs_rq)), delta_exec);
 #endif
@@ -1017,14 +1011,12 @@ update_stats_wait_end(struct cfs_rq *cfs_rq, struct sched_entity *se)
 		}
 		trace_sched_stat_wait(p, delta);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// wenbin.liu@PSW.BSP.MM, 2018/05/26
 // Add for get sched latency stat
 #ifdef CONFIG_OPPO_HEALTHINFO
 		ohm_schedstats_record(OHM_SCHED_SCHEDLATENCY, p, (delta >> 20));
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		update_jank_trace_info(p, JANK_TRACE_RUNNABLE, 0, delta);
 #endif
@@ -1069,7 +1061,6 @@ update_stats_enqueue_sleeper(struct cfs_rq *cfs_rq, struct sched_entity *se)
 			account_scheduler_latency(tsk, delta >> 10, 1);
 			trace_sched_stat_sleep(tsk, delta);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 			update_jank_trace_info(tsk, JANK_TRACE_SSTATE, 0, delta);
 #endif
@@ -1094,7 +1085,6 @@ update_stats_enqueue_sleeper(struct cfs_rq *cfs_rq, struct sched_entity *se)
 				schedstat_inc(se->statistics.iowait_count);
 				trace_sched_stat_iowait(tsk, delta);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// wenbin.liu@PSW.BSP.MM, 2018/05/09
 // Add for get iowait
 #ifdef CONFIG_OPPO_HEALTHINFO
 				ohm_schedstats_record(OHM_SCHED_IOWAIT, tsk, (delta >> 20));
@@ -1105,7 +1095,6 @@ update_stats_enqueue_sleeper(struct cfs_rq *cfs_rq, struct sched_entity *se)
 #endif /*OPLUS_FEATURE_IOMONITOR*/
 			}
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Jiheng,Xie@TECH.BSP.Performance, 2019/05/18,add for get dstate statictics
 #ifdef CONFIG_OPPO_HEALTHINFO
 			if(!tsk->in_iowait) {
 				 ohm_schedstats_record(OHM_SCHED_DSTATE, tsk, (delta >> 20));
@@ -1113,7 +1102,6 @@ update_stats_enqueue_sleeper(struct cfs_rq *cfs_rq, struct sched_entity *se)
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 			update_jank_trace_info(tsk, JANK_TRACE_DSTATE, 0, delta);
 #endif
@@ -4261,7 +4249,6 @@ check_preempt_tick(struct cfs_rq *cfs_rq, struct sched_entity *curr)
 	ideal_runtime = sched_slice(cfs_rq, curr);
 	delta_exec = curr->sum_exec_runtime - curr->prev_sum_exec_runtime;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 	if (is_heavy_load_task(current))
 		ideal_runtime = HEAVY_LOAD_RUNTIME;
 #endif
@@ -4276,7 +4263,6 @@ check_preempt_tick(struct cfs_rq *cfs_rq, struct sched_entity *curr)
 		return;
 	}
 #ifdef OPLUS_FEATURE_UIFIRST
-	// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 	if (is_heavy_load_task(current))
 		return;
 #endif
@@ -5416,7 +5402,6 @@ enqueue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 		flags = ENQUEUE_WAKEUP;
 	}
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		enqueue_ux_thread(rq, p);
 	}
@@ -5495,7 +5480,6 @@ static void dequeue_task_fair(struct rq *rq, struct task_struct *p, int flags)
 		flags |= DEQUEUE_SLEEP;
 	}
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		dequeue_ux_thread(rq, p);
 	}
@@ -7488,7 +7472,6 @@ static int start_cpu(struct task_struct *p, bool boosted,
 	struct root_domain *rd = cpu_rq(smp_processor_id())->rd;
 	int start_cpu = -1;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/03, Add for  UIfirst (slide boost)
 	if (sysctl_uifirst_enabled && sysctl_slide_boost_enabled && p->static_ux == 2 &&
 	(task_util(p) >= sysctl_boost_task_threshold ||
 	 scale_demand(p->ravg.sum) >= sysctl_boost_task_threshold)) {
@@ -7504,7 +7487,6 @@ static int start_cpu(struct task_struct *p, bool boosted,
 	}
 
 #ifdef OPLUS_FEATURE_UIFIRST
-	// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 	if (sysctl_cpu_multi_thread && !is_heavy_load_task(p))
 		return rd->min_cap_orig_cpu;
 #endif
@@ -7579,7 +7561,6 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 		target_capacity = 0;
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 	if (fbt_env->strict_max  || p->in_iowait ||(sysctl_cpu_multi_thread && !is_heavy_load_task(p)))
 #else
 	if (fbt_env->strict_max)
@@ -7635,7 +7616,6 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 				continue;
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 			if (sysctl_uifirst_enabled && test_task_ux(p)) {
 				if (sysctl_launcher_boost_enabled && is_heavy_ux_task(p) && !test_ux_task_cpu(i))
 					continue;
@@ -7680,7 +7660,6 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 				most_spare_cap_cpu = i;
 			}
 #ifdef OPLUS_FEATURE_UIFIRST
-			// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 			else if (spare_wake_cap == most_spare_wake_cap && sysctl_cpu_multi_thread
 					&& !is_heavy_load_task(p)
 					&& cpu_rq(i)->nr_running < cpu_rq(most_spare_cap_cpu)->nr_running) {
@@ -7952,7 +7931,6 @@ static inline int find_best_target(struct task_struct *p, int *backup_cpu,
 			}
 		}
 #ifdef OPLUS_FEATURE_UIFIRST
-		// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 		if (sysctl_cpu_multi_thread && !is_heavy_load_task(p)
 			&& next_group_higher_cap
 			&& (best_idle_cpu != -1 || target_cpu != -1 || most_spare_cap_cpu != -1)) {
@@ -8414,14 +8392,12 @@ out:
 		target_cpu = prev_cpu;
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled && sysctl_launcher_boost_enabled &&
 		!fbt_env.fastpath && is_heavy_ux_task(p) && !test_ux_prefer_cpu(p, target_cpu)) {
 		find_ux_task_cpu(p, &target_cpu);
 	}
 #endif /* OPLUS_FEATURE_UIFIRST */
 #ifdef OPLUS_FEATURE_UIFIRST
-// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/06/23, Add for UIFirst(sldie boost)
 	if (sysctl_uifirst_enabled && sysctl_slide_boost_enabled && 
 		p->static_ux == 2 && ux_task_misfit(p, cpu)) {
 		find_ux_task_cpu(p, &target_cpu);
@@ -8760,7 +8736,6 @@ static void check_preempt_wakeup(struct rq *rq, struct task_struct *p, int wake_
 	if (unlikely(se == pse))
 		return;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 	if (is_heavy_load_task(current))
 		return;
 #endif
@@ -8808,7 +8783,6 @@ static void check_preempt_wakeup(struct rq *rq, struct task_struct *p, int wake_
 	update_curr(cfs_rq_of(se));
 	BUG_ON(!pse);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled && test_task_ux(p) && !test_task_ux(curr)) {
 		goto preempt;
 	}
@@ -8851,7 +8825,6 @@ pick_next_task_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf
 	struct task_struct *p;
 	int new_tasks;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 	struct task_struct *pos;
 #endif
 
@@ -8908,7 +8881,6 @@ again:
 
 	p = task_of(se);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		pick_ux_thread(rq, &p, &se);
 	}
@@ -8954,7 +8926,6 @@ simple:
 	do {
 		se = pick_next_entity(cfs_rq, NULL);
 #ifndef OPLUS_FEATURE_UIFIRST
-// caichen@TECH.Kernel.Sched, 2019/03/10, add for heavy load task
 		set_next_entity(cfs_rq, se);
 #endif
 		cfs_rq = group_cfs_rq(se);
@@ -8962,7 +8933,6 @@ simple:
 
 	p = task_of(se);
 #ifdef OPLUS_FEATURE_UIFIRST
-	// caichen@TECH.Kernel.Sched, 2020/03/10, add for heavy load task
 	pos = list_first_entry(&rq->cfs_tasks, typeof(*pos), se.group_node);
 	if (sysctl_cpu_multi_thread && is_heavy_load_task(pos) && p != pos) {
 		p = pos;
@@ -9538,7 +9508,6 @@ redo:
 			goto next;
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		if (sysctl_uifirst_enabled && test_task_ux(p)) {
 			if (sysctl_launcher_boost_enabled && is_heavy_ux_task(p) && test_ux_task_cpu(task_cpu(p)) &&
 					!test_ux_task_cpu(env->dst_cpu))
@@ -13273,7 +13242,6 @@ static inline void walt_check_for_rotation(struct rq *rq)
 }
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 bool ux_task_misfit(struct task_struct *p, int cpu)
 {
 	int num_mincpu = cpumask_weight(topology_core_cpumask(0));
@@ -13295,7 +13263,6 @@ void check_for_migration(struct rq *rq, struct task_struct *p)
 	struct sched_domain *sd = NULL;
 
 	#ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/03, Add for  UIfirst (slide boost)
 	if (rq->misfit_task_load || (sysctl_uifirst_enabled && sysctl_slide_boost_enabled &&
 					p->static_ux == 2 && ux_task_misfit(p, prev_cpu))) {
 	#else

@@ -31,11 +31,9 @@
 
 #include <trace/events/sched.h>
 #ifdef OPLUS_FEATURE_UIFIRST
-// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/06/23, Add for UIFirst(sldie boost)
 #include <linux/uifirst/uifirst_sched_common.h>
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/03, Add for UIFirst(slide boost)
 #include <linux/sched.h>
 extern u64 ux_task_load[];
 extern u64 ux_load_ts[];
@@ -526,7 +524,6 @@ u64 freq_policy_load(struct rq *rq)
 	u64 load, tt_load = 0;
 	u64 coloc_boost_load = cluster->coloc_boost_load;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	u64 wallclock = sched_ktime_clock();
 	u64 timeline = 0;
 	int cpu = cpu_of(rq);
@@ -558,7 +555,6 @@ u64 freq_policy_load(struct rq *rq)
 		break;
 	}
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	if (sysctl_uifirst_enabled && sysctl_slide_boost_enabled && ux_load_ts[cpu]) {
 		timeline = wallclock - ux_load_ts[cpu];
 		if  (timeline >= UX_LOAD_WINDOW)
@@ -799,7 +795,6 @@ migrate_top_tasks(struct task_struct *p, struct rq *src_rq, struct rq *dst_rq)
 }
 
 #ifdef OPLUS_FEATURE_EDTASK_IMPROVE
-/* Chuck.Huang@Power.basic, 2020-09-03, Add for improving ed task migration */
 void migrate_ed_task(struct task_struct *p, u64 wallclock,
 		struct rq *src_rq, struct rq *dest_rq)
 {
@@ -936,7 +931,6 @@ void fixup_busy_time(struct task_struct *p, int new_cpu)
 	}
 
 #ifdef OPLUS_FEATURE_EDTASK_IMPROVE
-/* Chuck.Huang@Power.basic, 2020-09-03, Add for improving ed task migration */
 	if (sysctl_ed_task_enabled) {
 		migrate_ed_task(p, wallclock, src_rq, dest_rq);
 	}

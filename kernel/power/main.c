@@ -16,7 +16,6 @@
 #include <linux/debugfs.h>
 #include <linux/seq_file.h>
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 #include <linux/rtc.h>
 #endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
@@ -211,7 +210,6 @@ static ssize_t pm_test_store(struct kobject *kobj, struct kobj_attribute *attr,
 
 	unlock_system_sleep();
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("%s buf:%s, pm_test_level:%d,level:%d\n", __func__, buf,
 		pm_test_level, level);
 #endif /* VENDOR_EDIT */
@@ -580,7 +578,6 @@ static ssize_t state_store(struct kobject *kobj, struct kobj_attribute *attr,
 	int error;
 
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 	pr_info("PM: enter state_store, buf=%s.\n", buf);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
@@ -641,7 +638,6 @@ power_attr(state);
  * are any wakeup events detected after 'wakeup_count' was written to.
  */
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 static void pm_wakeup_count_marker(char *annotation)
 {
 	struct timespec ts;
@@ -686,7 +682,6 @@ static ssize_t wakeup_count_store(struct kobject *kobj,
 	int error;
 
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-	//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 	pm_wakeup_count_marker("store");
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
@@ -859,7 +854,6 @@ power_attr(pm_freeze_timeout);
 #endif	/* CONFIG_FREEZER*/
 
 #ifdef OPLUS_BUG_STABILITY
-/* fanhui@PhoneSW.BSP, 2016/05/16, interface to read PMIC reg PON_REASON and POFF_REASON */
 char pon_reason[128];
 static ssize_t pon_reason_show(struct kobject *kobj,
 			struct kobj_attribute *attr, char *buf)
@@ -921,7 +915,6 @@ static struct attribute * g[] = {
 	&pm_freeze_timeout_attr.attr,
 #endif
 #ifdef OPLUS_BUG_STABILITY
-/* fanhui@PhoneSW.BSP, 2016/05/16, interface to read PMIC reg PON_REASON and POFF_REASON */
 	&pon_reason_attr.attr,
 	&poff_reason_attr.attr,
 #endif /*OPLUS_BUG_STABILITY*/

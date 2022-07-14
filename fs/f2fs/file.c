@@ -22,7 +22,6 @@
 #include <linux/file.h>
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #include <linux/ufstw.h>
 #endif
 
@@ -257,7 +256,6 @@ static int f2fs_do_sync_file(struct file *file, loff_t start, loff_t end,
 	};
 	unsigned int seq_id = 0;
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	bool turbo_set = false;
 #endif
 #ifdef CONFIG_F2FS_BD_STAT
@@ -339,7 +337,6 @@ go_write:
 		goto out;
 	}
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	bdev_set_turbo_write(sbi->sb->s_bdev);
 	turbo_set = true;
 #endif
@@ -390,7 +387,6 @@ flush_out:
 	f2fs_update_time(sbi, REQ_TIME);
 out:
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	if (turbo_set)
 		bdev_clear_turbo_write(sbi->sb->s_bdev);
 #endif

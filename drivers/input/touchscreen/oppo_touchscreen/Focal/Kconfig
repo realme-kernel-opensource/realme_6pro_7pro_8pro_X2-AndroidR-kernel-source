@@ -1,3 +1,0 @@
-
-source "drivers/input/touchscreen/oppo_touchscreen/Focal/FT8006/Kconfig"
-source "drivers/input/touchscreen/oppo_touchscreen/Focal/ft3518/Kconfig"

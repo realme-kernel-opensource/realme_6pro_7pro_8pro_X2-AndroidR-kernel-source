@@ -22,7 +22,6 @@
 #include <soc/qcom/ramdump.h>
 #include <soc/qcom/subsystem_notif.h>
 #ifdef OPLUS_BUG_STABILITY
-//Laixin@CN.PSW.WiFi.Basic.2828376, 2020/02/19
 //Add for: disable wifi while power off charging because modem img will not mount
 #include <soc/oppo/boot_mode.h>
 #endif /* OPLUS_BUG_STABILITY */
@@ -2055,7 +2054,6 @@ static int cnss_probe(struct platform_device *plat_dev)
 	const struct platform_device_id *device_id;
 
 #ifdef OPLUS_BUG_STABILITY
-	//Laixin@CN.PSW.WiFi.Basic.2828376, 2020/02/19
 	//Add for: disable wifi while power off charging because modem img will not mount
 	if (qpnp_is_power_off_charging() &&
 		(get_boot_mode() != MSM_BOOT_MODE__WLAN) &&

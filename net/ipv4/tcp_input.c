@@ -123,7 +123,6 @@ int sysctl_tcp_default_init_rwnd __read_mostly = TCP_INIT_CWND * 2;
 #define TCP_HP_BITS (~(TCP_RESERVED_BITS|TCP_FLAG_PSH))
 
 //#ifdef OPLUS_FEATURE_WIFI_SLA
-//HuangJunyuan@CONNECTIVITY.WIFI.NETWORK.4502, 2018/04/10,Add code for appo sla function
 void (*statistic_dev_rtt)(struct sock *sk,long rtt) = NULL;
 EXPORT_SYMBOL(statistic_dev_rtt);
 //#endif /* OPLUS_FEATURE_WIFI_SLA */
@@ -133,7 +132,6 @@ EXPORT_SYMBOL(statistic_dev_rtt);
 #define REXMIT_NEW	2 /* FRTO-style transmit of unsent/new packets */
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.213300, 2020/06/01
 *Add for classify glink wakeup services
 */
 #include <net/oplus_nwpower.h>
@@ -798,7 +796,6 @@ static void tcp_rtt_estimator(struct sock *sk, long mrtt_us)
 			tp->mdev_max_us = tcp_rto_min_us(sk);
 		}
                 //#ifdef OPLUS_FEATURE_WIFI_SLA
-                //HuangJunyuan@CONNECTIVITY.WIFI.NETWORK.4502, 2018/04/10,
                 //Add code for appo sla function
                 if(TCP_ESTABLISHED == sk->sk_state && NULL != statistic_dev_rtt){
                         statistic_dev_rtt(sk,mrtt_us);
@@ -4696,7 +4693,6 @@ static void tcp_data_queue(struct sock *sk, struct sk_buff *skb)
 	int eaten;
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.213400, 2020/06/01
 	*Add for classify glink wakeup services
 	*/
 	struct timespec now_ts;
@@ -4761,7 +4757,6 @@ queue_and_out:
 		/* A retransmit, 2nd most common case.  Force an immediate ack. */
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 		/*
-		*Ruansong@PSW.NW.DATA.213500, 2020/06/01
 		*Add for classify glink wakeup services
 		*/
 		if (atomic_read(&tcpsynretrans_hook_boot) == 1) {
@@ -5740,7 +5735,6 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 	int saved_clamp = tp->rx_opt.mss_clamp;
 	bool fastopen_fail;
         #ifdef OPLUS_BUG_STABILITY
-        //ZhaoMengqing@CONNECTIVITY.WIFI.INTERNET.1394484, 2019/04/02,add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
         static int ts_error_count = 0;
         int ts_error_threshold = sysctl_tcp_ts_control[0];
 
@@ -5774,7 +5768,6 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 			NET_INC_STATS(sock_net(sk),
 					LINUX_MIB_PAWSACTIVEREJECTED);
                         #ifdef OPLUS_BUG_STABILITY
-			//ZhaoMengqing@CONNECTIVITY.WiFi.Network.internet.1394484, 2019/04/02,add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
 			//if count > threshold, disable TCP Timestamps
 			if (ts_error_threshold > 0) {
 				ts_error_count++;
@@ -5787,7 +5780,6 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
 			goto reset_and_undo;
 		}
                 #ifdef OPLUS_BUG_STABILITY
-                //ZhaoMengqing@CONNECTIVITY.WiFi.Network.internet.1394484, 2019/04/02,add for: When find TCP SYN-ACK Timestamp value error, just do not use Timestamp
                 //if other connection's Timestamp is correct, the network environment may be OK
                 if (tp->rx_opt.saw_tstamp && tp->rx_opt.rcv_tsecr &&
                     ts_error_threshold > 0 && ts_error_count > 0) {

@@ -628,7 +628,6 @@ static void kgsl_free_snapshot(struct kgsl_snapshot *snapshot)
 }
 
 #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 
 /************************************************
 adreno.h
@@ -783,7 +782,6 @@ void kgsl_device_snapshot(struct kgsl_device *device,
 	KGSL_DRV_ERR(device, "%s snapshot created at pa %pa++0x%zx\n",
 			gmu_fault ? "GMU" : "GPU", &pa, snapshot->size);
 	#if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-	// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 	if(context!= NULL){
 		dev_err(device->dev, "falut=%s, pid=%d, processname=%s\n",
 			kgsl_get_reason(device->snapshotfault, gmu_fault), context->proc_priv->pid, context->proc_priv->comm);
@@ -871,7 +869,6 @@ static int snapshot_release(struct kgsl_device *device,
 }
 
 #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 static bool snapshot_ontrol_on = 0;
 
 static ssize_t snapshot_control_show(struct kgsl_device *device, char *buf)
@@ -921,7 +918,6 @@ static ssize_t snapshot_show(struct file *filep, struct kobject *kobj,
 		return 0;
 
         #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-	// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 	if (snapshot_ontrol_on) {
 		dev_err(device->dev, "snapshot: snapshot_ontrol_on is true, skip snapshot\n");
 		return 0;
@@ -1156,7 +1152,6 @@ static SNAPSHOT_ATTR(snapshot_legacy, 0644, snapshot_legacy_show,
 	snapshot_legacy_store);
 
 #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 static SNAPSHOT_ATTR(snapshot_hashid, 0666, snapshot_hashid_show, NULL);
 static SNAPSHOT_ATTR(snapshot_control, 0666, snapshot_control_show, snapshot_control_store);
 #endif /* OPLUS_FEATURE_GPU_MINIDUMP */
@@ -1243,7 +1238,6 @@ int kgsl_device_snapshot_init(struct kgsl_device *device)
 	device->snapshot_crashdumper = 1;
 	device->snapshot_legacy = 0;
 	#if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-	// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 	device->snapshot_control = 0;
 	#endif /* OPLUS_FEATURE_GPU_MINIDUMP */
 
@@ -1289,7 +1283,6 @@ int kgsl_device_snapshot_init(struct kgsl_device *device)
 	ret  = sysfs_create_file(&device->snapshot_kobj,
 			&attr_snapshot_legacy.attr);
 	#if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-	// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 	ret  = sysfs_create_file(&device->snapshot_kobj, &attr_snapshot_hashid.attr);
 	if (ret)
 		return ret;
@@ -1326,7 +1319,6 @@ void kgsl_device_snapshot_close(struct kgsl_device *device)
 	device->force_panic = 0;
 	device->snapshot_crashdumper = 1;
         #if defined(OPLUS_FEATURE_GPU_MINIDUMP)
-	// MeiDongting@MULTIMEIDA.FEATURE.GPU.MINIDUMP, 2020/04/06, Add for OPPO gpu mini dump
 	device->snapshot_control = 0;
 	#endif /* OPLUS_FEATURE_GPU_MINIDUMP */
 }

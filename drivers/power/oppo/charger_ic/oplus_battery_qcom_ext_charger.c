@@ -130,7 +130,6 @@
 #define QPNP_CHARGER_DEV_NAME	"qcom,qpnp-linear-charger"
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-//Fuchun.Liao@Mobile.BSP.CHG 2015-04-26 add to use pmic-irq for external charge-ic
 struct qpnp_lbc_chip *qpnp_chip = NULL;
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
 
@@ -489,7 +488,6 @@ bool qpnp_lbc_is_usb_chg_plugged_in(void)
 	int rc;
 	struct qpnp_lbc_chip *chip = qpnp_chip;
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* dengnw@bsp.drv	add QCM case02048492  patch 20150611*/
 	rc = qpnp_lbc_read(chip, chip->usb_chgpth_base + USB_PTH_STS_REG,
 				&usbin_valid_rt_sts, 1);
 	if (rc) {
@@ -876,7 +874,6 @@ static int qpnp_charger_read_dt_props(struct qpnp_lbc_chip *chip)
 }
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-//Fuchun.Liao@Mobile.BSP.CHG 2015-04-26 add to use pmic-irq for external charge-ic
 void opchg_usbin_valid_irq_handler(void)
 {
 	int usb_present;
@@ -1030,7 +1027,6 @@ static int qpnp_lbc_request_irqs(struct qpnp_lbc_chip *chip)
 
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-//Fuchun.Liao@Mobile.BSP.CHG 2015-04-26 add to use pmic-irq for external charge-ic
 static int qpnp_lbc_request_usbin_valid_irq(struct qpnp_lbc_chip *chip)
 {
 	int rc = 0;
@@ -1088,7 +1084,6 @@ static void determine_initial_status(struct qpnp_lbc_chip *chip)
 }
 */
 #ifdef OPLUS_FEATURE_CHG_BASIC
-//Fuchun.Liao@Mobile.BSP.CHG 2015-04-26 add to use pmic-irq for external charge-ic
 #define BMS_VM_BMS_DATA_REG_0			0x40B0
 int qpnp_set_pmic_soc_memory(int soc)
 {
@@ -1264,7 +1259,6 @@ static int qpnp_lbc_probe(struct spmi_device *spmi)
 		pr_err("Unable to disable charger rc=%d\n", rc);
 	
 	#ifdef OPLUS_FEATURE_CHG_BASIC
-//Fuchun.Liao@Mobile.BSP.CHG 2015-04-26 add to use pmic-irq for external charge-ic
 	qpnp_chip = chip;
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
 	pr_err("%s success\n",__func__);

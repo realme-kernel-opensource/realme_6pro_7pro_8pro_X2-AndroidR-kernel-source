@@ -28,7 +28,6 @@
  * Timeout for stopping processes
  */
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY
-//PengNan@BSP.Power.Basic, add for debugging freezing failed, 2020/08/17
 unsigned int __read_mostly freeze_timeout_msecs = 20 * MSEC_PER_SEC;
 #else
 unsigned int __read_mostly freeze_timeout_msecs = 2 * MSEC_PER_SEC;

@@ -245,7 +245,6 @@ static void __fanout_unlink(struct sock *sk, struct packet_sock *po);
 static void __fanout_link(struct sock *sk, struct packet_sock *po);
 
 //#ifdef OPLUS_FEATURE_DHCP
-//LianGenglin@CONNECTIVITY.WIFI.INTERNET, 2020/05/09, Add for Dhcp conflict
 int (*handle_dhcp)(struct sock *sk, struct sk_buff *skb, struct net_device *dev, struct packet_type *pt) = NULL;
 EXPORT_SYMBOL(handle_dhcp);
 //#endif /* OPLUS_FEATURE_DHCP */
@@ -2166,7 +2165,6 @@ static int packet_rcv(struct sk_buff *skb, struct net_device *dev,
 	nf_reset(skb);
 
 //#ifdef OPLUS_FEATURE_DHCP
-//LianGenglin@CONNECTIVITY.WIFI.INTERNET, 2020/05/09, Add for Dhcp conflict
     if (handle_dhcp != NULL && handle_dhcp(sk, skb, dev, pt)) {
         printk("drop dhcp offer packet");
         goto drop;

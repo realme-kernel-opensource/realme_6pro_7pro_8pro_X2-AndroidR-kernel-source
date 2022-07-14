@@ -308,7 +308,6 @@ int anon_vma_clone(struct vm_area_struct *dst, struct vm_area_struct *src)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/*wanghao@BSP.Kernel.Function 2019/10/10 add for avoid apk recursive fork*/
 #define RECURSIVE_MAX_FORK_TIME 30
 
 /*
@@ -398,7 +397,6 @@ int anon_vma_fork(struct vm_area_struct *vma, struct vm_area_struct *pvma)
 	 * so rmap can find non-COWed pages in child processes.
 	 */
 #ifdef OPLUS_BUG_STABILITY
-	/*wanghao@BSP.Kernel.Function 2019/10/10 add for avoid apk recursive fork*/
 	error = anon_vma_clone_oppo(vma, pvma);
 	if (error < 0)
 		return error;

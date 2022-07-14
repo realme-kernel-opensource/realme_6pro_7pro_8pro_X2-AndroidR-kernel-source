@@ -6,7 +6,6 @@
  *             tp dev
  * Version:1.0:
  * Date created:2019/09/19
- * Author: Wenping.ZHOU@Bsp.Driver
  * TAG: BSP.TP.Init
  ***************************************************/
 

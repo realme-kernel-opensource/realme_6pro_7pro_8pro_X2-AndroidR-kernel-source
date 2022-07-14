@@ -28,13 +28,11 @@
 #endif
 /**************************************************/
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 #include "../../../../kernel/msm-4.14/drivers/power/supply/qcom/storm-watch.h"
 #include "../../../../kernel/msm-4.14/drivers/power/supply/qcom/battery.h"
 #endif
 
 #ifdef VENDOR_EDIT
-/* zhijie.Li@BSP.CHG.Basic, 2020/02/25,  lzj Add for HVDCP charging */
 #include <linux/time.h>
 #include <linux/jiffies.h>
 #include <linux/sched/clock.h>
@@ -80,16 +78,13 @@ enum print_reason {
 #define WBC_VOTER			"WBC_VOTER"
 #define HW_LIMIT_VOTER			"HW_LIMIT_VOTER"
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charger */
 #define DIVIDER_SET_VOTER			"DIVIDER_SET_VOTER"
 #endif
 
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 #define PD_DIS_VOTER			"PD_DIS_VOTER"
 #endif
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 #define SVOOC_OTG_VOTER		"SVOOC_OTG_VOTER"
 #endif/*VENDOR_EDIT*/
 #define PL_SMB_EN_VOTER			"PL_SMB_EN_VOTER"
@@ -117,7 +112,6 @@ enum print_reason {
 
 #define BOOST_BACK_STORM_COUNT	3
 #ifdef VENDOR_EDIT
-/* ZhiJie.Li@BSP.CHG.Basic, 2020/02/25, lzj Add for change storm count in aicl */
 #define WEAK_CHG_STORM_COUNT	3
 #else
 #define WEAK_CHG_STORM_COUNT	8
@@ -130,7 +124,6 @@ enum print_reason {
 #define ADC_CHG_ITERM_MASK		32767
 
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 #define USB_TEMP_HIGH	0x01//bit0
 #define USB_WATER_DETECT	0x02//bit1
 #define USB_RESERVE2	0x04//bit2
@@ -142,7 +135,6 @@ enum print_reason {
 #define SDP_CURRENT_UA			500000
 #define CDP_CURRENT_UA			1500000
 #ifndef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Modify for charging */
 #define DCP_CURRENT_UA			1500000
 #else
 #define DCP_CURRENT_UA			3000000
@@ -419,7 +411,6 @@ struct smb_iio {
 	struct iio_channel	*sbux_chan;
 	struct iio_channel	*vph_v_chan;
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  lzj Add for charging chargerid adc*/
 	struct iio_channel	*usbtemp_v_chan;
 	struct iio_channel	*usbtemp_sup_v_chan;
 #endif
@@ -459,7 +450,6 @@ struct smb_charger {
 	struct power_supply		*bms_psy;
 	struct power_supply		*usb_main_psy;
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging*/
 	struct power_supply		*ac_psy;
 #endif
 	struct power_supply		*usb_port_psy;
@@ -537,15 +527,12 @@ struct smb_charger {
 	int			sec_chg_selected;
 	int			cp_reason;
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 	struct delayed_work chg_monitor_work;
 #endif
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 	struct delayed_work typec_disable_cmd_work;
 #endif
 #ifdef VENDOR_EDIT
-/* ZhiJie.Li@BSP.CHG.Basic, 2019/02/25, lzj Add for hvdcp charging */
 	unsigned long long hvdcp_detect_time;
 	unsigned long long hvdcp_detach_time;
 	bool hvdcp_detect_ok;
@@ -651,7 +638,6 @@ struct smb_charger {
 	enum qc2_non_comp_voltage qc2_unsupported_voltage;
 	bool			dbc_usbov;
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for fake typec */
 	bool			fake_typec_insertion;
 	bool			fake_usb_insertion;
 #endif
@@ -679,7 +665,6 @@ struct smb_charger {
 
 	/* wireless */
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 	int			pre_current_ma;
 	bool		is_dpdm_on_usb;
 	struct delayed_work	divider_set_work;
@@ -687,7 +672,6 @@ struct smb_charger {
 #endif
 	int			dcin_uv_count;
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charger */
 	struct work_struct	chargerid_switch_work;
 	struct mutex pinctrl_mutex;
 	struct pinctrl		*usbtemp_gpio1_adc_pinctrl;
@@ -696,7 +680,6 @@ struct smb_charger {
 	struct pinctrl_state	*usbtemp_gpio12_default;
 #endif
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charger */
 	int			shipmode_id_gpio;
 	struct pinctrl		*shipmode_id_pinctrl;
 	struct pinctrl_state	*shipmode_id_active;
@@ -715,7 +698,6 @@ struct smb_charger {
 };
 
 #ifdef VENDOR_EDIT
-/*lizhijie@BSP.CHG.Basic 2020/02/25 lzj add for charger*/
 struct smb_dt_props {
 	int			usb_icl_ua;
 	struct device_node	*revid_dev_node;

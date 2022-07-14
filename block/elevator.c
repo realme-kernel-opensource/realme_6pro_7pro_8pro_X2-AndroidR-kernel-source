@@ -43,7 +43,6 @@
 #include "blk-mq-sched.h"
 #include "blk-wbt.h"
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 #include "oppo_foreground_io_opt/oppo_foreground_io_opt.h"
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 
@@ -420,7 +419,6 @@ void elv_dispatch_sort(struct request_queue *q, struct request *rq)
 
 	list_add(&rq->queuelist, entry);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	queue_throtl_add_request(q, rq, false);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 }
@@ -444,7 +442,6 @@ void elv_dispatch_add_tail(struct request_queue *q, struct request *rq)
 	q->boundary_rq = rq;
 	list_add_tail(&rq->queuelist, &q->queue_head);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	queue_throtl_add_request(q, rq, false);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 }
@@ -620,7 +617,6 @@ void elv_requeue_request(struct request_queue *q, struct request *rq)
 	if (blk_account_rq(rq)) {
 		q->in_flight[rq_is_sync(rq)]--;
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 		ohm_ioqueue_dec_inflight(q, rq);
@@ -685,7 +681,6 @@ void __elv_add_request(struct request_queue *q, struct request *rq, int where)
 		rq->rq_flags |= RQF_SOFTBARRIER;
 		list_add(&rq->queuelist, &q->queue_head);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 		queue_throtl_add_request(q, rq, true);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 		break;
@@ -695,7 +690,6 @@ void __elv_add_request(struct request_queue *q, struct request *rq, int where)
 		elv_drain_elevator(q);
 		list_add_tail(&rq->queuelist, &q->queue_head);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 		queue_throtl_add_request(q, rq, false);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 		/*
@@ -833,7 +827,6 @@ void elv_completed_request(struct request_queue *q, struct request *rq)
 	if (blk_account_rq(rq)) {
 		q->in_flight[rq_is_sync(rq)]--;
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 		ohm_ioqueue_dec_inflight(q, rq);

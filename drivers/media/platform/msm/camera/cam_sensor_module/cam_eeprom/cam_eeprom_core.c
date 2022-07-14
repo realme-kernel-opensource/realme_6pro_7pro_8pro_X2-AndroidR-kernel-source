@@ -979,7 +979,6 @@ void cam_eeprom_shutdown(struct cam_eeprom_ctrl_t *e_ctrl)
 }
 
 #ifdef VENDOR_EDIT
-//add by yufeng@camera, 20190115 for write eeprom
 static int32_t cam_eeprom_write_data(struct cam_eeprom_ctrl_t *e_ctrl,
 	void *arg)
 {
@@ -1095,7 +1094,6 @@ static int32_t cam_eeprom_write_data(struct cam_eeprom_ctrl_t *e_ctrl,
 	}
 	return rc;
 }
-//add by yufeng@camera, 20190115 for write eeprom
 static int32_t cam_eeprom_check_data(struct cam_eeprom_ctrl_t *e_ctrl,
 	void *arg)
 {
@@ -1220,7 +1218,6 @@ int32_t cam_eeprom_driver_cmd(struct cam_eeprom_ctrl_t *e_ctrl, void *arg)
 		}
 		break;
 #ifdef VENDOR_EDIT
-	//add by yufeng@camera, 20190115 for write eeprom
 	case CAM_WRITE_CALIBRATION_DATA:
 		CAM_DBG(CAM_EEPROM, "CAM_WRITE_CALIBRATION_DATA");
 		rc = cam_eeprom_write_data(e_ctrl, arg);

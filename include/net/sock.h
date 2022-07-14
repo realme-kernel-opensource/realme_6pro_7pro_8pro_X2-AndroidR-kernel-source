@@ -186,13 +186,11 @@ struct sock_common {
 	possible_net_t		skc_net;
 
 	//#ifdef OPLUS_FEATURE_WIFI_SLA
-	//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET.1197891, 2018/04/10,Add code for appo sla function
 	u32 skc_oplus_mark;
 	//#endif /* OPLUS_FEATURE_WIFI_SLA */
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
     /*
-    *Ruansong@PSW.NW.DATA.211400, 2020/06/01
     *Add for classify glink wakeup services
     */
     u32 skc_oplus_pid;
@@ -367,12 +365,10 @@ struct sock {
 #define sk_rxhash		__sk_common.skc_rxhash
 
 //#ifdef OPLUS_FEATURE_WIFI_SLA
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET.1197891, 2018/04/10,Add code for appo sla function
 #define oplus_sla_mark   __sk_common.skc_oplus_mark
 //#endif /* OPLUS_FEATURE_WIFI_SLA */
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.211400, 2020/06/01
 *Add for classify glink wakeup services
 */
 #define oplus_last_rcv_stamp        __sk_common.skc_oplus_last_rcv_stamp
@@ -1865,7 +1861,6 @@ static inline void sk_dst_confirm(struct sock *sk)
 static inline void sock_confirm_neigh(struct sk_buff *skb, struct neighbour *n)
 {
 	#ifdef OPLUS_BUG_STABILITY
-	//WangWei@CONNECTIVITY.WIFI.NETWORK.1357567, 2018/04/27.
 	//Remove for [1357567],some AP doesn't send arp when it needs to send data to DUT
 	//We remove this code to send arp more frequently to notify our mac to AP
 	return;

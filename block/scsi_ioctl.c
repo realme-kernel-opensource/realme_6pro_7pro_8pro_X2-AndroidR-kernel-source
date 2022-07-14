@@ -206,7 +206,6 @@ static void blk_set_cmd_filter_defaults(struct blk_cmd_filter *filter)
 	__set_bit(GPCMD_SET_STREAMING, filter->write_ok);
 	__set_bit(GPCMD_SET_READ_AHEAD, filter->write_ok);
 #ifdef OPLUS_FEATURE_STORAGE_TOOL
-// jason.wu@BSP.Storage, 2020-6-11
 // add write buffer command for common user
 // add vendor command for common user
 	__set_bit(WRITE_BUFFER, filter->write_ok);
@@ -432,7 +431,6 @@ int sg_scsi_ioctl(struct request_queue *q, struct gendisk *disk, fmode_t mode,
 	unsigned int in_len, out_len, bytes, opcode, cmdlen;
 	char *buffer = NULL;
 #ifdef OPLUS_FEATURE_STORAGE_TOOL
-// jason.wu@BSP.Storage, 2020-03-03 workaround for samsung device.
 // vendor cmd len is 16 and not 10 in spec.
 // in current application ,only samsung health will use this cmd.
 	struct scsi_device *sdev = NULL;
@@ -471,7 +469,6 @@ int sg_scsi_ioctl(struct request_queue *q, struct gendisk *disk, fmode_t mode,
 
 	cmdlen = COMMAND_SIZE(opcode);
 #ifdef OPLUS_FEATURE_STORAGE_TOOL
-// jason.wu@BSP.Storage, 2020-03-03 workaround for samsung device.
 // vendor cmd len is 16 and not 10 in spec.
 // in current application ,only samsung health will use this cmd.
 	sdev = (struct scsi_device*)(q->queuedata);

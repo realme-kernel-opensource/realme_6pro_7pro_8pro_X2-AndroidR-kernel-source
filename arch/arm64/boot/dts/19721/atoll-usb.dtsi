@@ -89,7 +89,6 @@
 			reg = <0x0a600000 0xcd00>;
 			interrupts = <0 133 0>;
 //#ifndef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 //			usb-phy = <&qusb_phy0>, <&usb_qmp_dp_phy>;
 //#else
 			usb-phy = <&qusb_phy0>, <&usb_nop_phy>;
@@ -104,7 +103,6 @@
 			usb-core-id = <0>;
 			tx-fifo-resize;
 //#ifndef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 //			maximum-speed = "super-speed";
 //#else
 			maximum-speed = "high-speed";
@@ -222,7 +220,6 @@
 		reset-names = "phy_reset";
 	};
 //#ifdef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 	usb_nop_phy:usb_nop_phy{
 	status = "okay";
 	compatible = "usb-nop-xceiv";
@@ -234,7 +231,6 @@
 		reg = <0x88e8000 0x3000>;
 		reg-names = "qmp_phy_base";
 //#ifndef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 		status = "disabled";
 //#endif
 		vdd-supply = <&pm6150_l4>;

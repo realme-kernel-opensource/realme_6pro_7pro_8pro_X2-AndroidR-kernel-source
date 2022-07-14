@@ -162,12 +162,20 @@ static ssize_t bl_power_store(struct device *dev, struct device_attribute *attr,
 }
 static DEVICE_ATTR_RW(bl_power);
 
+#ifdef OPLUS_BUG_STABILITY
+static ssize_t actual_brightness_show(struct device *dev,
+	struct device_attribute *attr, char *buf);
+#endif /* OPLUS_BUG_STABILITY */
 static ssize_t brightness_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
+#ifndef OPLUS_BUG_STABILITY
 	struct backlight_device *bd = to_backlight_device(dev);
 
 	return sprintf(buf, "%d\n", bd->props.brightness);
+#else
+	return actual_brightness_show(dev, attr, buf);
+#endif /* OPLUS_BUG_STABILITY */
 }
 
 int backlight_device_set_brightness(struct backlight_device *bd,

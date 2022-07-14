@@ -5,7 +5,6 @@
 ** Description : oppo dc_diming feature
 ** Version : 1.0
 ** Date : 2020/04/15
-** Author : Qianxu@MM.Display.LCD Driver
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -46,7 +45,6 @@ extern int oppo_panel_alpha;
 extern oppo_dc_v2_on;
 extern ktime_t oppo_backlight_time;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 extern int oppo_display_mode;
 extern atomic_t aod_onscreenfp_status;
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
@@ -345,7 +343,6 @@ int sde_connector_update_hbm(struct drm_connector *connector)
 		dsi_display->panel->is_hbm_enabled = fingerprint_mode;
 		if (fingerprint_mode) {
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 			if (!dsi_display->panel->oppo_priv.is_aod_ramless || oppo_display_mode) {
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 				mutex_lock(&dsi_display->panel->panel_lock);
@@ -369,7 +366,6 @@ int sde_connector_update_hbm(struct drm_connector *connector)
 					usleep_range(frame_time_us, frame_time_us + 100);
 				}
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 				else if (dsi_display->panel->oppo_priv.is_aod_ramless) {
 					ktime_t delta = ktime_sub(ktime_get(), oppo_backlight_time);
 					s64 delta_us = ktime_to_us(delta);
@@ -414,14 +410,12 @@ int sde_connector_update_hbm(struct drm_connector *connector)
 					return rc;
 				}
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 			}
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 		} else {
 			bool aod_hbm_off = true;
 			bool set_bl_off = true;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 			if(dsi_display->panel->oppo_priv.is_aod_ramless) {
 				if(atomic_read(&aod_onscreenfp_status)) {
 					aod_hbm_off = false;
@@ -462,7 +456,6 @@ int sde_connector_update_hbm(struct drm_connector *connector)
 				    OPPO_DISPLAY_POWER_DOZE == get_oppo_display_power_status()) {
 					rc = dsi_panel_tx_cmd_set(dsi_display->panel, DSI_CMD_AOD_HBM_OFF);
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 					if (dsi_display->panel->oppo_priv.is_aod_ramless) {
 						oppo_update_aod_light_mode_unlock(panel);
 					}
@@ -484,7 +477,6 @@ int sde_connector_update_hbm(struct drm_connector *connector)
 				if(aod_hbm_off) {
 					rc = dsi_panel_tx_cmd_set(dsi_display->panel, DSI_CMD_AOD_HBM_OFF);
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 					if (dsi_display->panel->oppo_priv.is_aod_ramless) {
 						oppo_update_aod_light_mode_unlock(panel);
 					}

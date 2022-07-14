@@ -439,7 +439,6 @@ struct file *sock_alloc_file(struct socket *sock, int flags, const char *dname)
 	file->private_data = sock;
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
     /*
-    *Ruansong@PSW.NW.DATA.211800, 2020/06/01
     *Add for classify glink wakeup services
     */
     if (sock->sk) {

@@ -5,7 +5,6 @@
 ** Description : oppo display panel char dev  /dev/oppo_panel
 ** Version : 1.0
 ** Date : 2020/06/13
-** Author : Li.Sheng@MULTIMEDIA.DISPLAY.LCD
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -217,4 +216,4 @@ void __exit oppo_display_panel_exit()
 module_init(oppo_display_panel_init);
 module_exit(oppo_display_panel_exit);
 MODULE_LICENSE("GPL v2");
-MODULE_AUTHOR("Lisheng <>");
+MODULE_AUTHOR("Lisheng <lisheng1@oppo.com>");

@@ -959,7 +959,6 @@ void bq24196_dump_registers(void)
 		}
 	}	
 
-// wenbin.liu@SW.Bsp.Driver, 2016/02/29  Add for log tag 
 	if(dump_count == DUMP_REG_LOG_CNT_30S) {			
 		dump_count = 0;
 		chg_debug( "bq24196_reg[0-a]:0x%02x(0),0x%02x(1),0x%02x(2),0x%02x(3),0x%02x(4),0x%02x(5),0x%02x(6),0x%02x(7),0x%02x(8),0x%02x(9),0x%02x(a)\n",
@@ -990,7 +989,6 @@ void bq24196_dump_registers()
 		}
 	}	
 
-// wenbin.liu@SW.Bsp.Driver, 2016/02/29  Add for log tag 
 	if(dump_count == DUMP_REG_LOG_CNT_30S) {			
 		dump_count = 0;
 		chg_debug( "bq24196_reg[0-a]:0x%02x(0),0x%02x(1),0x%02x(2),0x%02x(3),0x%02x(4),0x%02x(5),0x%02x(6),0x%02x(7),0x%02x(8),0x%02x(9),0x%02x(a)\n",

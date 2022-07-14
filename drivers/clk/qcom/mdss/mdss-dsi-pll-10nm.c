@@ -807,7 +807,6 @@ static int dsi_pll_read_stored_trim_codes(struct mdss_pll_resources *pll_res,
 			codes_info->pll_codes.pll_codes_3);
 
 #ifdef OPLUS_BUG_STABILITY
-/*Mark.Yao@PSW.MM.Display.LCD.Params,2019-11-17 fix mipi clk setting error */
 		if ((vco_clk_rate / 1000) != (codes_info->clk_rate / 1000) &&
 				codes_info->is_valid) {
 #else

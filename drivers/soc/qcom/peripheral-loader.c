@@ -45,7 +45,6 @@
 #include <trace/events/trace_msm_pil_event.h>
 
 #ifdef OPLUS_FEATURE_SSR
-//Yongpei.Yao@MULTIMEDIA.AUDIODRIVER.SSR, 2020/04/01, Add for adsp/venus SSR dump
 #include <soc/oppo/oppo_kevent_feedback.h>
 #endif /* OPLUS_FEATURE_SSR */
 
@@ -479,7 +478,6 @@ static void print_aux_minidump_tocs(struct pil_desc *desc)
 #endif
 
 #ifdef OPLUS_FEATURE_SSR
-//Yongpei.Yao@MULTIMEDIA.AUDIODRIVER.SSR, 2020/04/01, Add for adsp/venus SSR dump
 #define CAUSENAME_SIZE 128
 unsigned int BKDRHash(char* str, unsigned int len)
 {
@@ -500,7 +498,6 @@ unsigned int BKDRHash(char* str, unsigned int len)
 #endif /*OPLUS_FEATURE_SSR*/
 
 #ifdef OPLUS_FEATURE_SSR
-//Liu.Wei@NETWORK.RF.10384, 2020/08/03, Add for report adsp crash info
 void __adsp_send_uevent(struct device *dev, char *reason)
 {
 	int ret_val;
@@ -546,7 +543,6 @@ int pil_do_ramdump(struct pil_desc *desc,
 	int count = 0, ret;
 
 #ifdef OPLUS_FEATURE_SSR
-//Yongpei.Yao@MULTIMEDIA.AUDIODRIVER.SSR, 2020/04/01, Add for adsp/venus SSR dump
 	unsigned char payload[100] = "";
 	unsigned int hashid;
 	char strHashSource[CAUSENAME_SIZE];
@@ -555,7 +551,6 @@ int pil_do_ramdump(struct pil_desc *desc,
 #ifdef CONFIG_QCOM_MINIDUMP
 	if (desc->minidump_ss) {
 #ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-	//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Add for customized subsystem ramdump to skip generate dump cause by SAU
 	if (SKIP_GENERATE_RAMDUMP) {
 		pil_err(desc, "%s: Skip ramdump cuase by ap normal trigger.\n %s",
 			__func__, desc->name);
@@ -589,7 +584,6 @@ int pil_do_ramdump(struct pil_desc *desc,
 			(desc->minidump_ss->md_ss_enable_status ==
 				MD_SS_ENABLED)) {
 			#ifndef OPLUS_FEATURE_MODEM_MINIDUMP
-			//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Modify for skip mini dump encryption
 			if (desc->minidump_ss->encryption_status ==
 			    MD_SS_ENCR_DONE) {
 				pr_info("Dumping Minidump for %s\n",
@@ -633,7 +627,6 @@ int pil_do_ramdump(struct pil_desc *desc,
 				__func__, desc->name, ret);
 
 #ifdef OPLUS_FEATURE_SSR
-//lijiang@MULTIMEDIA.AUDIODRIVER.FEATURE, 2020/08/19, Add for adsp/venus SSR dump
 	if(strlen(desc->name) > 0 && (strncmp(desc->name,"venus",strlen(desc->name)) == 0)) {
 		strncpy(strHashSource,desc->name,strlen(desc->name));
 		hashid = BKDRHash(strHashSource,strlen(strHashSource));
@@ -650,7 +643,6 @@ int pil_do_ramdump(struct pil_desc *desc,
 #if 0
 		upload_mm_kevent_feedback_data(OPPO_MM_DIRVER_FB_EVENT_MODULE_AUDIO,payload);
 #endif
-		//Liu.Wei@NETWORK.RF.10384, 2020/08/03, Add for report adsp crash info
 		if(desc->dev){
 			__adsp_send_uevent(desc->dev, payload);
 		}

@@ -51,7 +51,6 @@
 						"bcl-lvl2";
 			#thermal-sensor-cells = <1>;
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl 
 			status = "disabled";
 //#endif
 		};
@@ -166,7 +165,6 @@
 			qcom,pmic-revid = <&pm6150l_revid>;
 			qcom,voltage-step-ramp;
 // #ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/06, modified for bring up 19721 NT36672C JDI panel */
 			status = "ok";
 //#ifdef OPLUS_BUG_STABILITY
 			lcdb_ldo_vreg: ldo {
@@ -323,7 +321,6 @@
 			qcom,pmic-revid = <&pm6150l_revid>;
 			qcom,auto-calibration;
 // #ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/06, modified for bring up 19721 NT36672C JDI panel */
 			qcom,fs-current-limit = <20000>;
 			qcom,string-cfg = <3>;
 			qcom,en-cabc;
@@ -525,7 +522,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl
 /*
 	pm6150l-bcl-lvl0 {
 		polling-delay-passive = <100>;

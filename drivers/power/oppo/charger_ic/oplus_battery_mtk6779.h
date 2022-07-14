@@ -7,11 +7,9 @@
 **
 ** Version: 1.0
 ** Date created: 2018-11-09
-** Author: Jianchao.Shi@PSW.BSP.CHG
 **
 ** --------------------------- Revision History: ------------------------------------
 * <version>       <date>         <author>              			<desc>
-* Revision 1.0    2018-11-09   Jianchao.Shi@PSW.BSP.CHG   	Created for new architecture
 *************************************************************************************/
 #ifndef __OPLUS_BATTERY_MTK6779_H__
 #define __OPLUS_BATTERY_MTK6779_H__
@@ -517,7 +515,6 @@ struct charger_manager {
 };
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/11/09, sjc Add for charging */
 
 struct mtk_pmic {
 	struct charger_manager* oplus_info;

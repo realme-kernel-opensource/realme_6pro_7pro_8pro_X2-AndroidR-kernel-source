@@ -172,7 +172,6 @@ static int __init do_msm_minidump_log_init(void)
 	register_kernel_sections();
 	register_log_buf();
 #ifdef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE	
-//yixue.ge@bsp.drv add for dump cpu contex for minidump
 	register_cpu_contex();
 #endif /* CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE */
 	return 0;

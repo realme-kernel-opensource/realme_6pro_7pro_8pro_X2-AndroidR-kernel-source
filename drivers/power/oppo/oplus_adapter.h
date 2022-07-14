@@ -6,12 +6,9 @@
 **
 ** Version: 1.0
 ** Date created: 21:03:46, 05/04/2012
-** Author: Fuchun.Liao@BSP.CHG.Basic
 **
 ** --------------------------- Revision History: ------------------------------------------------------------
 * <version>           <date>                <author>                            <desc>
-* Revision 1.0     2015-06-22        Fuchun.Liao@BSP.CHG.Basic         Created for new architecture from R9
-* Revision 1.1     2018-04-12        Fanhong.Kong@BSP.CHG.Basic        divided for svooc from oplus_vooc.c 
 ************************************************************************************************************/
 
 //#ifndef _OPLUS_ADAPTER_H_

@@ -54,9 +54,6 @@
 	for (index = 0; (index < (display)->ctrl_count) &&\
 			(index < MAX_DSI_CTRLS_PER_DISPLAY); index++)
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability,2020/10/08
- * debug logs
-*/
 #define DSI_WARN(fmt, ...)	DRM_WARN("[msm-dsi-warn]: "fmt, ##__VA_ARGS__)
 #define DSI_ERR(fmt, ...)	DRM_DEV_ERROR(NULL, "[msm-dsi-error]: " fmt, \
 								##__VA_ARGS__)
@@ -295,7 +292,6 @@ enum dsi_dyn_clk_feature_type {
  * @DSI_CMD_SET_QSYNC_ON                   Enable qsync mode
  * @DSI_CMD_SET_QSYNC_OFF                  Disable qsync mode
  #ifdef OPLUS_BUG_STABILITY
- * @ Gou shengjun@PSW.MM.Display.LCD.Stability,2018/12/14, add for lcd notes
  * @DSI_CMD_POST_ON_BACKLIGHT:             Panel on cmd send for AOD and Fingerprint
  * @DSI_CMD_AOD_ON:                        Panel AOD on cmd
  * @DSI_CMD_AOD_OFF:                       Panel AOD off cmd
@@ -338,9 +334,6 @@ enum dsi_cmd_set_type {
 	DSI_CMD_SET_QSYNC_ON,
 	DSI_CMD_SET_QSYNC_OFF,
 #ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/07/03
- * optimize screen on
-*/
 	DSI_CMD_POST_ON_BACKLIGHT,
 	DSI_CMD_AOD_ON,
 	DSI_CMD_AOD_OFF,
@@ -348,7 +341,6 @@ enum dsi_cmd_set_type {
 	DSI_CMD_HBM_OFF,
 	DSI_CMD_AOD_HBM_ON,
 	DSI_CMD_AOD_HBM_OFF,
-/*mark.yao@PSW.MM.Display.LCD.Stability,2018/4/28,add for sRGB and DCI-P3*/
 	DSI_CMD_SEED_MODE0,
 	DSI_CMD_SEED_MODE1,
 	DSI_CMD_SEED_MODE2,
@@ -365,19 +357,16 @@ enum dsi_cmd_set_type {
 	DSI_CMD_DATA_DIMMING_OFF,
 	DSI_CMD_OSC_CLK_MODEO0,
 	DSI_CMD_OSC_CLK_MODEO1,
-/*Song.Gao@PSW.MM.Display.LCD.Stability,2020/04/21,add for DC backlight V2 enter and exit sequence*/
 	DSI_CMD_SEED_ENTER,
 	DSI_CMD_SEED_EXIT,
 	DSI_CMD_HBM_ENTER_SWITCH,
 	DSI_CMD_HBM_EXIT_SWITCH,
 	DSI_CMD_LEVELKEY_END,
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/*Jiasong.Zhong@PSW.MM.Display.LCD.Stability,2019/11/18,add FAIL SAFE API for 19125 panel*/
 	DSI_CMD_FAILSAFE_ON,
 	DSI_CMD_FAILSAFE_OFF,
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 	DSI_CMD_CABC_UI,
 	DSI_CMD_CABC_IMAGE,
 	DSI_CMD_CABC_VIDEO,
@@ -692,7 +681,6 @@ struct dsi_display_mode_priv_info {
 	bool dsc_enabled;
 	struct msm_roi_caps roi_caps;
 	#ifdef OPLUS_BUG_STABILITY
-	/*Sachin Shukla@PSW.MM.Display.LCD.Stable,2019-11-17 add for fingerprint */
 	int fod_th_brightness;
 	int fod_on_vblank;
 	int fod_off_vblank;

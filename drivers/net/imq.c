@@ -23,13 +23,11 @@
 **
 ** Version: 1.0
 ** Date :   2020-03-20
-** Author:  HuangJunyuan@CONNECTIVITY.WIFI.INTERNET
 ** TAG  :   OPLUS_FEATURE_WIFI_LIMMITBGSPEED
 **
 ** ---------------------Revision History: ---------------------
 **  <author>                      <data>     <version >   <desc>
 ** ---------------------------------------------------------------
-**  HuangJunyuan@CONNECTIVITY.WIFI  2020/03/20  1.0          build this module
 **
 ************************************************************************************/
 
@@ -551,7 +549,6 @@ static int __imq_nf_queue(struct nf_queue_entry *entry, struct net_device *dev)
 	int users;
 	int retval = -EINVAL;
 	unsigned int orig_queue_index;
-	bool again = false;
 
 	skb = entry->skb;
 	skb_orig = NULL;
@@ -622,7 +619,7 @@ static int __imq_nf_queue(struct nf_queue_entry *entry, struct net_device *dev)
 		if (likely(skb_popd)) {
 			/* Note that we validate skb (GSO, checksum, ...) outside of locks */
 			if (validate)
-				skb_popd = validate_xmit_skb_list(skb_popd, dev, &again);
+				skb_popd = validate_xmit_skb_list(skb_popd, dev);
 
 			if (skb_popd) {
 				int dummy_ret;

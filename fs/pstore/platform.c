@@ -608,7 +608,6 @@ static void pstore_console_write(struct console *con, const char *s, unsigned c)
 	psinfo->write(&record);
 }
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 static void  pstore_console_init(void )
 {
 	size_t oldsize;
@@ -647,7 +646,6 @@ static struct console pstore_console = {
 static void pstore_register_console(void)
 {
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	/*pstore memset befor use*/
 	pstore_console_init();
 #endif

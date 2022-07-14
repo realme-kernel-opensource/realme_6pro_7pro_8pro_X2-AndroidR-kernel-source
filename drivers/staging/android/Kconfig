@@ -46,7 +46,6 @@ config ANDROID_LOW_MEMORY_KILLER_AUTODETECT_OOM_ADJ_VALUES
 source "drivers/staging/android/ion/Kconfig"
 
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 config OPPO_HANS
         bool "HANS kernel and HANS native communication channel"
         default y if OPLUS_FEATURE_HANS_FREEZE

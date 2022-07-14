@@ -64,7 +64,6 @@ int sysctl_tcp_slow_start_after_idle __read_mostly = 1;
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.212800, 2020/06/01
 *Add for classify glink wakeup services
 */
 #include <net/oplus_nwpower.h>
@@ -1021,7 +1020,6 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 	int err;
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
         /*
-		*Ruansong@PSW.NW.DATA.212900, 2020/06/01
         *Add for classify glink wakeup services
 		*/
         struct timespec now_ts;
@@ -1155,7 +1153,6 @@ static int __tcp_transmit_skb(struct sock *sk, struct sk_buff *skb,
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
     /*
-    *Ruansong@PSW.NW.DATA.213000, 2020/06/01.
     *Add for classify glink wakeup services.
     */
     if (atomic_read(&ipa_wakeup_hook_boot) == 1) {
@@ -2915,7 +2912,6 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
 	int diff, len, err;
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
         /*
-        *Ruansong@PSW.NW.DATA.213100, 2020/06/01
         *Add for classify glink wakeup services
         */
         struct timespec now_ts;
@@ -3010,7 +3006,6 @@ int __tcp_retransmit_skb(struct sock *sk, struct sk_buff *skb, int segs)
 		TCP_SKB_CB(skb)->sacked |= TCPCB_EVER_RETRANS;
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
         /*
-        *Ruansong@PSW.NW.DATA.213200, 2020/06/01
         *Add for classify glink wakeup services
         */
         if (atomic_read(&tcpsynretrans_hook_boot) == 1) {

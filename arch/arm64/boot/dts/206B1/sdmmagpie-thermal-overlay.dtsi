@@ -125,7 +125,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl
 /*
 	pm6150-bcl-lvl0 {
 		cooling-maps {

@@ -22,7 +22,6 @@
 #include <linux/slab.h>
 #include <linux/soc/qcom/smem.h>
 
-//Yong.Qian@bsp.kernel.stability, 2020/5/14, Add for dump reason
 #ifdef OPLUS_FEATURE_AGINGTEST
 #include <linux/string.h>
 #include <linux/kallsyms.h>
@@ -800,7 +799,6 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
 	return 0;
 }
 EXPORT_SYMBOL(qcom_smem_virt_to_phys);
-//Yong.Qian@bsp.kernel.stability, 2020/5/14, Add for dump reason
 #ifdef OPLUS_FEATURE_AGINGTEST
 static char caller_function_name[KSYM_SYMBOL_LEN];
 char *parse_function_builtin_return_address(unsigned long function_address)

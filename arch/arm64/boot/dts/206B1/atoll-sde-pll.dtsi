@@ -29,7 +29,6 @@
 		gdsc-supply = <&mdss_core_gdsc>;
 		qcom,dsi-pll-ssc-en;
 		//#ifdef VENDOR_EDIT
-		//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/04/29, Add for ssc mode
 		//qcom,dsi-pll-ssc-mode = "down-spread";
 		qcom,dsi-pll-ssc-mode = "center-spread";
 		//#endif /* VENDOR_EDIT */

@@ -23,7 +23,6 @@ struct ramdump_segment {
 };
 
 #ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Add for customized subsystem ramdump to skip generate dump cause by SAU
 extern bool SKIP_GENERATE_RAMDUMP;
 #endif
 #ifdef CONFIG_MSM_SUBSYSTEM_RESTART

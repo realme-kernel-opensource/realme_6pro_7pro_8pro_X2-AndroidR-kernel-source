@@ -239,7 +239,6 @@
 
 			config {
 //#ifdef VENDOR_EDIT
-//lizhijie@BSP.CHG.Basic. 2020/02/25 add for charger
 				pins = "gpio55", "gpio93";
 //#else
 //				pins = "gpio55", "gpio33";
@@ -277,7 +276,6 @@
 		};
 
 		//#ifdef VENDOR_EDIT
-		/* ZhangKe@Network.RF 2020/10/15 modify for rf-cable */
 		rf_cable0_active: rf_cable0_active {
 			mux {
 				pins = "gpio118";
@@ -648,7 +646,6 @@
 					pins = "gpio115", "gpio116";
 					drive-strength = <2>;
 //#ifdef VENDOR_EDIT
-///lizhijie@BSP.CHG.Basic 2020/03/20 lzj add for i2c issue
 					input-enable;
 //#endif
 					bias-pull-up;
@@ -941,7 +938,6 @@
 		};
 
 		//#ifdef VENDOR_EDIT
-		//Qicai.gu@Bsp.Group.Tp, 2020/02/26, Add for oppo project
 		pmx_ts_int_active {
 			ts_int_active: ts_int_active {
 				mux {
@@ -975,7 +971,6 @@
 		//#endif
 
 		//#ifdef /*VENDOR_EDIT*/
-		/*#zoulian@BSP.Fingerprint.Basic, 2020/03/02, add for fingerprint driver */
 		oplus_fp_common{
 			gpio_id2_default: gpio_id2_default {
 				mux {
@@ -990,7 +985,6 @@
 				};
 			};
 		};
-		/*#ifdef VENDOR_EDIT#zoulian@BSP.Fingerprint.Basic, 2020/03/02, add for fingerprint driver */
 		goodix_fp{
 			gpio_goodix_irq_default: gpio_goodix_irq_default {
 				mux {
@@ -1686,7 +1680,6 @@
 		};
 
 //#ifdef OPLUS_FEATURE_TP_BASIC
-//Cong.Dai@psw.bsp.tp,2020/03/05 add for config vol down key
                 key_vol_down {
                         key_vol_down_default: key_vol_down_default {
                                 mux {
@@ -1792,7 +1785,6 @@
 			};
 		};
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		//Kaiqin.Huang@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/08/24, Add for use sia81xx pa
 		sia81xx_gpio_L: sia81xx_gpio_L {
 			mux {
 				pins = "gpio63", "gpio63";
@@ -1834,7 +1826,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//huyu@BSP.Storage.Sdcard, 2020/08/12, Add for SDcard detect	
 	sd_card_detect {
         sd_detect_default: sd_detect_default {
            pins = "gpio8"; /* GPIO 8 */
@@ -1848,7 +1839,6 @@
 };
 
 //#ifdef VENDOR_EDIT
-//LiPING-m@PSW.MM.Display.LCD.Stable, 2020/03/04, Add for pm6250 gpio4
 &pm6150_gpios {
 	disp_1p2_pins {
 		disp_1p2_pins_default: disp_1p2_pins_default{

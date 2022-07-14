@@ -33,7 +33,6 @@
 #include "binder_alloc.h"
 #include "binder_trace.h"
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 #include <linux/hans.h>
 #endif /*OPLUS_FEATURE_HANS_FREEZE*/
 
@@ -363,7 +362,6 @@ static struct binder_buffer *binder_alloc_new_buf_locked(
 	size_t size, data_offsets_size;
 	int ret;
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 	struct task_struct *p = NULL;
 #endif /*OPLUS_FEATURE_HANS_FREEZE*/
 
@@ -390,7 +388,6 @@ static struct binder_buffer *binder_alloc_new_buf_locked(
 		return ERR_PTR(-EINVAL);
 	}
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 	if (is_async
 		&& (alloc->free_async_space < 3 * (size + sizeof(struct binder_buffer))
 		|| (alloc->free_async_space < ((alloc->buffer_size / 2) * 9 / 10)))) {

@@ -61,7 +61,7 @@ obj-$(CONFIG_CXL_BASE)		+= cxl/
 obj-$(CONFIG_ASPEED_LPC_CTRL)  += aspeed-lpc-ctrl.o
 obj-$(CONFIG_ASPEED_LPC_SNOOP) += aspeed-lpc-snoop.o
 obj-$(CONFIG_PCI_ENDPOINT_TEST)        += pci_endpoint_test.o
-obj-$(CONFIG_FPR_FPC) 	+= fpr_FingerprintCard/
+#obj-$(CONFIG_FPR_FPC) 	+= fpr_FingerprintCard/
 
 obj-$(CONFIG_UID_SYS_STATS)	+= uid_sys_stats.o
 obj-$(CONFIG_MEMORY_STATE_TIME)	+= memory_state_time.o
@@ -72,9 +72,11 @@ obj-$(CONFIG_OKL4_RINGBUF)	+= okl4-ringbuf.o
 obj-$(CONFIG_TEST_IRQ_REQUESTER) += irq_requester.o
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-#Qicai.Gu@BSP.TP, 2020/08/10, modify for rf cable monitor
 obj-$(CONFIG_OPLUS_RF_CABLE_MONITOR)	+= oplus_rf_cable_monitor.o
 #endif
+#ifdef OPLUS_FEATURE_CHG_BASIC
+obj-y                           += oplus_rf_cable_monitor.o
+#endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
 obj-y               += motor.o
@@ -82,7 +84,6 @@ obj-y               += oppo_motor/
 #endif
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-#Qicai.Gu@BSP.TP, 2020/08/10, modify for sim detect
 obj-$(CONFIG_SIM_DETECT)	+= sim_detect.o
 #endif
 

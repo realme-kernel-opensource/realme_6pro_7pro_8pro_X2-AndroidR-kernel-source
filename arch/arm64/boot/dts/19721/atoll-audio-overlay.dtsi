@@ -18,7 +18,6 @@
 
 &bolero {
 	//#ifndef OPLUS_ARCH_EXTENDS
-	//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for disable wsa
 	//qcom,num-macros = <4>;
 	//#else /* OPLUS_ARCH_EXTENDS */
 	qcom,num-macros = <3>;
@@ -74,7 +73,6 @@
 			qcom,swr-mstr-irq-wakeup-capable = <1>;
 			wcd938x_tx_slave: wcd938x-tx-slave {
 				//#ifdef OPLUS_ARCH_EXTENDS
-				//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for use wcd937x codec
 				status = "disabled";
 				//#endif /* OPLUS_ARCH_EXTENDS */
 				compatible = "qcom,wcd938x-slave";
@@ -82,7 +80,6 @@
 			};
 			wcd937x_tx_slave: wcd937x-tx-slave {
 				//#ifndef OPLUS_ARCH_EXTENDS
-				//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Delete for use wcd937x codec
 				//status = "disabled";
 				//#endif /* OPLUS_ARCH_EXTENDS */
 				compatible = "qcom,wcd937x-slave";
@@ -123,7 +120,6 @@
 			qcom,swr-clock-stop-mode0 = <1>;
 			wcd938x_rx_slave: wcd938x-rx-slave {
 				//#ifdef OPLUS_ARCH_EXTENDS
-				//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for use wcd937x codec
 				status = "disabled";
 				//#endif /* OPLUS_ARCH_EXTENDS */
 				compatible = "qcom,wcd938x-slave";
@@ -131,7 +127,6 @@
 			};
 			wcd937x_rx_slave: wcd937x-rx-slave {
 				//#ifndef OPLUS_ARCH_EXTENDS
-				//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Delete for use wcd937x codec
 				//status = "disabled";
 				//#endif /* OPLUS_ARCH_EXTENDS */
 				compatible = "qcom,wcd937x-slave";
@@ -142,7 +137,6 @@
 
 	wsa_macro: wsa-macro@62640000 {
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for disable wsa
 		status = "disabled";
 		//#endif /* OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,wsa-macro";
@@ -218,7 +212,6 @@
 
 	wcd938x_codec: wcd938x-codec {
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for use wcd937x codec
 		status = "disabled";
 		//#endif /* OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,wcd938x-codec";
@@ -269,7 +262,6 @@
 
 	wcd937x_codec: wcd937x-codec {
 		//#ifndef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Delete for use wcd937x codec
 		//status = "disabled";
 		//#endif /* OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,wcd937x-codec";
@@ -307,7 +299,6 @@
 		qcom,cdc-vdd-mic-bias-current = <30000>;
 
 		//#ifndef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for AMIC bias to 2.7V
 		/*
 		qcom,cdc-micbias1-mv = <1800>;
 		qcom,cdc-micbias2-mv = <1800>;
@@ -353,7 +344,6 @@
 		"IN3_AUX", "AUX_OUT",
 		"TX SWR_ADC0", "ADC1_OUTPUT",
 		//#ifndef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for AMIC2/AMIC3 not work
 		//"TX SWR_ADC1", "ADC2_OUTPUT",
 		//"TX SWR_ADC2", "ADC3_OUTPUT",
 		//"TX SWR_ADC3", "ADC4_OUTPUT",
@@ -404,7 +394,6 @@
 		"VA SWR_MIC7", "VA_SWR_CLK",
 		"VA SWR_ADC0", "ADC1_OUTPUT",
 		//#ifndef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for AMIC2/AMIC3 not work
 		//"VA SWR_ADC1", "ADC2_OUTPUT",
 		//"VA SWR_ADC2", "ADC3_OUTPUT",
 		//"VA SWR_ADC3", "ADC4_OUTPUT",
@@ -422,14 +411,12 @@
 	qcom,msm-mbhc-hphl-swh = <1>;
 	qcom,msm-mbhc-gnd-swh = <1>;
 	//#ifdef OPLUS_ARCH_EXTENDS
-	//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.HEADSETDET, 2020/07/30, Add for disable qcom moisture detect
 	qcom,msm-mbhc-moist-cfg = <1>, <3>, <0>;
 	//#endif /* OPLUS_ARCH_EXTENDS */
 	qcom,cdc-dmic01-gpios = <&cdc_dmic01_gpios>;
 	qcom,cdc-dmic23-gpios = <&cdc_dmic23_gpios>;
 	qcom,cdc-dmic45-gpios = <&cdc_dmic45_gpios>;
 	//#ifdef OPLUS_ARCH_EXTENDS
-	//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30,, Add for MI2S gpio
 	//for tfa98xx i2s
 	qcom,tert-mi2s-gpios = <&cdc_mi2s_2_gpios>;
 	//#endif /* OPLUS_ARCH_EXTENDS */
@@ -437,7 +424,6 @@
 	asoc-codec-names = "msm-stub-codec.1", "bolero_codec",
 				"msm-ext-disp-audio-codec-rx";
 	//#ifndef OPLUS_ARCH_EXTENDS
-	//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for disable wsa
 	/*
 	qcom,wsa-max-devs = <2>;
 	qcom,wsa-devs = <&wsa881x_0211>, <&wsa881x_0212>,
@@ -450,7 +436,6 @@
 	//#endif /* OPLUS_ARCH_EXTENDS */
 	qcom,codec-max-aux-devs = <1>;
 	//#ifndef OPLUS_ARCH_EXTENDS
-	//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for use wcd937x codec
 	//qcom,codec-aux-devs = <&wcd938x_codec>;
 	//#else /* OPLUS_ARCH_EXTENDS */
 	qcom,codec-aux-devs = <&wcd937x_codec>;
@@ -459,13 +444,11 @@
 				  <&lpi_tlmm>, <&bolero>;
 
 	/* #ifdef OPLUS_ARCH_EXTENDS */
-	/* Suresh.Alla@MULTIMEDIA.AUDIODRIVER.HEADSETDET, 2020/07/30, Add for HeadsetDet. */
 	qcom,msm-mbhc-hs-mic-max-threshold-mv = <2600>;
 	qcom,msm-mbhc-hs-mic-min-threshold-mv = <75>;
 	/* #endif OPLUS_ARCH_EXTENDS */
 
 	/* #ifdef OPLUS_ARCH_EXTENDS */
-	/* Suresh.Alla@MULTIMEDIA.AUDIODRIVER.HEADSETDET, 2020/07/30, Add for mbhc cross connection. */
 	oppo,mbhc-check-cross-conn = <0>;
 	/* #endif OPLUS_ARCH_EXTENDS */
 };
@@ -473,7 +456,6 @@
 &q6core {
 	cdc_dmic01_gpios: cdc_dmic01_pinctrl {
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		/* Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for not use dmic */
 		status = "disabled";
 		/* #endif OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,msm-cdc-pinctrl";
@@ -485,7 +467,6 @@
 
 	cdc_dmic23_gpios: cdc_dmic23_pinctrl {
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		/* Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for not use dmic */
 		status = "disabled";
 		/* #endif OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,msm-cdc-pinctrl";
@@ -497,7 +478,6 @@
 
 	cdc_dmic45_gpios: cdc_dmic45_pinctrl {
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		/* Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for not use dmic */
 		status = "disabled";
 		/* #endif OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,msm-cdc-pinctrl";
@@ -509,7 +489,6 @@
 
 	wsa_swr_gpios: wsa_swr_clk_data_pinctrl {
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for disable wsa
 		status = "disabled";
 		//#endif /* OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,msm-cdc-pinctrl";
@@ -536,7 +515,6 @@
 			    &tx_swr_data1_sleep &tx_swr_data2_sleep>;
 		qcom,lpi-gpios;
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.HEADSETDET, 2020/07/30, Add for headset detect in suspend state
 		qcom,chip-wakeup-reg = <0x01FFB000>;
 		qcom,chip-wakeup-maskbit = <0>;
 		qcom,chip-wakeup-default-val = <0x1>;
@@ -544,7 +522,6 @@
 	};
 
 	//#ifdef OPLUS_ARCH_EXTENDS
-	//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for Tertiary MI2S gpio
 	cdc_mi2s_2_gpios: msm_cdc_pinctrl {
 		compatible = "qcom,msm-cdc-pinctrl";
 		pinctrl-names = "aud_active", "aud_sleep";
@@ -557,7 +534,6 @@
 &soc {
 	wsa_spkr_en1: wsa_spkr_en1_pinctrl {
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for disable wsa
 		status = "disabled";
 		//#endif /* OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,msm-cdc-pinctrl";
@@ -568,7 +544,6 @@
 
 	wsa_spkr_en2: wsa_spkr_en2_pinctrl {
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for disable wsa
 		status = "disabled";
 		//#endif /* OPLUS_ARCH_EXTENDS */
 		compatible = "qcom,msm-cdc-pinctrl";
@@ -654,7 +629,6 @@
 };
 
 /* #ifdef OPLUS_ARCH_EXTENDS */
-/*Kaiqin.Huang@MULTIMEDIA.AUDIODRIVER.SMARTPA, 2020/10/29, Add for tfa98xx smartpa*/
 &qupv3_se5_i2c {
 	status = "okay";
 	tfa98xx@34 {
@@ -671,7 +645,6 @@
 /* #endif OPLUS_ARCH_EXTENDS */
 
 /* #ifdef OPLUS_ARCH_EXTENDS */
-/*Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for SmartPA i2s config*/
 &dai_mi2s2 {
 	compatible = "qcom,msm-dai-q6-mi2s";
 	qcom,msm-dai-q6-mi2s-dev-id = <2>;
@@ -681,6 +654,5 @@
 /* #endif OPLUS_ARCH_EXTENDS */
 
 /* #ifdef OPLUS_ARCH_EXTENDS */
-/* Chunyu.xie@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/08/09, Add for oplus extend aduio config */
 #include "oplus-audio-extend.dtsi"
 /* #endif OPLUS_ARCH_EXTENDS */

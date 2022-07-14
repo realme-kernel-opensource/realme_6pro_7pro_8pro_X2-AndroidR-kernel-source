@@ -105,14 +105,12 @@
 #include "../../lib/kstrtox.h"
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 #include <linux/oppo_healthinfo/oppo_jank_monitor.h>
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 #define GLOBAL_SYSTEM_UID KUIDT_INIT(1000)
 #define GLOBAL_SYSTEM_GID KGIDT_INIT(1000)
 extern const struct file_operations proc_static_ux_operations;
@@ -2019,7 +2017,6 @@ int pid_revalidate(struct dentry *dentry, unsigned int flags)
 		task_dump_owner(task, inode->i_mode, &inode->i_uid, &inode->i_gid);
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		if (is_special_entry(dentry, "static_ux")) {
 			inode->i_uid = GLOBAL_SYSTEM_UID;
 			inode->i_gid = GLOBAL_SYSTEM_GID;
@@ -3407,7 +3404,6 @@ static const struct pid_entry tgid_base_stuff[] = {
 	ONE("time_in_state", 0444, proc_time_in_state_show),
 #endif
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 	REG("jank_info", S_IRUGO | S_IWUGO, proc_jank_trace_operations),
 #endif
@@ -3816,7 +3812,6 @@ static const struct pid_entry tid_base_stuff[] = {
 	ONE("time_in_state", 0444, proc_time_in_state_show),
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	REG("static_ux", S_IRUGO | S_IWUGO, proc_static_ux_operations),
 #endif /* OPLUS_FEATURE_UIFIRST */
 #ifdef CONFIG_CAMERA_OPT

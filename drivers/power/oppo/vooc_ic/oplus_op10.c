@@ -4,10 +4,8 @@
 * Description: For Silergy op10 ASIC
 * Version   : 1.0
 * Date      : 2019-08-15
-* Author    : SJC@PhoneSW.BSP
 * ------------------------------ Revision History: --------------------------------
 * <version>       <date>        	<author>              		<desc>
-* Revision 1.0    2019-09-23  	LZJ@PhoneSW.BSP    		Created for new architecture
 ***********************************************************************************/
 #define VOOC_ASIC_OP10
 

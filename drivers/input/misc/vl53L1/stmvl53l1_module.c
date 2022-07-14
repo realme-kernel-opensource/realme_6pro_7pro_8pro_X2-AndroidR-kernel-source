@@ -2430,7 +2430,6 @@ static int sleep_for_data(struct stmvl53l1_data *data, pid_t pid,
 
 	mutex_unlock(&data->work_mutex);
 	#ifndef VENDOR_EDIT
-	/*modify by hongbo.dai@Camea,20181120 for fix dead lock */
 	if(data->preset_mode == VL53L1_PRESETMODE_LITE_RANGING){
 	#else
 	if (1) {
@@ -3467,16 +3466,6 @@ static void stmvl53l1_on_newdata_event(struct stmvl53l1_data *data)
 		 * the previous ranging values along that error status
 		 */
 		#ifdef VENDOR_EDIT
-		/*rm by hongbo.dai@camera 20190420, AmbientRate issue: Output ranging data even no target is detected
-		for (i = 0; i < VL53L1_MAX_RANGE_RESULTS; i++) {
-			if (pmrange->RangeData[i].RangeStatus ==
-					VL53L1_RANGESTATUS_NONE) {
-				memcpy(&pmrange->RangeData[i], &RangeData[i],
-					sizeof(VL53L1_TargetRangeData_t));
-				pmrange->RangeData[i].RangeStatus =
-						VL53L1_RANGESTATUS_NONE;
-			}
-		}*/
 		#endif
 		/* got histogram debug data in case user want it later on */
 		if (!rc)
@@ -3693,7 +3682,6 @@ static void stmvl53l1_input_push_data_singleobject(struct stmvl53l1_data *data)
 	}
 	/* Do not send the events till this if fixed properly */
 	return;
-	/*removed by hongbo.dai@camera 20190202*/
 	/*
 	input_report_abs(input, ABS_DISTANCE, (meas->RangeMilliMeter + 5) / 10);
 	input_report_abs(input, ABS_HAT0X, meas->TimeStamp / 1000);
@@ -4011,7 +3999,6 @@ int stmvl53l1_intr_handler(struct stmvl53l1_data *data)
 		 * Such dummy irq also occured during offset and crosstalk
 		 * calibration procedures.
 		 */
-        	/* Jianwei.Luo@Cam.Drv 20190128 remove the log in the interrupt for bug: 1785866, case: 03859530 */
 		//vl53l1_dbgmsg("got intr but not on (dummy or calibration)\n");
 		rc = 0;
 	}

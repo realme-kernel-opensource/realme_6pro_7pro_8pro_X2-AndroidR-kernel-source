@@ -918,7 +918,6 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 }
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance,2019-07-29,add for cpufreq limit info
 #ifdef CONFIG_OPPO_HEALTHINFO
 static ssize_t show_freq_change_info(struct cpufreq_policy *policy, char *buf)
 {
@@ -942,7 +941,6 @@ cpufreq_freq_attr_ro(bios_limit);
 cpufreq_freq_attr_ro(related_cpus);
 cpufreq_freq_attr_ro(affected_cpus);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance,2019-07-29,add for cpufreq limit info
 #ifdef CONFIG_OPPO_HEALTHINFO
 cpufreq_freq_attr_ro(freq_change_info);
 #endif
@@ -965,7 +963,6 @@ static struct attribute *default_attrs[] = {
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance,2019-07-29,add for cpufreq limit info
 #ifdef CONFIG_OPPO_HEALTHINFO
 	&freq_change_info.attr,
 #endif
@@ -2279,7 +2276,6 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 	pr_debug("setting new policy for CPU %u: %u - %u kHz\n",
 		 new_policy->cpu, new_policy->min, new_policy->max);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance,2019-07-29,add for cpufreq limit info
 #ifdef CONFIG_OPPO_HEALTHINFO
 	policy->org_max = new_policy->max;
 #endif
@@ -2322,7 +2318,6 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 	policy->max = new_policy->max;
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance,2019-07-29,add for cpufreq limit info
 #ifdef CONFIG_OPPO_HEALTHINFO
 	strncpy(policy->change_comm, current->comm, TASK_COMM_LEN);
 #endif

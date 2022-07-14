@@ -5,7 +5,6 @@
 ** Description : display driver private management
 ** Version : 1.0
 ** Date : 2018/03/17
-** Author : Jie.Hu@PSW.MM.Display.Stability
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -79,7 +78,6 @@ int set_oppo_display_vendor(const char *display_name)
 	} else if (!strcmp(display_name, "dsi_oppo19365samsung_ams643xf01_1080_2400_cmd_display")) {
 		oppo_display_vendor = OPPO_SAMSUNG_AMS643XF01_DISPALY_FHD_PLUS_CMD_PANEL;
 		register_device_proc("lcd", "AMS643XF01", "samsung1024");
-/* Chao.Zhang@PSW.MM.DISPLAY.LCD, 20200914, add for 19031 lcd bringup */
 	} else if (!strcmp(display_name, "dsi_oppo19031samsung_ams641rw01_1080_2400_cmd_display")) {
 		oppo_display_vendor = OPPO_SAMSUNG_AMS641RW01_DISPLAY_FHD_PLUS_CMD_PANEL;
 		register_device_proc("lcd", "AMS641RW01", "samsung1024");
@@ -92,7 +90,6 @@ int set_oppo_display_vendor(const char *display_name)
 	} else if (!strcmp(display_name, "dsi_oppo19111samsung_ams641rw16_1080_2340_cmd_display")) {
 		oppo_display_vendor = OPPO_SAMSUNG_AMS641RW16_DISPLAY_FHD_PLUS_CMD_PANEL;
 		register_device_proc("lcd", "AMS641RW16", "samsung1024");
-	/* Chao.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, add for 19081 LCD */
 	} else if (!strcmp(display_name, "dsi_samsung_fhd_plus_dsc_cmd_90fps_display")) {
 		oppo_display_vendor = OPPO_SAMSUNG_SOFEF03F_M_DISPLAY_FHD_DSC_CMD_PANEL;
 		register_device_proc("lcd", "SOFEF03F_M", "samsung1024");

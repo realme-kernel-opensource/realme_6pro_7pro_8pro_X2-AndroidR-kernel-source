@@ -18,7 +18,6 @@
 #include "blk-wbt.h"
 
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 #include "oppo_foreground_io_opt/oppo_foreground_io_opt.h"
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 struct queue_sysfs_entry {
@@ -401,7 +400,6 @@ static ssize_t queue_poll_delay_store(struct request_queue *q, const char *page,
 }
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 static ssize_t queue_show_ohm_inflight(struct request_queue *q, char *page)
@@ -660,7 +658,6 @@ static struct queue_sysfs_entry queue_rq_affinity_entry = {
 };
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@PSW.Tech.BSP.Performance, 2019/03/11, Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 static struct queue_sysfs_entry queue_ohm_inflight_entry = {
 	.attr = {.name = "ohm_inflight", .mode = S_IRUGO },
@@ -719,7 +716,6 @@ static struct queue_sysfs_entry throtl_sample_time_entry = {
 #endif
 
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 static struct queue_sysfs_entry queue_fgio_entry = {
 	.attr = {.name = "fg_io_cnt_max", .mode = S_IRUGO | S_IWUSR },
 	.show = queue_fg_count_max_show,
@@ -736,7 +732,6 @@ static struct attribute *default_attrs[] = {
 	&queue_requests_entry.attr,
 	&queue_ra_entry.attr,
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	&queue_fgio_entry.attr,
 	&queue_bothio_entry.attr,
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
@@ -765,7 +760,6 @@ static struct attribute *default_attrs[] = {
 	&queue_rq_affinity_entry.attr,
 	&queue_iostats_entry.attr,
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 	&queue_ohm_inflight_entry.attr,

@@ -18,7 +18,6 @@ struct workqueue_struct;
 
 struct work_struct;
 #ifdef OPLUS_FEATURE_UIFIRST
-// caichen@TECH.Kernel.Sched, 2020/06/25, add for uifirst
 #include <linux/uifirst/uifirst_sched_workqueue.h>
 #endif
 
@@ -111,7 +110,6 @@ struct work_struct {
 	struct lockdep_map lockdep_map;
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// caichen@TECH.Kernel.Sched, 2020/05/28, add for uifirst wq
 	int ux_work;
 #endif
 };
@@ -210,7 +208,6 @@ static inline unsigned int work_static(struct work_struct *work)
 #else
 static inline void __init_work(struct work_struct *work, int onstack) {
 #ifdef OPLUS_FEATURE_UIFIRST
-// caichen@TECH.Kernel.Sched, 2020/05/28, add for  uifirst wq
 	work->ux_work = 0;
 #endif
 }

@@ -991,7 +991,6 @@ int32_t cam_eeprom_driver_cmd(struct cam_eeprom_ctrl_t *e_ctrl, void *arg)
 	struct cam_eeprom_query_cap_t  eeprom_cap = {0};
 	struct cam_control            *cmd = (struct cam_control *)arg;
 #ifdef VENDOR_EDIT
-//add by yufeng@camera, 20190618 for write calibration
 	int i = 0;
 	int j = 0;
 	int idx = 0;
@@ -1002,9 +1001,7 @@ int32_t cam_eeprom_driver_cmd(struct cam_eeprom_ctrl_t *e_ctrl, void *arg)
 	struct cam_sensor_i2c_reg_setting  i2c_reg_settings;
 	struct cam_sensor_i2c_reg_array    i2c_reg_arrays[8];
 	struct cam_sensor_i2c_reg_array    i2c_reg_array;
-//add by yufeng@camera, 20190618 for check eeprom data
 	struct check_eeprom_data_t check_eeprom_data;
-//add by yufeng@camera, 20190618 for write AE SYNC
 	struct cam_write_AE_SYNC_t cam_write_AE_SYNC;
 #endif
 
@@ -1079,7 +1076,6 @@ int32_t cam_eeprom_driver_cmd(struct cam_eeprom_ctrl_t *e_ctrl, void *arg)
 		}
 		break;
 #ifdef VENDOR_EDIT
-//add by yufeng@camera, 20190115 for write eeprom
 	case CAM_WRITE_CALIBRATION_DATA:
 		memset(&cam_write_eeprom, 0, sizeof(struct cam_write_eeprom_t));
 		if (copy_from_user(&cam_write_eeprom, (void __user *) cmd->handle, sizeof(struct cam_write_eeprom_t))) {
@@ -1204,7 +1200,6 @@ int32_t cam_eeprom_driver_cmd(struct cam_eeprom_ctrl_t *e_ctrl, void *arg)
 			}
 		}
 		break;
-	//add by yufeng@camera, 20190216 for check eeprom data
 	case CAM_CHECK_CALIBRATION_DATA:
 		memset(&check_eeprom_data, 0, sizeof(struct check_eeprom_data_t));
 		if (copy_from_user(&check_eeprom_data, (void __user *) cmd->handle, sizeof(struct check_eeprom_data_t))) {
@@ -1235,7 +1230,6 @@ int32_t cam_eeprom_driver_cmd(struct cam_eeprom_ctrl_t *e_ctrl, void *arg)
 			}
 		}
 		break;
-//add by yufeng@camera, 20190618 for write AE SYNC
 	case CAM_WRITE_AE_SYNC_DATA:
 		memset(&cam_write_AE_SYNC, 0, sizeof(struct cam_write_AE_SYNC_t));
 		if (copy_from_user(&cam_write_AE_SYNC, (void __user *) cmd->handle, sizeof(struct cam_write_AE_SYNC_t))) {

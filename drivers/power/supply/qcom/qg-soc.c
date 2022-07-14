@@ -198,13 +198,11 @@ static int qg_process_tcss_soc(struct qpnp_qg *chip, int sys_soc)
 					qg_iterm_ua,
 					chip->prev_fifo_i_ua);
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 	if(chip->prev_fifo_i_ua >= qg_iterm_ua)
 		soc_ibat = QG_MAX_SOC;
 #endif
 	soc_ibat = CAP(QG_MIN_SOC, QG_MAX_SOC, soc_ibat);
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 	wt_ibat = qg_linear_interpolate(1, chip->soc_tcss_entry,
 					10000, 10000, soc_ibat);
 	wt_ibat = CAP(QG_MIN_SOC, QG_MAX_SOC, wt_ibat);
@@ -292,7 +290,6 @@ int qg_adjust_sys_soc(struct qpnp_qg *chip)
 	/* TCSS */
 	chip->sys_soc = qg_process_tcss_soc(chip, chip->sys_soc);
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 	if (chip->sys_soc <= 50) { /* 0.5% */
 		/* Hold SOC to 1% of VBAT has not dropped below cutoff */
 		rc = qg_get_battery_voltage(chip, &vbat_uv);
@@ -382,7 +379,6 @@ static bool is_scaling_required(struct qpnp_qg *chip)
 {
 	bool input_present = is_input_present(chip);
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 	int ibat = 0;
 	int rc;
 

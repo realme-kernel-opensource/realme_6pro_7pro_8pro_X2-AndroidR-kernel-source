@@ -5,7 +5,6 @@
 ** Description : oppo display private api implement
 ** Version : 1.0
 ** Date : 2018/03/20
-** Author : Jie.Hu@PSW.MM.Display.Stability
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -19,7 +18,6 @@
 #include "oppo_display_panel_seed.h"
 #include "oppo_display_panel_hbm.h"
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 #include "oplus_display_panel_cabc.h"
 #endif /*OPLUS_FEATURE_LCD_CABC*/
 /*
@@ -34,7 +32,6 @@
 
 extern int hbm_mode;
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 extern int cabc_mode;
 extern int is_support_cabc;
 #endif /*OPLUS_FEATURE_LCD_CABC*/
@@ -107,7 +104,6 @@ int oppo_set_display_vendor(struct dsi_display *display)
 	return 0;
 }
 
-/* Sachin@PSW.MM.Display.LCD.Stable, 2020/04/17, Add for dynamic OSC clock */
 int dsi_panel_osc_clk_on(struct dsi_panel *panel) {
 	int rc = 0;
 
@@ -275,7 +271,6 @@ int oppo_display_update_osc_clk(void)
 		}
 	}
 
-	/* xupengcheng@MULTIMEDIA.DISPLAY.LCD.Feature,2020-10-21 optimize osc adaptive */
 	if (!display->panel->oppo_priv.is_osc_support){
 		pr_err("not support osc\n");
 		return 0;
@@ -632,7 +627,6 @@ static ssize_t oppo_display_set_audio_ready(struct device *dev,
 }
 
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 static ssize_t oplus_display_set_cabc(struct device *dev,
 		struct device_attribute *attr,
 		const char *buf, size_t count) {
@@ -1071,7 +1065,6 @@ static ssize_t oppo_display_dump_info(struct device *dev,
 }
 
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 static ssize_t oplus_display_get_cabc(struct device *dev,
 	struct device_attribute *attr, char *buf)
 {
@@ -1819,7 +1812,6 @@ int oppo_panel_process_dimming_v2(struct dsi_panel *panel, int bl_lvl,
 
 	} else if (oppo_seed_backlight) {
 		pr_err("Exit DC backlight v2\n");
-		//Zeke.Shi@RM.MM.DISPLAY.LCD.Stability,2019-11-07,add for set bakclight to 0 befor set seed.
 		if (bl_lvl == 0) {
 			int rc = 0;
 			struct mipi_dsi_device *dsi = &panel->mipi_device;
@@ -1986,7 +1978,6 @@ static ssize_t oppo_display_set_dimlayer_hbm(struct device *dev,
 	oppo_dimlayer_hbm = value;
 
 #ifdef VENDOR_EDIT
-	/* Hu Jie@PSW.MM.Display.Lcd.Stability, 2019-09-27, add log at display key evevnt */
 	pr_err("debug for oppo_display_set_dimlayer_hbm set oppo_dimlayer_hbm = %d\n",
 		oppo_dimlayer_hbm);
 #endif
@@ -2048,7 +2039,6 @@ static ssize_t oppo_display_set_esd_status(struct device *dev,
 	sscanf(buf, "%du", &enable);
 
 #ifdef VENDOR_EDIT
-	/* Hu Jie@PSW.MM.Display.Lcd.Stability, 2019-09-27, add log at display key evevnt */
 	pr_err("debug for oppo_display_set_esd_status, the enable value = %d\n",
 		enable);
 #endif
@@ -2129,7 +2119,6 @@ int oppo_onscreenfp_status = 0;
 ktime_t oppo_onscreenfp_pressed_time;
 u32 oppo_onscreenfp_vblank_count = 0;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 int oppo_display_mode = 1;
 atomic_t aod_onscreenfp_status = ATOMIC_INIT(0);
 static DECLARE_WAIT_QUEUE_HEAD(oppo_aod_wait);
@@ -2185,7 +2174,6 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 	int i;
 	bool if_con = false;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	struct drm_display_mode *cmd_mode = NULL;
 	struct drm_display_mode *vid_mode = NULL;
 	struct drm_display_mode *mode = NULL;
@@ -2215,7 +2203,6 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 
 	oppo_onscreenfp_status = onscreenfp_status;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	if((0==oppo_display_mode) && onscreenfp_status) {
 		atomic_set(&aod_onscreenfp_status, onscreenfp_status);
 	}
@@ -2223,7 +2210,6 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 
 	if_con = onscreenfp_status && (OPPO_DISPLAY_AOD_SCENE == get_oppo_display_scene());
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	if_con = if_con && !display->panel->oppo_priv.is_aod_ramless;
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 	if (if_con) {
@@ -2252,14 +2238,12 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 	}
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	if (!display->panel->oppo_priv.is_aod_ramless) {
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 		oppo_onscreenfp_vblank_count = drm_crtc_vblank_count(
 			dsi_connector->state->crtc);
 		oppo_onscreenfp_pressed_time = ktime_get();
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	}
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 
@@ -2275,7 +2259,6 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 	crtc = dsi_connector->state->crtc;
 	crtc_state = drm_atomic_get_crtc_state(state, crtc);
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	cur_mode = &crtc->state->mode;
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 
@@ -2288,7 +2271,6 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 	}
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	if (display->panel->oppo_priv.is_aod_ramless) {
 		struct drm_display_mode *set_mode = NULL;
 
@@ -2331,7 +2313,6 @@ static ssize_t oppo_display_notify_fp_press(struct device *dev,
 	drm_atomic_state_put(state);
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	if (display->panel->oppo_priv.is_aod_ramless && mode_changed) {
 		for (i = 0; i < priv->num_crtcs; i++) {
 			if (priv->disp_thread[i].crtc_id == crtc->base.id) {
@@ -2618,7 +2599,6 @@ int dsi_display_oppo_set_power(struct drm_connector *connector,
 				mutex_lock(&display->panel->panel_lock);
 				rc = dsi_panel_tx_cmd_set(display->panel, DSI_CMD_AOD_HBM_OFF);
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 				if (display->panel->oppo_priv.is_aod_ramless) {
 					oppo_update_aod_light_mode_unlock(display->panel);
 				}
@@ -2840,7 +2820,6 @@ static ssize_t oppo_display_set_panel_pwr(struct device *dev,
 }
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 struct aod_area {
 	bool enable;
 	int x;
@@ -3391,13 +3370,11 @@ static DEVICE_ATTR(mipi_clk_rate_hz, S_IRUGO|S_IWUSR, oppo_display_get_mipi_clk_
 static DEVICE_ATTR(osc_clock, S_IRUGO|S_IWUSR, oppo_display_get_osc_clk,
 	oppo_display_set_osc_clk);
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 static DEVICE_ATTR(aod_area, S_IRUGO|S_IWUSR, oppo_display_get_aod_area, oppo_display_set_aod_area);
 static DEVICE_ATTR(video, S_IRUGO|S_IWUSR, oppo_display_get_video, oppo_display_set_video);
 static DEVICE_ATTR(failsafe, S_IRUGO|S_IWUSR, oppo_display_get_failsafe, oppo_display_set_failsafe);
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 static DEVICE_ATTR(LCM_CABC, S_IRUGO|S_IWUSR, oplus_display_get_cabc, oplus_display_set_cabc);
 #endif /*OPLUS_FEATURE_LCD_CABC*/
 
@@ -3439,13 +3416,11 @@ static struct attribute *oppo_display_attrs[] = {
 	&dev_attr_mipi_clk_rate_hz.attr,
 	&dev_attr_osc_clock.attr,
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	&dev_attr_aod_area.attr,
 	&dev_attr_video.attr,
 	&dev_attr_failsafe.attr,
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 	&dev_attr_LCM_CABC.attr,
 #endif /*OPLUS_FEATURE_LCD_CABC*/
 	NULL,	/* need to NULL terminate the list of attributes */
@@ -3532,4 +3507,4 @@ static void __exit oppo_display_private_api_exit(void)
 module_init(oppo_display_private_api_init);
 module_exit(oppo_display_private_api_exit);
 MODULE_LICENSE("GPL v2");
-MODULE_AUTHOR("Hujie <>");
+MODULE_AUTHOR("Hujie <hujie@oppo.com>");

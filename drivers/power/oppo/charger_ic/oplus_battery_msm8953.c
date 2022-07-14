@@ -545,7 +545,6 @@ static void smbchg_set_chargerid_switch_val(
 	
 	if(chip->pmic_spmi.not_support_1200ma && !value && !is_usb_present(chip)) {
 	/* BugID 879716 : Solve some situatuion ChargerID is not 0 mV when usb is not present */
-	// wenbin.liu@BSP.CHG.Basic, 2016/11/14
 		chip->chargerid_volt = 0;
 		chip->chargerid_volt_got = false;
 	}
@@ -1511,7 +1510,7 @@ static int smbchg_get_charge_enable(struct oplus_chg_chip *chip)
 }
 
 
-int qpnp_fg_set_charge_enble(bool enable)	// wenbin.liu@SW.Bsp.Driver, 2016/08/15  Add for qpnp_fg charge
+int qpnp_fg_set_charge_enble(bool enable)
 {	
 	if(!the_chip)
 		return -EINVAL;
@@ -7203,7 +7202,6 @@ static inline int get_bpd(const char *name)
 #define OTG_CMD_CTRL_RID_EN		0x08
 #define AICL_ADC_BIT			BIT(6)
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Vooc/Basic/Gauge, 2017/04/14
 // Add for otg id value
 #define OTG_CMD_CTRL_RID_DIS	0x00
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
@@ -7656,7 +7654,6 @@ static int smbchg_hw_init(struct oplus_chg_chip *chip)
 		}
 	}
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Vooc/Basic/Gauge, 2017/04/14
 // Add for disable otg RID EN
 		/* configure OTG enable to register command control*/
 	rc = smbchg_sec_masked_write(chip, chip->pmic_spmi.otg_base + OTG_CFG,
@@ -8521,7 +8518,6 @@ static int smbchg_check_chg_version(struct oplus_chg_chip *chip)
 
 		chip->pmic_spmi.schg_version = QPNP_SCHG_LITE;
 #ifndef OPLUS_FEATURE_CHG_BASIC
-//Fuchun.Liao@Mobile.BSP.CHG 2016/06/23 modify for not support hvdcp
 		if (pmic_rev_id->pmic_subtype == PMI8937)
 			chip->pmic_spmi.hvdcp_not_supported = true;
 #else
@@ -8555,7 +8551,6 @@ static void rerun_hvdcp_det_if_necessary(struct oplus_chg_chip *chip)
 	int rc;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2016/12/06
 // Add for dead battery  charging if sometimes jump into kernel may lead APSD abnormal status
 	if(chip->pmic_spmi.hvdcp_not_supported)
 		return;
@@ -8883,7 +8878,6 @@ static int smbchg_probe(struct spmi_device *spmi)
 		return -EPROBE_DEFER;
 	}
 
-	// wenbin.liu@SW.Bsp.Driver, 2016/08/16  Add for check gauge probe finished
 	if(oplus_gauge_check_chip_is_null()) {
 		chg_err("gauge chip null, will do after bettery init.\n");
 		return -EPROBE_DEFER;

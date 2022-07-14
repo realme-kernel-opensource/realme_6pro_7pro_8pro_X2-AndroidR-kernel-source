@@ -159,7 +159,6 @@ enum zone_stat_item {
 #endif
 	NR_FREE_CMA_PAGES,
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-09-25, add ion cached account*/
         NR_IONCACHE_PAGES,
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 	NR_VM_ZONE_STAT_ITEMS };

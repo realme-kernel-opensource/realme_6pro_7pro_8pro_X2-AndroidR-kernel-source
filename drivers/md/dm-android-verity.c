@@ -506,7 +506,6 @@ static void handle_error(void)
 	if (mode == DM_VERITY_MODE_RESTART) {
 		DMERR("triggering restart");
 #ifdef OPLUS_BUG_STABILITY
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/15, add feature: feedback 2.0, monitor abnormal restart
 		panic("dm-verity device corrupted");
 #else
 		kernel_restart("dm-verity device corrupted");

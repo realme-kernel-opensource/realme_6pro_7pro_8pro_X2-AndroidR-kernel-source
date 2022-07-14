@@ -214,7 +214,6 @@ struct cam_flash_ctrl {
 	struct i2c_data_settings            i2c_data;
 	uint32_t                            last_flush_req;
 #ifdef VENDOR_EDIT
-	/*Add by Zhengrong.Zhang@Camera 20160809 for flash*/
 	const char *flash_name;
 #endif
 };
@@ -225,7 +224,6 @@ int cam_flash_pmic_apply_setting(struct cam_flash_ctrl *fctrl, uint64_t req_id);
 int cam_flash_i2c_apply_setting(struct cam_flash_ctrl *fctrl, uint64_t req_id);
 int cam_flash_off(struct cam_flash_ctrl *fctrl);
 #ifdef VENDOR_EDIT
-/*Add by hongbo.dai@Camera 20180319 for flash*/
 int cam_flash_on(struct cam_flash_ctrl *flash_ctrl,
 	struct cam_flash_frame_setting *flash_data,
 	int mode);

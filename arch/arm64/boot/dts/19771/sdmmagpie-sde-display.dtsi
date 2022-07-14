@@ -31,12 +31,12 @@
 #include "dsi-panel-sharp-qsync-fhd-video.dtsi"
 #include "dsi-panel-sharp-qsync-fhd-cmd.dtsi"
 //#ifdef OPLUS_BUG_STABILITY
-/* YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/04/16, add for 19031 lcd bringup */
 #include "dsi-panel_oppo18097samsung_ams641rw01_1080_2340.dtsi"
 #include "dsi-panel_oppo19031samsung_ams641rw01_1080_2400.dtsi"
 #include "dsi-panel_oppo19031samsung_ams641rw01_1080_2400_61fps.dtsi"
 #include "dsi-panel_oppo19031samsung_ams655ue01_1080_2400_61fps.dtsi"
 #include "dsi-panel_oppo19111samsung_ams641rw16_1080_2340.dtsi"
+#include "dsi-panel_rm19771samsung_ams641rw16_1080_2340.dtsi"
 //#endif /*OPLUS_BUG_STABILITY*/
 #include <dt-bindings/clock/mdss-10nm-pll-clk.h>
 
@@ -301,7 +301,6 @@
 	};
 
 //#ifdef OPLUS_BUG_STABILITY
-/* YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/03/28, add for 19031 lcd birng up */
 	dsi_oppo18097samsung_ams641rw01_1080_2340_cmd_display: qcom,dsi-display@17 {
 		label = "dsi_oppo18097samsung_ams641rw01_1080_2340_cmd_display";
 		qcom,display-type = "primary";
@@ -360,6 +359,17 @@
 
 		qcom,dsi-panel = <&dsi_oppo19111samsung_ams641rw16_1080_2340_cmd>;
 	};
+
+	dsi_rm19771_samsung_ams641rw16_1080_2340_cmd_display: qcom,dsi-display@22 {
+		label = "dsi_rm19771_samsung_ams641rw16_1080_2340_cmd_display";
+		qcom,display-type = "primary";
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_rm19771samsung_ams641rw16_1080_2340_cmd>;
+	};
 //#endif /*OPLUS_BUG_STABILITY*/
 
 	sde_dsi: qcom,dsi-display {
@@ -391,7 +401,6 @@
 
 //#ifndef OPLUS_BUG_STABILITY
 /*
- * YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/03/28,
  * modify for 19031 lcd bring up
  */
 		//vddio-supply = <&pm6150_l13>;
@@ -419,12 +428,12 @@
 			&dsi_nt35695b_truly_fhd_video_display
 			&dsi_nt35695b_truly_fhd_cmd_display
 //#ifdef OPLUS_BUG_STABILITY
-/* YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/03/28, add for 19031 lcd bringup */
 			&dsi_oppo18097samsung_ams641rw01_1080_2340_cmd_display
 			&dsi_oppo19031samsung_ams641rw01_1080_2400_cmd_display
 			&dsi_oppo19031samsung_ams641rw01_1080_2400_61fps_cmd_display
 			&dsi_oppo19031samsung_ams655ue01_1080_2400_61fps_cmd_display
-			&dsi_oppo19111samsung_ams641rw16_1080_2340_cmd_display>;
+			&dsi_oppo19111samsung_ams641rw16_1080_2340_cmd_display
+			&dsi_rm19771_samsung_ams641rw16_1080_2340_cmd_display>;
 //#endif /*OPLUS_BUG_STABILITY*/
 
 	};
@@ -460,7 +469,6 @@
 			&dsi_nt35695b_truly_fhd_cmd_sec_display>;
 
 //#ifdef OPLUS_BUG_STABILITY
-/* YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/04/16, add for 19031 lcd bringup */
 		status = "disable";
 //#endif /*OPLUS_BUG_STABILITY*/
 	};
@@ -474,12 +482,15 @@
 
 &sde_dp {
 	qcom,dp-usbpd-detection = <&pm6150_pdphy>;
+//#ifdef VENDOR_EDIT
+/* Yichun.Chen  PSW.BSP.CHG  2019-06-05  for disable usbdp */
+	status = "disabled";
+//#endif
 };
 
 &mdss_mdp {
 //#ifndef OPLUS_BUG_STABILITY
 /*
- * YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/04/16,
  * modify for 19031 lcd bringup
  */
 		//connectors = <&sde_rscc &sde_wb &sde_dsi &sde_dp &sde_dsi1>;
@@ -513,7 +524,6 @@
 
 
 //#ifdef OPLUS_BUG_STABILITY
-/* YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/04/16, add for 19031 lcd bringup */
 &dsi_oppo18097samsung_ams641rw01_1080_2340_cmd {
 	qcom,ulps-enabled;
 	qcom,mdss-dsi-t-clk-post = <0x0E>;

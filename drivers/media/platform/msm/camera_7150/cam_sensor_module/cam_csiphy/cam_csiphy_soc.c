@@ -259,6 +259,7 @@ int32_t cam_csiphy_parse_dt_info(struct platform_device *pdev,
 		csiphy_dev->ctrl_reg->csiphy_2ph_reg = csiphy_2ph_v1_2_reg;
 		csiphy_dev->ctrl_reg->csiphy_2ph_combo_mode_reg =
 			csiphy_2ph_v1_2_combo_mode_reg;
+
 		csiphy_dev->ctrl_reg->csiphy_3ph_reg = csiphy_3ph_v1_2_reg;
 		csiphy_dev->ctrl_reg->csiphy_2ph_3ph_mode_reg = NULL;
 		csiphy_dev->ctrl_reg->csiphy_irq_reg = csiphy_irq_reg_1_2;

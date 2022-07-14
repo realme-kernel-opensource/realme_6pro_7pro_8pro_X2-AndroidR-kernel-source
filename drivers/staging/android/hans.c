@@ -6,7 +6,6 @@
 **
 ** Version: 1.0
 ** Date : 2019/09/23
-** Author: #Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 **
 ** ------------------ Revision History:------------------------
 ** <author>      <data>      <version >       <desc>

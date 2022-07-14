@@ -1579,9 +1579,6 @@ static int soc_probe_component(struct snd_soc_card *card,
 			goto err_probe;
 		}
 		#ifndef OPLUS_ARCH_EXTENDS
-		/*Jianfeng.Qiu@PSW.MM.AudioDriver.Platform.1234162, 2018/03/30,
-		 *Delete for uart issue duo to warning log.
-		 */
 		WARN(dapm->idle_bias_off &&
 			dapm->bias_level != SND_SOC_BIAS_OFF,
 			"codec %s can not start from non-off bias with idle_bias_off==1\n",

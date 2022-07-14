@@ -186,7 +186,6 @@ struct cam_eeprom_ctrl_t {
 };
 
 #ifdef VENDOR_EDIT
-/*add by yufeng@camera, 20191023 for write data to eeprom*/
 #define CALIB_DATA_LENGTH         1689
 #define WRITE_DATA_MAX_LENGTH     8
 #define WRITE_DATA_DELAY          5
@@ -200,7 +199,6 @@ struct cam_write_eeprom_t {
 	unsigned char calibData[CALIB_DATA_LENGTH];
 } __attribute__ ((packed));
 
-//add by yufeng@camera, 20191023 for check eeprom data
 #define EEPROM_CHECK_DATA_MAX_SIZE 196
 struct check_eeprom_data_t{
 	uint32_t cam_id;

@@ -89,7 +89,6 @@ int nu1619_get_vt_sleep_val(void);
 static void wlchg_reset_variables(struct oplus_nu1619_ic *chip);
 
 #ifdef VENDOR_EDIT
-/* Ping.Zhang@BSP.TP.Init, 2020/03/02, Add for notify touchpanel status */
 void __attribute__((weak)) switch_wireless_charger_state(int wireless_state) {return;}
 #endif
 
@@ -3925,7 +3924,6 @@ static void nu1619_idt_connect_int_func(struct work_struct *work)
 
 			oplus_chg_restart_update_work();
 #ifdef VENDOR_EDIT
-/* Ping.Zhang@BSP.TP.Init, 2020/03/02, Add for notify touchpanel status */
 			switch_wireless_charger_state(1);
 #endif
 		}
@@ -3979,7 +3977,6 @@ static void nu1619_idt_connect_int_func(struct work_struct *work)
 #endif
 			oplus_chg_restart_update_work();
 #ifdef VENDOR_EDIT
-/* Ping.Zhang@BSP.TP.Init, 2020/03/02, Add for notify touchpanel status */
 			switch_wireless_charger_state(0);
 #endif
 		}
@@ -4185,7 +4182,6 @@ static int nu1619_ext1_wired_otg_gpio_init(struct oplus_nu1619_ic *chip)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Hang.Zhao@BSP.CHG.Basic,2019/11/24, Modify for charger */
 	gpio_direction_output(chip->ext1_wired_otg_en_gpio, 1);
 	pinctrl_select_state(chip->pinctrl,
 			chip->ext1_wired_otg_en_active);
@@ -4296,7 +4292,6 @@ static int nu1619_ext2_wireless_otg_gpio_init(struct oplus_nu1619_ic *chip)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Hang.Zhao@BSP.CHG.Basic,2019/11/24, Modify for charger */
 	gpio_direction_output(chip->ext2_wireless_otg_en_gpio, 1);
 	pinctrl_select_state(chip->pinctrl,
 			chip->ext2_wireless_otg_en_active);

@@ -48,7 +48,6 @@
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.200400, 2020/06/01.
 *Add for classify glink wakeup services.
 */
 int modem_wakeup_src_count[MODEM_WAKEUP_SRC_NUM] = { 0 };
@@ -144,7 +143,6 @@ static DEFINE_IDR(qrtr_ports);
 static DEFINE_MUTEX(qrtr_port_lock);
 
 //#ifdef OPLUS_BUG_COMPATIBILITY
-//#ashish.mathur@NETWORK.REG.523820, 2020/10/29 , Integrated QC CR#2586654 for solving Aging Crash Issue
 /* backup buffers */
 #define QRTR_BACKUP_HI_NUM 5
 #define QRTR_BACKUP_HI_SIZE SZ_16K
@@ -238,7 +236,6 @@ static void qrtr_log_tx_msg(struct qrtr_node *node, struct qrtr_hdr_v1 *hdr,
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
     /*
-    *Ruansong@PSW.NW.DATA.200400, 2020/06/01.
     *Add for classify glink wakeup services.
     */
     if (qrtr_first_msg) {
@@ -260,7 +257,6 @@ static void qrtr_log_tx_msg(struct qrtr_node *node, struct qrtr_hdr_v1 *hdr,
 		    type == QRTR_TYPE_DEL_SERVER)
 #ifndef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 			/*
-			*Ruansong@PSW.NW.DATA.200400, 2020/06/01.
 			*Add for classify glink wakeup services.
 			*/
 			QRTR_INFO(node->ilc,
@@ -318,7 +314,6 @@ static void qrtr_log_rx_msg(struct qrtr_node *node, struct sk_buff *skb)
 		skb_copy_bits(skb, 0, &pl_buf, sizeof(pl_buf));
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
         /*
-        *Ruansong@PSW.NW.DATA.200400, 2020/06/01.
         *Add for classify glink wakeup services.
         */
         if (qrtr_first_msg)
@@ -337,7 +332,6 @@ static void qrtr_log_rx_msg(struct qrtr_node *node, struct sk_buff *skb)
 		    cb->type == QRTR_TYPE_DEL_SERVER)
 #ifndef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 			/*
-			*Ruansong@PSW.NW.DATA.200400, 2020/06/01.
 			*Add for classify glink wakeup services.
 			*/
 			QRTR_INFO(node->ilc,
@@ -767,7 +761,6 @@ int qrtr_peek_pkt_size(const void *data)
 EXPORT_SYMBOL(qrtr_peek_pkt_size);
 
 //#ifdef OPLUS_BUG_COMPATIBILITY
-//#ashish.mathur@NETWORK.REG.523820, 2020/10/29 , Integrated QC CR#2586654 for solving Aging Crash Issue
 static void qrtr_alloc_backup(struct work_struct *work)
 {
  struct sk_buff *skb;
@@ -848,7 +841,6 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
 	skb = alloc_skb_with_frags(sizeof(*v1), len, 0, &errcode, GFP_ATOMIC);
 	if (!skb)
         //#ifdef OPLUS_BUG_COMPATIBILITY
-        //#ashish.mathur@NETWORK.REG.523820, 2020/10/29 , Integrated QC CR#2586654 for solving Aging Crash Issue
            {
            skb = qrtr_get_backup(len);
            if (!skb) {
@@ -856,7 +848,6 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
         //#endif OPLUS_BUG_COMPATIBILITY
               return -ENOMEM;
         //#ifdef OPLUS_BUG_COMPATIBILITY
-        //#ashish.mathur@NETWORK.REG.523820, 2020/10/29 , Integrated QC CR#2586654 for solving Aging Crash Issue
                      }
             }
         //#endif OPLUS_BUG_COMPATIBILITY
@@ -2095,7 +2086,6 @@ static int __init qrtr_proto_init(void)
 
 	rtnl_register(PF_QIPCRTR, RTM_NEWADDR, qrtr_addr_doit, NULL, 0);
         //#ifdef OPLUS_BUG_COMPATIBILITY
-        //#ashish.mathur@NETWORK.REG.523820, 2020/10/29 , Integrated QC CR#2586654 for solving Aging Crash Issue
         qrtr_backup_init();
         //#endif OPLUS_BUG_COMPATIBILITY
 	return 0;
@@ -2108,7 +2098,6 @@ static void __exit qrtr_proto_fini(void)
 	sock_unregister(qrtr_family.family);
 	proto_unregister(&qrtr_proto);
         //#ifdef OPLUS_BUG_COMPATIBILITY
-        //#ashish.mathur@NETWORK.REG.523820, 2020/10/29 , Integrated QC CR#2586654 for solving Aging Crash Issue
         qrtr_backup_deinit();
         //#endif OPLUS_BUG_COMPATIBILITY
 }

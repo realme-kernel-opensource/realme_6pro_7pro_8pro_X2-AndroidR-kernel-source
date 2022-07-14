@@ -20,6 +20,9 @@
 		compatible = "qcom,msm-hw-limits";
 		interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,affinity = <0>;
+		/* #ifdef VENDOR_EDIT */
+		dump_thres = <1017600>;
+		/* #endif */
 		reg = <0x18358800 0x1000>,
 			<0x18323000 0x1000>;
 		#thermal-sensor-cells = <0>;
@@ -29,6 +32,9 @@
 		compatible = "qcom,msm-hw-limits";
 		interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,affinity = <1>;
+		/* #ifdef VENDOR_EDIT */
+		dump_thres = <1094400>;
+		/* #endif */
 		reg = <0x18350800 0x1000>,
 			<0x18325800 0x1000>;
 		#thermal-sensor-cells = <0>;
@@ -96,6 +102,21 @@
 	};
 };
 
+//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+/{
+        shell_front {
+                compatible = "oplus,shell-temp";
+        };
+
+        shell_frame {
+                compatible = "oplus,shell-temp";
+        };
+
+        shell_back {
+                compatible = "oplus,shell-temp";
+        };
+};
+//#endif
 &thermal_zones {
 	aoss-0-usr {
 		polling-delay-passive = <0>;
@@ -642,11 +663,15 @@
 		};
 	};
 
+/* #ifdef VENDOR_EDIT */
 	quiet-therm-adc {
-		polling-delay-passive = <0>;
-		polling-delay = <0>;
-		thermal-governor = "user_space";
+		polling-delay-passive = <50>;
+		polling-delay = <500>;
+		thermal-governor = "step_wise";
 		thermal-sensors = <&pm6150_adc_tm ADC_AMUX_THM4_PU2>;
+		/* #ifdef VENDOR_EDIT */
+		temp-track;
+		/* #endif */
 		wake-capable-sensor;
 		trips {
 			active-config0 {
@@ -654,9 +679,53 @@
 				hysteresis = <1000>;
 				type = "passive";
 			};
+			skin_trip0: skin-trip0 {
+			//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+				temperature = <81000>;
+			//#else
+			    //temperature = <41000>;
+			//endif
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			skin_trip1: skin-trip1 {
+			//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+				temperature = <83000>;
+			//#else
+			    //temperature = <43000>;
+			//endif
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			skin_trip2: skin-trip2 {
+			//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+				temperature = <85000>;
+			//#else
+			    //temperature = <45000>;
+			//endif
+				hysteresis = <1000>;
+				type = "passive";
+			};
+		};
+		cooling-maps {
+			cpu1_cdev0 {
+				trip = <&skin_trip0>;
+				cooling-device =
+					<&CPU6 THERMAL_NO_LIMIT 2>;
+			};
+			cpu1_cdev1 {
+				trip = <&skin_trip1>;
+				cooling-device =
+					<&CPU6 THERMAL_NO_LIMIT 6>;
+			};
+			cpu1_cdev2 {
+				trip = <&skin_trip2>;
+				cooling-device =
+					<&CPU6 THERMAL_NO_LIMIT 8>;
+			};
 		};
 	};
-
+/*#endif*/
 	conn-therm-adc {
 		polling-delay-passive = <0>;
 		polling-delay = <0>;
@@ -1781,7 +1850,11 @@
 				type = "passive";
 			};
 			gold_trip: gold-trip {
-				temperature = <50000>;
+			//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+				temperature = <80000>;
+			//#else
+			    //temperature = <50000>;
+			//#endif
 				hysteresis = <0>;
 				type = "passive";
 			};
@@ -1791,7 +1864,11 @@
 				type = "passive";
 			};
 			skin_gpu_trip: skin-gpu-trip {
-				temperature = <52000>;
+			//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+				temperature = <82000>;
+			//#else
+			    //temperature = <52000>;
+			//#endif
 				hysteresis = <4000>;
 				type = "passive";
 			};
@@ -1801,7 +1878,11 @@
 				type = "passive";
 			};
 			silver_trip: silver-trip {
-				temperature = <54000>;
+			//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+				temperature = <84000>;
+			//#else
+			    //temperature = <54000>;
+			//#endif
 				hysteresis = <0>;
 				type = "passive";
 			};

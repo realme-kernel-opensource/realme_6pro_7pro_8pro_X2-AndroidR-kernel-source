@@ -13,10 +13,9 @@
 ### ------------------------------- Revision History: ----------------------------
 ### <author>                        <date>       <version>   <desc>
 ### ------------------------------------------------------------------------------
-### Liang.Sun@TECH.Build              2020-03-18   1.0         Create this moudle
 ##################################################################################
 
--include ./oplus_native_features.mk
+-include ../../out/oplus_native_features.mk
 
 ###ifdef OPLUS_ARCH_INJECT
 OPLUS_CONNECTIVITY_NATIVE_FEATURE_SET :=
@@ -171,7 +170,6 @@ ifeq ($(OPLUS_FEATURE_SECURE_KEYINTERFACESGUARD),yes)
 KBUILD_CFLAGS += -DOPPO_DISALLOW_KEY_INTERFACES
 endif
 
-# Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless
 ifeq ($(OPLUS_FEATURE_AOD_RAMLESS),yes)
 KBUILD_CFLAGS += -DOPLUS_FEATURE_AOD_RAMLESS
 KBUILD_CPPFLAGS += -DOPLUS_FEATURE_AOD_RAMLESS
@@ -179,18 +177,15 @@ CFLAGS_KERNEL += -DOPLUS_FEATURE_AOD_RAMLESS
 CFLAGS_MODULE += -DOPLUS_FEATURE_AOD_RAMLESS
 endif
 
-#Chao.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/10/23, add for DP MAX20328
 ifeq ($(OPLUS_FEATURE_DP_MAX20328),yes)
 KBUILD_CFLAGS += -DOPLUS_FEATURE_DP_MAX20328
 endif
 
-#xupengcheng@MULTIMEDIA.DISPLAY.LCD, 2020/11/11, add for cabc feature
 ifeq ($(OPLUS_FEATURE_LCD_CABC),yes)
 KBUILD_CFLAGS += -DOPLUS_FEATURE_LCD_CABC
 endif
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-#Yunqing.Zeng@BSP.Power.Basic, 2020/09/10, add for feature powerinfo standby.
 inner_mk_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 inner_mk_dir := $(shell dirname $(inner_mk_path))
 inner_oplus_wakelock_dir1 := $(inner_mk_dir)/../vendor/oplus/kernel/wakelock_profiler

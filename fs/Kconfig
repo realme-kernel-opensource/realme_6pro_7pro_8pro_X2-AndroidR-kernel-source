@@ -15,7 +15,6 @@ config FS_IOMAP
 
 source "fs/ext2/Kconfig"
 #ifdef VENDOR_EDIT
-#Yuwei.Guan@TECH.Storage.FS.OEXT4,2020/04/18, add to use oext4 Kconfig
 source "fs/oext4/Kconfig"
 #else
 #source "fs/ext4/Kconfig"
@@ -324,7 +323,6 @@ source "fs/dlm/Kconfig"
 source "fs/unicode/Kconfig"
 
 #ifdef OPLUS_FEATURE_EXFAT_SUPPORT
-#huyu@BSP.Driver, 2020/08/13, Add for exfat filesystem
 source "fs/exfat/Kconfig"
 #endif /*OPLUS_FEATURE_EXFAT_SUPPORT*/
 

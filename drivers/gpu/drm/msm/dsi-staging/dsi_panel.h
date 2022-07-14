@@ -30,9 +30,6 @@
 #include "dsi_parser.h"
 #include "msm_drv.h"
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.LCD.Stability,2018/11/21
- * Add for save display panel power status at oppo display management
-*/
 struct oppo_brightness_alpha {
 	u32 brightness;
 	u32 alpha;
@@ -125,9 +122,6 @@ struct dsi_backlight_config {
 	u32 brightness_max_level;
 	u32 brightness_default_level;
 #ifdef OPLUS_BUG_STABILITY
-/*Sachin Shukla@PSW.MM.Display.LCD.Feature,2019-11-04 add for
- * global hbm
-*/
 	u32 bl_normal_max_level;
 	u32 brightness_normal_max_level;
 #endif /* OPLUS_BUG_STABILITY */
@@ -160,17 +154,14 @@ struct dsi_panel_reset_config {
 	int lcd_mode_sel_gpio;
 	u32 mode_sel_state;
 	#ifdef OPLUS_BUG_STABILITY
-	/* Chao.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/18, add for 19081 LCD */
 	int lcd_vci_gpio;
 	int err_flag_gpio;
 	u32 lcd_delay_vci_gpio;
-	/* Chao.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/23, add for lcd reset gpio delay */
 	u32 lcd_delay_disp_en_gpio;
 	u32 lcd_delay_reset_gpio;
 	u32 lcd_delay_mode_sel_gpio;
 	u32 lcd_delay_set_pinctrl_state;
 	u32 lcd_delay_enable_regulator;
-	/* xupengcheng@MULTIMEDIA.DISPLAY.LCD, 2020/10/30, add for 19781 lp11 delay */
 	u32 lcd_delay_lp11_state;
 	#endif /* OPLUS_BUG_STABILITY */
 };
@@ -198,19 +189,14 @@ struct drm_panel_esd_config {
 };
 
 #ifdef OPLUS_BUG_STABILITY
-/*Sachin hukla@PSW.MM.Display.LCD.Feature,2019-11-07 add for
- * oppo custom info
-*/
 struct dsi_panel_oppo_privite {
 	const char *vendor_name;
 	const char *manufacture_name;
 	bool skip_mipi_last_cmd;
 	bool is_pxlw_iris5;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-// Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless
 	bool is_aod_ramless;
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
-	/* xupengcheng@MULTIMEDIA.DISPLAY.LCD.Feature,2020-10-21 optimize osc adaptive */
 	bool is_osc_support;
 	bool is_19781_lcd;
 	u32 osc_clk_mode0_rate;
@@ -220,8 +206,8 @@ struct dsi_panel_oppo_privite {
 	bool bl_interpolate_nosub;
 	struct oppo_brightness_alpha *bl_remap;
 	int bl_remap_count;
+	bool bl_remap_brightness_show;
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 	bool is_19696_lcd;
 #endif /*OPLUS_FEATURE_LCD_CABC*/
 	u32 pll_delay;
@@ -281,21 +267,15 @@ struct dsi_panel {
 	enum dsi_panel_physical_type panel_type;
 
 //#ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.Service.Feature,2018/11/21
- * For OnScreenFingerprint feature
-*/
 	bool is_hbm_enabled;
 	/* Fix aod flash problem */
 	bool need_power_on_backlight;
-/*DuanSu@MULTIMEDIA.DISPLAY.LCD, 2020/08/03, Add for 19567 project reset */
   	bool reset_timing;
-/*Sachin Shukla@PSW.MM.Display.LCD.Feature,2019-10-30 add for fod brightness */
 	struct oppo_brightness_alpha *ba_seq;
 	struct oppo_brightness_alpha *dc_ba_seq;
 	int ba_count;
 	int dc_ba_count;
 	struct dsi_panel_oppo_privite oppo_priv;
-	/* Chao.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/18, add for 19081 LCD */
 	bool is_err_flag_irq_enabled;
 	bool err_flag_status;
 //#endif /* OPLUS_BUG_STABILITY */
@@ -419,13 +399,8 @@ int dsi_panel_parse_esd_reg_read_configs(struct dsi_panel *panel);
 
 void dsi_panel_ext_bridge_put(struct dsi_panel *panel);
 //#ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/11/21
- * Add for oppo display new structure
-*/
 int dsi_panel_tx_cmd_set(struct dsi_panel *panel,
 			   enum dsi_cmd_set_type type);
-/* add begin by zhangchaofan@ODM_LQ@Multimedia.TP,for tp resume upload fw 2019-11-14*/
 extern void lcd_queue_load_tp_fw(void);
-/* add end by zhangchaofan@ODM_LQ@Multimedia.TP,for tp resume upload fw 2019-11-14 */
 //#endif /* OPLUS_BUG_STABILITY */
 #endif /* _DSI_PANEL_H_ */

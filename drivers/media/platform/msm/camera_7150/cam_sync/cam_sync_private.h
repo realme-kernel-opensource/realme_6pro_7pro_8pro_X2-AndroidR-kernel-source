@@ -32,7 +32,6 @@
 
 #define CAM_SYNC_OBJ_NAME_LEN           64
 #ifdef VENDOR_EDIT
-/*modified by houyujun@Camera 20190716 for sync not enought*/
 #define CAM_SYNC_MAX_OBJS               2048
 #else
 #define CAM_SYNC_MAX_OBJS               1024

@@ -13,7 +13,6 @@ obj-y     = fork.o exec_domain.o panic.o \
 	    async.o range.o smpboot.o ucount.o
 
 #ifdef CONFIG_OPLUS_FEATURE_PANIC_FLUSH
-#yanwu@TECH.Storage.FS.oF2FS, 2019/09/13, flush device cache in panic if necessary
 obj-y += panic_flush.o
 #endif
 
@@ -126,12 +125,10 @@ obj-$(CONFIG_TORTURE_TEST) += torture.o
 obj-$(CONFIG_HAS_IOMEM) += memremap.o
 
 #ifdef OPLUS_FEATURE_UIFIRST
-#XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 obj-y += uifirst/
 #endif /* OPLUS_FEATURE_UIFIRST */
 
 #ifdef OPLUS_FEATURE_UIFIRST
-#Liujie.Xie@TECH.Kernel.Sched, 2020/03/23, add for heavy load task
 obj-y += oppo_special_opt/
 #endif /* OPLUS_FEATURE_UIFIRST */
 

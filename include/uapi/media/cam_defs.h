@@ -17,23 +17,19 @@
 #define CAM_SD_SHUTDOWN                         (CAM_COMMON_OPCODE_BASE + 0x7)
 #define CAM_FLUSH_REQ                           (CAM_COMMON_OPCODE_BASE + 0x8)
 #ifndef VENDOR_EDIT
-/*Modified by Zhengrong.Zhang@Cam.Drv, 20180421, for [ois calibration]*/
 #define CAM_COMMON_OPCODE_MAX                   (CAM_COMMON_OPCODE_BASE + 0x9)
 #else
 #define CAM_GET_FUSE_ID                         (CAM_COMMON_OPCODE_BASE + 0x9)
 #define CAM_GET_OIS_GYRO_OFFSET                 (CAM_COMMON_OPCODE_BASE + 0xA)
 #define CAM_GET_OIS_HALL_POSITION               (CAM_COMMON_OPCODE_BASE + 0xB)
-/*added by hongbo.dai@Cam.Drv, 20180501, for [Cam ois ]*/
 #define CAM_OIS_GYRO_OFFSET_CALIBRATION         (CAM_COMMON_OPCODE_BASE + 0xC)
 #define CAM_GET_OIS_EIS_HALL                    (CAM_COMMON_OPCODE_BASE + 0xD)
 #define CAM_SET_GYRO_POWER_STATUS               (CAM_COMMON_OPCODE_BASE + 0xE)
 #define CAM_GET_GYRO_NOISE                      (CAM_COMMON_OPCODE_BASE + 0xF)
-/*add by yufeng@camera, 20190618 for write eeprom */
 #define CAM_WRITE_CALIBRATION_DATA              (CAM_COMMON_OPCODE_BASE + 0x10)
 #define CAM_CHECK_CALIBRATION_DATA              (CAM_COMMON_OPCODE_BASE + 0x11)
 #define CAM_WRITE_AE_SYNC_DATA                  (CAM_COMMON_OPCODE_BASE + 0x12)
 #define CAM_GET_GYRO_ENERGY                     (CAM_COMMON_OPCODE_BASE + 0x13)
-//add by lifeiping@Cam.Drv, 20200423, add dpc read for imx471
 #define CAM_GET_DPC_DATA                        (CAM_COMMON_OPCODE_BASE + 0x14)
 #define CAM_COMMON_OPCODE_MAX                   (CAM_COMMON_OPCODE_BASE + 0x15)
 #endif
@@ -107,7 +103,6 @@ struct cam_control {
 	_IOWR('V', BASE_VIDIOC_PRIVATE, struct cam_control)
 
 #ifdef VENDOR_EDIT
-	/*add by hongbo.dai@Camera,20180326 for AT test*/
 #define VIDIOC_CAM_FTM_POWNER_UP 0
 #define VIDIOC_CAM_FTM_POWNER_DOWN 1
 #endif
@@ -678,7 +673,6 @@ struct cam_dump_req_cmd {
 };
 
 #ifdef VENDOR_EDIT
-/*zhixian.mai cam@drv , 20200416 add for hw interface  */
 #define CAM_OEM_COMMON_OPCODE_BASE                  0x8000
 
 #define CAM_OEM_RW_SIZE_MAX        128

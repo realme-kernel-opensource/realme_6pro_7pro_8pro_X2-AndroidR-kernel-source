@@ -145,7 +145,6 @@ TRACE_EVENT(block_rq_complete,
 		  __entry->nr_sector, __entry->error)
 );
 
-/*Hank.liu@PSW.BSP Kernel IO Latency  2019-03-19,block io time trace to collect a request information*/
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 /**
 * block_time - trace block io latency during send request to complete request 

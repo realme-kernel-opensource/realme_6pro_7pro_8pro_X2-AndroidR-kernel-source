@@ -17,7 +17,6 @@
 
 
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, Add for charging */
 #ifdef CONFIG_OPLUS_SM7125R_CHARGER
 #include "../../oppo/charger_ic/oplus_battery_msm7125_R.h"
 #elif defined CONFIG_OPLUS_SM7150R_CHARGER

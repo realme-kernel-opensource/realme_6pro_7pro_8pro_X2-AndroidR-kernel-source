@@ -615,8 +615,6 @@ source "drivers/misc/oppo_motor/Kconfig"
 #endif
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-#Fuchun.Liao@BSP.CHG.Basic 2018/11/26 modify for rf cable monitor
-#Qicai.Gu@BSP.TP, 2020/07/30, modify for rf cable monitor
 config OPLUS_RF_CABLE_MONITOR
 	bool "OPLUS rf cable monitor system"
 	depends on OF
@@ -627,7 +625,6 @@ config OPLUS_RF_CABLE_MONITOR
 #endif /* OPLUS_FEATURE_TP_BASIC */
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-#Qicai.Gu@BSP.TP, 2020/08/25, modify for sim detect
 config SIM_DETECT
 	tristate "SIM_DETECT system"
 	default n

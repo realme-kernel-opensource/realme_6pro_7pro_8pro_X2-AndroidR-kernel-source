@@ -89,6 +89,5 @@ config PROC_UID
 	help
 	Provides aggregated per-uid information under /proc/uid.
 #ifdef OPLUS_FEATURE_HEALTHINFO
-#//Huacai.Zhou@PSW.BSP.kernel.Peformance, 2018/06/18, add foreground process opt support
 source fs/proc/oppo_healthinfo/Kconfig
 #endif /* OPLUS_FEATURE_HEALTHINFO */

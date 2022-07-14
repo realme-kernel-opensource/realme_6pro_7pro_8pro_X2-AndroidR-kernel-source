@@ -5,11 +5,9 @@
 *                  Manage all charger IC and define abstarct function flow.
 * Version   : 1.0
 * Date      : 2015-06-22
-* Author    : fanhui@PhoneSW.BSP
 *           : Fanhong.Kong@ProDrv.CHG
 * ------------------------------ Revision History: --------------------------------
 * <version>         <date>              <author>                      <desc>
-* Revision 1.0    2015-06-22      fanhui@PhoneSW.BSP          Created for new architecture
 * Revision 1.0    2015-06-22      Fanhong.Kong@ProDrv.CHG     Created for new architecture
 ***********************************************************************************/
 
@@ -934,7 +932,6 @@ void oplus_chg_variables_reset(struct oplus_chg_chip *chip, bool in);
 void oplus_chg_external_power_changed(struct power_supply *psy);
 #endif
 int oplus_is_rf_ftm_mode(void);
-//huangtongfeng@BSP.CHG.Basic, 2017/01/13, add for kpoc charging param.
 int oplus_get_charger_chip_st(void);
 void oplus_chg_set_allow_switch_to_fastchg(bool allow);
 int oplus_tbatt_power_off_task_init(struct oplus_chg_chip *chip);

@@ -38,7 +38,6 @@
 #include <soc/oplus/system/oplus_project.h>
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/22, sjc Add for charging */
 #include "../oplus_charger.h"
 #include "../oplus_gauge.h"
 #include "../oplus_vooc.h"
@@ -61,7 +60,6 @@ static void smbchg_enter_shipmode(struct oplus_chg_chip *chip);
 /* wenbin.liu  add for TP issue */
 void __attribute__((weak)) switch_usb_state(int usb_state) {return;}
 
-/*Fanhong.Kong@PSW.BSP.CHG,add 2017/12/28 for batt safe hw feature*/
 static bool oplus_shortc_check_is_gpio(struct oplus_chg_chip *chip);
 static int oplus_shortc_gpio_init(struct oplus_chg_chip *chip);
 #define OPLUS_CHG_MONITOR_INTERVAL round_jiffies_relative(msecs_to_jiffies(5000))
@@ -70,7 +68,6 @@ static int oplus_shortc_gpio_init(struct oplus_chg_chip *chip);
 		__func__, ##__VA_ARGS__)	\
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/15, sjc Add for OTG debug */
 #define smblib_dbg(chg, reason, fmt, ...)			\
 	do {							\
 		if (*chg->debug_mask & (reason))		\
@@ -94,7 +91,6 @@ static int oplus_shortc_gpio_init(struct oplus_chg_chip *chip);
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/22
 // Add for smb debug log
 static int __debug_mask;
 #else
@@ -330,7 +326,6 @@ static int smblib_get_jeita_cc_delta(struct smb_charger *chg, int *cc_delta_ua)
 }
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2018/01/10
 // Add for not apply use android N
 int smblib_icl_override(struct smb_charger *chg, bool override)
 {
@@ -472,7 +467,6 @@ static const struct apsd_result const smblib_apsd_results[] = {
 		.pst	= POWER_SUPPLY_TYPE_USB_DCP
 	},
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/11/17
 // Add for float charger to DCP
 	[FLOAT] = {
 		.name	= "FLOAT",
@@ -530,7 +524,6 @@ static const struct apsd_result *smblib_get_apsd_result(struct smb_charger *chg)
 	if (apsd_stat & QC_CHARGER_BIT) {
 		/* since its a qc_charger, either return HVDCP3 or HVDCP2 */
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/25, sjc Modify for charging */
 		if (result != &smblib_apsd_results[HVDCP3])
 			result = &smblib_apsd_results[HVDCP2];
 #else
@@ -626,7 +619,6 @@ int smblib_set_charge_param(struct smb_charger *chg,
 	}
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/12/23
 // Add for chg registor debug    PVT delete
 	smblib_dbg(chg, PR_REGISTER, "%s = %d (0x%02x)\n",
 		   param->name, val_u, val_raw);
@@ -818,7 +810,6 @@ static const struct apsd_result *smblib_update_usb_type(struct smb_charger *chg)
 	const struct apsd_result *apsd_result = smblib_get_apsd_result(chg);
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/22
 // Add for chg log
 	chg_debug("***********  Type = %d, PD = %d, R_Type = %d **************\n",
 			apsd_result->pst, chg->pd_active, chg->real_charger_type);
@@ -842,7 +833,6 @@ static const struct apsd_result *smblib_update_usb_type(struct smb_charger *chg)
 					apsd_result->name, chg->pd_active);
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/22
 // Add for chg log
 	chg_debug("***********  APSD = %s  **************\n",apsd_result->name);
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
@@ -1010,7 +1000,6 @@ int smblib_rerun_apsd_if_required(struct smb_charger *chg)
 {
 	union power_supply_propval val;
 	int rc;
-/* wenbin.liu@BSP.CHG.Basic, 2017/12/06   Add for not rerun  if not usb */
 	const struct apsd_result *apsd_result;
 
 	rc = smblib_get_prop_usb_present(chg, &val);
@@ -1022,10 +1011,8 @@ int smblib_rerun_apsd_if_required(struct smb_charger *chg)
 	if (!val.intval)
 		return 0;
 
-/* wenbin.liu@BSP.CHG.Basic, 2017/12/06   Add for not rerun  if not usb */
 	apsd_result = smblib_get_apsd_result(chg);
 
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/06/19, sjc Modify to rerun apsd */
 	if ((apsd_result->pst != POWER_SUPPLY_TYPE_UNKNOWN)
 			&& (apsd_result->pst != POWER_SUPPLY_TYPE_USB)
 			&& (apsd_result->pst != POWER_SUPPLY_TYPE_USB_CDP)) {
@@ -1133,7 +1120,6 @@ static int set_sdp_current(struct smb_charger *chg, int icl_ua)
 		return -EINVAL;
 	}
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/20, sjc Add for charging */
 	if (icl_ua <= USBIN_150MA)
 		icl_options = 0;
 	else
@@ -1193,7 +1179,6 @@ int smblib_set_icl_current(struct smb_charger *chg, int icl_ua)
 	bool override;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/11, sjc Add for charging */
 	int boot_mode = get_boot_mode();
 	if (boot_mode == MSM_BOOT_MODE__RF || boot_mode == MSM_BOOT_MODE__WLAN) {
 		icl_ua = 0;
@@ -1402,7 +1387,6 @@ static int smblib_hvdcp_enable_vote_callback(struct votable *votable,
 	u8 val = HVDCP_AUTH_ALG_EN_CFG_BIT | HVDCP_EN_BIT;
 	u8 stat;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/11, sjc Add for disable HVDCP */
 	hvdcp_enable = 0;
 #endif
 
@@ -1415,7 +1399,6 @@ static int smblib_hvdcp_enable_vote_callback(struct votable *votable,
 	 * negotiation happens.
 	 */
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/28, sjc Modify for disable HVDCP */
 	val = 0;
 #else
 	if (!hvdcp_enable)
@@ -1645,7 +1628,6 @@ int smblib_vconn_regulator_is_enabled(struct regulator_dev *rdev)
  * OTG REGULATOR *
  *****************/
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/08, sjc Add for OTG */
 #define MAX_RETRY		30
 #else
 #define MAX_RETRY		15
@@ -1654,7 +1636,6 @@ int smblib_vconn_regulator_is_enabled(struct regulator_dev *rdev)
 #define MIN_DELAY_US		2000
 #define MAX_DELAY_US		9000
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/11/10 
 // Delete for otg current max is 1A 
 static int otg_current[] = {250000, 500000, 1000000, 1500000};
 #else
@@ -1739,7 +1720,6 @@ static int _smblib_vbus_regulator_enable(struct regulator_dev *rdev)
 	int rc;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/08/29, sjc Add for using gpio as OTG ID */
 	struct oplus_chg_chip *chip = g_oplus_chip;
 
 	if (chip && oplus_usbid_check_is_gpio(chip) && chip->chg_ops->check_chrdet_status())
@@ -2521,7 +2501,6 @@ int smblib_get_prop_usb_present(struct smb_charger *chg,
 }
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/05, sjc Add for charging */
 /*  when set USBIN_SUSPEND_BIT, use present instead of online */
 static bool usb_online_status = false;
 #endif
@@ -2532,7 +2511,6 @@ int smblib_get_prop_usb_online(struct smb_charger *chg,
 	u8 stat;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/05, sjc Add for charging */
 	if (usb_online_status == true) {
 		rc = smblib_read(chg, USBIN_BASE + INT_RT_STS_OFFSET, &stat);
 		if (rc < 0) {
@@ -2548,7 +2526,6 @@ int smblib_get_prop_usb_online(struct smb_charger *chg,
 	if (get_client_vote_locked(chg->usb_icl_votable, USER_VOTER) == 0) {
 		val->intval = false;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/04, sjc Add for debug */
 		chg_debug(": false\n");
 #endif
 		return rc;
@@ -2864,7 +2841,6 @@ int smblib_get_prop_die_health(struct smb_charger *chg,
 #define SDP_CURRENT_UA			500000
 #define CDP_CURRENT_UA			1500000
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/11/27 
 // Delete for oplus dcp 2A 
 #define DCP_CURRENT_UA			1500000
 #else
@@ -3667,7 +3643,6 @@ void smblib_usb_plugin_hard_reset_locked(struct smb_charger *chg)
 		smblib_cc2_sink_removal_exit(chg);
 	} else {
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/22, sjc Add for charging */
 		oplus_vooc_reset_fastchg_after_usbout();
 		if (oplus_vooc_get_fastchg_started() == false && g_oplus_chip) {
 			smbchg_set_chargerid_switch_val(g_oplus_chip, 0);
@@ -3694,7 +3669,6 @@ void smblib_usb_plugin_hard_reset_locked(struct smb_charger *chg)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/25, sjc Add for charging */
 	if (vbus_rising) {
 		cancel_delayed_work_sync(&chg->chg_monitor_work);
 		schedule_delayed_work(&chg->chg_monitor_work, OPLUS_CHG_MONITOR_INTERVAL);
@@ -3713,7 +3687,6 @@ void smblib_usb_plugin_hard_reset_locked(struct smb_charger *chg)
 
 	power_supply_changed(chg->usb_psy);
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/24
 // Add for charging	
 	smblib_dbg(chg, PR_INTERRUPT, "IRQ: usbin-plugin %s\n",
 					vbus_rising ? "attached" : "detached");
@@ -3752,7 +3725,6 @@ void smblib_usb_plugin_locked(struct smb_charger *chg)
 					msecs_to_jiffies(PL_DELAY_MS));
 	} else {
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/22, sjc Add for charging */
 		oplus_vooc_reset_fastchg_after_usbout();
 		if (oplus_vooc_get_fastchg_started() == false && g_oplus_chip) {
 			smbchg_set_chargerid_switch_val(g_oplus_chip, 0);
@@ -3786,7 +3758,6 @@ void smblib_usb_plugin_locked(struct smb_charger *chg)
 		smblib_micro_usb_plugin(chg, vbus_rising);
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/25, sjc Add for charging */
 	if (vbus_rising) {
 		cancel_delayed_work_sync(&chg->chg_monitor_work);
 		schedule_delayed_work(&chg->chg_monitor_work, OPLUS_CHG_MONITOR_INTERVAL);
@@ -3805,7 +3776,6 @@ void smblib_usb_plugin_locked(struct smb_charger *chg)
 
 	power_supply_changed(chg->usb_psy);
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/24
 // Add for charging
 	smblib_dbg(chg, PR_INTERRUPT, "IRQ: usbin-plugin %s\n",
 				vbus_rising ? "attached" : "detached");
@@ -4136,7 +4106,6 @@ static void smblib_handle_apsd_done(struct smb_charger *chg, bool rising)
 	}
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Vooc/Basic/Gauge, 2017/09/24
 // Add for charging
 	smblib_dbg(chg, PR_INTERRUPT, "IRQ: apsd-done rising; %s detected\n",
 		   apsd_result->name);
@@ -4167,7 +4136,6 @@ irqreturn_t smblib_handle_usb_source_change(int irq, void *data)
 		 * charger-mis-detection.
 		 */
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/06/19, sjc Modify to rerun apsd */
 		chg->uusb_apsd_rerun_done = true;
 		smblib_rerun_apsd(chg);
 		return IRQ_HANDLED;
@@ -4184,7 +4152,6 @@ irqreturn_t smblib_handle_usb_source_change(int irq, void *data)
 		(bool)(stat & APSD_DTC_STATUS_DONE_BIT));
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/25, sjc Add for charging */
 	if ((bool)(stat & APSD_DTC_STATUS_DONE_BIT))
 		oplus_chg_wake_update_work();
 #endif
@@ -4502,7 +4469,6 @@ static void smblib_usb_typec_change(struct smb_charger *chg)
 }
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/07/31, sjc Add for using gpio as OTG ID*/
 irqreturn_t usbid_change_handler(int irq, void *data)
 {
 	struct oplus_chg_chip *chip = data;
@@ -4558,7 +4524,6 @@ irqreturn_t smblib_handle_dc_plugin(int irq, void *data)
 	struct smb_charger *chg = irq_data->parent_data;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/09, sjc Add for charging */
 	if (chg->dc_psy)
 #endif
 	power_supply_changed(chg->dc_psy);
@@ -4615,7 +4580,6 @@ irqreturn_t smblib_handle_switcher_power_ok(int irq, void *data)
 
 	if (is_storming(&irq_data->storm_data)) {
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/12/29
 // Add for  add  android N code
 		/* This could be a weak charger reduce ICL */
 		if (!is_client_vote_enabled(chg->usb_icl_votable,
@@ -4644,7 +4608,6 @@ irqreturn_t smblib_handle_switcher_power_ok(int irq, void *data)
 				msecs_to_jiffies(BOOST_BACK_UNVOTE_DELAY_MS));
 		}
 #else
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/13, sjc Modify for charging */
 		if (printk_ratelimit())
 			smblib_err(chg, "Reverse boost detected: voting 0mA to suspend input\n");
 		if (chg->real_charger_type != POWER_SUPPLY_TYPE_USB_CDP
@@ -4715,12 +4678,10 @@ static void smblib_uusb_otg_work(struct work_struct *work)
 	u8 stat;
 	bool otg;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/03, sjc Add for charging */
 	static bool otg_status = 0;
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/07/31, sjc Modify for using gpio as OTG ID*/
 	struct oplus_chg_chip *chip = g_oplus_chip;
 	union power_supply_propval ret = {0,};
 
@@ -4755,7 +4716,6 @@ static void smblib_uusb_otg_work(struct work_struct *work)
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/01, sjc Add for charging */
 	if (otg_status ^ otg) {
 		otg_status = otg;
 		chg_debug("smblib_handle_usb_typec_change_for_uusb: [%d]\n", otg_status);
@@ -5127,7 +5087,6 @@ unlock:
 }
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/25, sjc Add for charging */
 static int oplus_chg_get_fv_monitor(struct oplus_chg_chip *chip)
 {
 	int default_fv = 0;
@@ -5500,7 +5459,6 @@ int smblib_init(struct smb_charger *chg)
 	INIT_DELAYED_WORK(&chg->otg_ss_done_work, smblib_otg_ss_done_work);
 	INIT_DELAYED_WORK(&chg->icl_change_work, smblib_icl_change_work);
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/25, sjc Add for charging */
 	INIT_DELAYED_WORK(&chg->chg_monitor_work, oplus_chg_monitor_work);
 #endif
 	INIT_DELAYED_WORK(&chg->pl_enable_work, smblib_pl_enable_work);
@@ -5592,7 +5550,6 @@ module_param_named(
 	weak_chg_icl_ua, __weak_chg_icl_ua, int, S_IRUSR | S_IWUSR);
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/27, sjc Modify for OTG current limit (V3.1)  */
 #define MICRO_1P5A	1500000
 #else
 #define MICRO_1P5A	1000000
@@ -5719,7 +5676,6 @@ static int smb2_parse_dt(struct smb2 *chip)
 	chg->micro_usb_mode = of_property_read_bool(node, "qcom,micro-usb");
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/22, sjc Add for charging*/
 	if (g_oplus_chip) {
 		g_oplus_chip->normalchg_gpio.chargerid_switch_gpio = 
 				of_get_named_gpio(node, "qcom,chargerid_switch-gpio", 0);
@@ -5741,7 +5697,6 @@ static int smb2_parse_dt(struct smb2 *chip)
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/12, sjc Add for BOB noise*/
 	if (!chg->pm660l_bob_reg && of_get_property(node, "pm660l_bob-supply", NULL)) {
 		chg->pm660l_bob_reg = devm_regulator_get(chg->dev, "pm660l_bob");
 		if (IS_ERR(chg->pm660l_bob_reg)) {
@@ -5752,7 +5707,6 @@ static int smb2_parse_dt(struct smb2 *chip)
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/07/31, sjc Add for using gpio as OTG ID*/
 	if (g_oplus_chip) {
 		g_oplus_chip->normalchg_gpio.usbid_gpio =
 				of_get_named_gpio(node, "qcom,usbid-gpio", 0);
@@ -5775,7 +5729,7 @@ static int smb2_parse_dt(struct smb2 *chip)
 	}
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
 
-#ifdef OPLUS_FEATURE_CHG_BASIC//Fanhong.Kong@PSW.BSP.CHG,add 2017/12/02 for shipmode  stm6620
+#ifdef OPLUS_FEATURE_CHG_BASIC
     if (g_oplus_chip) {
 		g_oplus_chip->normalchg_gpio.ship_gpio = 
 				of_get_named_gpio(node, "qcom,ship-gpio", 0);
@@ -5823,7 +5777,6 @@ static int smb2_parse_dt(struct smb2 *chip)
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/28, sjc Modify for charging */
 	chg->dcp_icl_ua = chip->dt.usb_icl_ua;
 #else
 	chg->dcp_icl_ua = -EINVAL;
@@ -5862,7 +5815,6 @@ static enum power_supply_property smb2_usb_props[] = {
 	POWER_SUPPLY_PROP_BOOST_CURRENT,
 	POWER_SUPPLY_PROP_PE_START,
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/18, sjc Add for OTG sw */
 	POWER_SUPPLY_PROP_OTG_SWITCH,
 	POWER_SUPPLY_PROP_OTG_ONLINE,
 #endif
@@ -5876,7 +5828,6 @@ static enum power_supply_property smb2_usb_props[] = {
 };
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/18, sjc Add for OTG sw */
 bool __attribute__((weak)) oplus_get_otg_switch_status(void)
 {
 	return false;
@@ -5894,7 +5845,6 @@ void __attribute__((weak)) oplus_set_otg_switch_status(bool value)
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/26, sjc Add for charging */
 static bool use_present_status = false;
 #endif
 
@@ -5915,7 +5865,6 @@ static int smb2_usb_get_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_ONLINE:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/26, sjc Modify for charging */
 		if (use_present_status)
 			rc = smblib_get_prop_usb_present(chg, val);
 		else
@@ -6001,7 +5950,6 @@ static int smb2_usb_get_prop(struct power_supply *psy,
 		rc = smblib_get_pe_start(chg, val);
 		break;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/18, sjc Add for OTG sw */
 	case POWER_SUPPLY_PROP_OTG_SWITCH:
 		val->intval = oplus_get_otg_switch_status();
 		break;
@@ -6051,7 +5999,6 @@ static int smb2_usb_set_prop(struct power_supply *psy,
 	mutex_lock(&chg->lock);
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/11/02
 // Add for enable otg_switch all the time
 	if (!chg->typec_present) {
 		rc = -EINVAL;
@@ -6084,7 +6031,6 @@ static int smb2_usb_set_prop(struct power_supply *psy,
 		rc = smblib_set_prop_boost_current(chg, val);
 		break;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/18, sjc Add for OTG sw */
 	case POWER_SUPPLY_PROP_OTG_SWITCH:
 		oplus_set_otg_switch_status(!!val->intval);
 		break;
@@ -6121,7 +6067,6 @@ static int smb2_usb_prop_is_writeable(struct power_supply *psy,
 {
 	switch (psp) {
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/18, sjc Add for OTG sw */
 	case POWER_SUPPLY_PROP_OTG_SWITCH:
 #endif
 	case POWER_SUPPLY_PROP_CTM_CURRENT_MAX:
@@ -6140,7 +6085,6 @@ static int smb2_init_usb_psy(struct smb2 *chip)
 
 	chg->usb_psy_desc.name			= "usb";
 #ifndef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/22 
 // Delete for usb init unknow 
 	chg->usb_psy_desc.type			= POWER_SUPPLY_TYPE_USB_PD;
 #else
@@ -6383,7 +6327,6 @@ static int smb2_init_usb_main_psy(struct smb2 *chip)
  *************************/
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Delete for charging*/
 static enum power_supply_property smb2_dc_props[] = {
 	POWER_SUPPLY_PROP_PRESENT,
 	POWER_SUPPLY_PROP_ONLINE,
@@ -6488,7 +6431,6 @@ static int smb2_init_dc_psy(struct smb2 *chip)
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/07, sjc Add for charging*/
 /*************************
  * AC PSY REGISTRATION *
  *************************/
@@ -6599,7 +6541,6 @@ static enum power_supply_property smb2_batt_props[] = {
 	/*add current for cts test by wenbin.liu*/
 	POWER_SUPPLY_PROP_CURRENT_MAX,
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	POWER_SUPPLY_PROP_CHARGE_NOW,
 	POWER_SUPPLY_PROP_AUTHENTICATE,
 	POWER_SUPPLY_PROP_CHARGE_TIMEOUT,
@@ -6642,7 +6583,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 	switch (psp) {
 	case POWER_SUPPLY_PROP_STATUS:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip) {
 			if (oplus_chg_show_vooc_logo_ornot() == 1)
 				val->intval = POWER_SUPPLY_STATUS_CHARGING;
@@ -6659,7 +6599,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_HEALTH:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip)
 			val->intval = oplus_chg_get_prop_batt_health(g_oplus_chip);
 		else
@@ -6671,7 +6610,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 
 	case POWER_SUPPLY_PROP_PRESENT:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip)
 			val->intval = g_oplus_chip->batt_exist;
 		else
@@ -6690,7 +6628,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 
 	case POWER_SUPPLY_PROP_CAPACITY:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip)
 			val->intval = g_oplus_chip->ui_soc;
 		else
@@ -6704,7 +6641,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 		rc = smblib_get_prop_system_temp_level(chg, val);
 		break;
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/07, sjc Modify for charging */
 /* CHARGER_TEMP and CHARGER_TEMP_MAX is dependent on FG and only for HVDCP */
 	case POWER_SUPPLY_PROP_CHARGER_TEMP:
 		/* do not query RRADC if charger is not present */
@@ -6736,7 +6672,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip)
 			val->intval = g_oplus_chip->batt_volt * 1000;
 		else
@@ -6758,7 +6693,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_CURRENT_NOW:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip) {
 			if (oplus_vooc_get_fastchg_started() == true) {
 				g_oplus_chip->icharging = oplus_gauge_get_prev_batt_current();
@@ -6783,7 +6717,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_TEMP:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Modify for charging*/
 		if (g_oplus_chip)
 			val->intval = g_oplus_chip->temperature;
 		else
@@ -6809,7 +6742,6 @@ static int smb2_batt_get_prop(struct power_supply *psy,
 		break;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	case POWER_SUPPLY_PROP_CHARGE_NOW:
 		if (g_oplus_chip)
 			val->intval = g_oplus_chip->charger_volt;
@@ -7048,7 +6980,6 @@ static int smb2_batt_set_prop(struct power_supply *psy,
 		break;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	case POWER_SUPPLY_PROP_MMI_CHARGING_ENABLE:
 		if (g_oplus_chip) {
 			if (val->intval == 0) {
@@ -7138,7 +7069,6 @@ static int smb2_batt_prop_is_writeable(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_SW_JEITA_ENABLED:
 		return 1;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	case POWER_SUPPLY_PROP_MMI_CHARGING_ENABLE:
 #ifdef CONFIG_OPLUS_SHIP_MODE_SUPPORT
 	case POWER_SUPPLY_PROP_SHIP_MODE:
@@ -7383,7 +7313,6 @@ static int smb2_configure_typec(struct smb_charger *chg)
 }
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/11, sjc Add for OTG */
 static int smb2_disable_typec(struct smb_charger *chg)
 {
 	int rc;
@@ -7454,7 +7383,6 @@ static int smb2_disable_typec(struct smb_charger *chg)
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/24, sjc Add for otg id value change support */
 static void otg_enable_pmic_id_value (void)
 {
 	int rc;
@@ -7606,7 +7534,6 @@ static int smb2_init_hw(struct smb2 *chip)
 
 	/* set OTG current limit */
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/08, sjc Modify for OTG */
 	rc = smblib_set_charge_param(chg, &chg->param.otg_cl,
 				(chg->wa_flags & OTG_WA) ?
 				chg->param.otg_cl.min_u : chg->otg_cl_ua);
@@ -7621,7 +7548,6 @@ static int smb2_init_hw(struct smb2 *chip)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/27, sjc Add for OTG battery UVLO */
 	smblib_masked_write(chg, BAT_UVLO_THRESHOLD_CFG_REG, BAT_UVLO_THRESHOLD_MASK, 0x3);
 #endif
 
@@ -7666,7 +7592,6 @@ static int smb2_init_hw(struct smb2 *chip)
 	vote(chg->pd_disallowed_votable_indirect, MICRO_USB_VOTER,
 			chg->micro_usb_mode, 0);
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/20, sjc Modify for charging */
 	vote(chg->hvdcp_enable_votable, MICRO_USB_VOTER,
 			chg->micro_usb_mode, 0);
 #else
@@ -7679,7 +7604,6 @@ static int smb2_init_hw(struct smb2 *chip)
 	 * start from min and AICL ADC disable
 	 */
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/06, sjc Modify for charging */
 	rc = smblib_masked_write(chg, USBIN_AICL_OPTIONS_CFG_REG,
 			SUSPEND_ON_COLLAPSE_USBIN_BIT | USBIN_AICL_START_AT_MAX_BIT
 				| USBIN_AICL_ADC_EN_BIT | USBIN_AICL_RERUN_EN_BIT, USBIN_AICL_RERUN_EN_BIT);
@@ -7714,7 +7638,6 @@ static int smb2_init_hw(struct smb2 *chip)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/11, sjc Modify for OTG */
 	if (chg->micro_usb_mode)
 		rc = smb2_disable_typec(chg);
 	else
@@ -7794,7 +7717,6 @@ static int smb2_init_hw(struct smb2 *chip)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/14, sjc Add for charging */
 	/* disable FG default iterm */
 	rc = smblib_masked_write(chg, FG_UPDATE_CFG_2_SEL_REG,
 				IBT_LT_CHG_TERM_THRESH_SEL_BIT, 1);
@@ -7820,36 +7742,30 @@ static int smb2_init_hw(struct smb2 *chip)
 		return rc;
 	}
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/02/22, sjc Add for GPS */
 	/* disable FG ESR for GPS, NOTE: this is not final solution */
 	rc = smblib_write(chg, 0x4169, 0x0);
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/29, sjc Add for TYPE_C_CHANGE_IRQ storm(and counter current) */
 	smblib_masked_write(chg, 0x1380, 0x03, 0x3);
 	smblib_masked_write(chg, 0x1365, 0x03, 0x3);
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/06/28, sjc Add for reducing DCD timeout */
 	smblib_masked_write(chg, 0x1363, 0x20, 0);
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/06/29, sjc Add for reducing chg delay after unsuspend */
 	smblib_masked_write(chg, 0x1052, 0x02, 0);
 	smblib_masked_write(chg, 0x1053, 0x40, 0);
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Gauge, 2017/12/13
 // Add for disable  thermal cfg
 	smblib_masked_write(chg, 0x1670, 0xff, 0);
 #endif /*OPLUS_FEATURE_CHG_BASIC*/
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/24, sjc Add for otg id value change support */
 	otg_disable_pmic_id_value();
 #endif
 
@@ -8060,7 +7976,6 @@ static int smb2_determine_initial_status(struct smb2 *chip)
 		smblib_suspend_on_debug_battery(chg);
 	smblib_handle_usb_plugin(0, &irq_data);
 #ifdef OPLUS_FEATURE_CHG_BASIC
-	/* Jianchao.Shi@BSP.CHG.Basic, 2017/08/29, sjc Modify for using gpio as OTG ID */
 	if (oplus_usbid_check_is_gpio(g_oplus_chip) == false)
 		smblib_handle_usb_typec_change(0, &irq_data);
 #else
@@ -8285,7 +8200,6 @@ static int smb2_request_interrupt(struct smb2 *chip,
 		return 0;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/07/31, sjc Add for using gpio as OTG ID*/
 	if (irq_index == TYPE_C_CHANGE_IRQ/* || strcmp(irq_name, "type-c-change") == 0*/) {
 		if (g_oplus_chip && oplus_usbid_check_is_gpio(g_oplus_chip) == true) {
 			printk(KERN_ERR "[OPLUS_CHG] usbid is gpio\n");
@@ -8396,7 +8310,6 @@ static int force_dc_psy_update_write(void *data, u64 val)
 	struct smb_charger *chg = data;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/09, sjc Add for charging */
 	if (chg->dc_psy)
 #endif
 		power_supply_changed(chg->dc_psy);
@@ -8445,7 +8358,6 @@ static void smb2_create_debugfs(struct smb2 *chip)
 
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/22, sjc Add for dump registers */
 static bool d_reg_mask = false;
 static ssize_t dump_registers_mask_write(struct file *file, const char __user *buff, size_t count, loff_t *ppos)
 {
@@ -8484,7 +8396,6 @@ static void init_proc_dump_registers_mask(void)
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 #ifndef USE_8998_FILE
 //static int get_boot_mode(void);
 static int smbchg_usb_suspend_disable(struct oplus_chg_chip *chip);
@@ -9125,7 +9036,6 @@ void smbchg_set_chargerid_switch_val(struct oplus_chg_chip *chip, int value)
 #if 0
 	if (chip->pmic_spmi.not_support_1200ma && !value && !is_usb_present(chip)) {
 	/* BugID 879716 : Solve some situatuion ChargerID is not 0 mV when usb is not present */
-	// wenbin.liu@BSP.CHG.Basic, 2016/11/14
 		chip->chargerid_volt = 0;
 		chip->chargerid_volt_got = false;
 	}
@@ -9161,7 +9071,6 @@ static int smbchg_get_chargerid_switch_val(struct oplus_chg_chip *chip)
 }
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/07/31, sjc Add for using gpio as OTG ID*/
 static int oplus_usbid_gpio_init(struct oplus_chg_chip *chip)
 {
 	chip->normalchg_gpio.pinctrl = devm_pinctrl_get(chip->dev);
@@ -9262,7 +9171,7 @@ bool oplus_usbid_check_is_gpio(struct oplus_chg_chip *chip)
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 
-#ifdef OPLUS_FEATURE_CHG_BASIC//Fanhong.Kong@PSW.BSP.CHG,add 2017/12/02 for shipmode  stm6620
+#ifdef OPLUS_FEATURE_CHG_BASIC
 static bool oplus_ship_check_is_gpio(struct oplus_chg_chip *chip)
 {
 	if (gpio_is_valid(chip->normalchg_gpio.ship_gpio))
@@ -9806,7 +9715,6 @@ struct oplus_chg_operations  smb2_chg_ops = {
 #endif /* OPLUS_FEATURE_CHG_BASIC */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/12, sjc Add for BOB noise*/
 #define REGULATOR_MODE_FAST			0x1
 #define REGULATOR_MODE_NORMAL			0x2
 #define REGULATOR_MODE_IDLE			0x4
@@ -9909,7 +9817,6 @@ EXPORT_SYMBOL_GPL(pm660l_bob_regulator_set_mode);
 static int smb2_probe(struct platform_device *pdev)
 {
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	struct oplus_chg_chip *oplus_chip;
 	struct power_supply *main_psy = NULL;
 	union power_supply_propval pval = {0, };
@@ -9921,7 +9828,6 @@ static int smb2_probe(struct platform_device *pdev)
 	int usb_present, batt_present, batt_health, batt_charge_type;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	chg_debug("SMB2_Probe Start\n");
 	if (oplus_gauge_check_chip_is_null()) {
 		chg_err("gauge chip null, will do after bettery init.\n");
@@ -9934,7 +9840,6 @@ static int smb2_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	oplus_chip = devm_kzalloc(&pdev->dev, sizeof(*oplus_chip), GFP_KERNEL);
 	if (!oplus_chip)
 		return -ENOMEM;
@@ -9954,12 +9859,10 @@ static int smb2_probe(struct platform_device *pdev)
 	chg->name = "PMI";
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/08/10, sjc Add for charging */
 	chg->pre_current_ma = -1;
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/22, sjc Add for charging*/
 	if (of_find_property(oplus_chip->dev->of_node, "qcom,pm660chg-vadc", NULL)) {
 		oplus_chip->pmic_spmi.pm660_vadc_dev = qpnp_get_vadc(oplus_chip->dev, "pm660chg");
 		if (IS_ERR(oplus_chip->pmic_spmi.pm660_vadc_dev)) {
@@ -10040,7 +9943,6 @@ static int smb2_probe(struct platform_device *pdev)
 	}
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Delete for charging*/
 	rc = smb2_init_dc_psy(chip);
 	if (rc < 0) {
 		pr_err("Couldn't initialize dc psy rc=%d\n", rc);
@@ -10049,7 +9951,6 @@ static int smb2_probe(struct platform_device *pdev)
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/07, sjc Add for charging*/
 	rc = smb2_init_ac_psy(chip);
 	if (rc < 0) {
 		pr_err("Couldn't initialize ac psy rc=%d\n", rc);
@@ -10082,7 +9983,6 @@ static int smb2_probe(struct platform_device *pdev)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/11, sjc Add for charging*/
 	if (oplus_chg_is_usb_present()) {
 		rc = smblib_masked_write(chg, CHARGING_ENABLE_CMD_REG,
 				CHARGING_ENABLE_CMD_BIT, 0);
@@ -10097,7 +9997,6 @@ static int smb2_probe(struct platform_device *pdev)
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	oplus_chg_parse_dt(oplus_chip);
 	oplus_chg_init(oplus_chip);
 	main_psy = power_supply_get_by_name("main");
@@ -10129,7 +10028,6 @@ static int smb2_probe(struct platform_device *pdev)
 	}
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/07/31, sjc Add for using gpio as OTG ID*/
 	if (oplus_usbid_check_is_gpio(oplus_chip) == true)
 		oplus_usbid_irq_register(oplus_chip);
 #endif
@@ -10144,7 +10042,6 @@ static int smb2_probe(struct platform_device *pdev)
 
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2016/12/26, sjc Add for charging*/
 	g_oplus_chip->authenticate = oplus_gauge_get_batt_authenticate();
 	if(!g_oplus_chip->authenticate)
 		smbchg_charging_disble(g_oplus_chip);
@@ -10166,7 +10063,6 @@ static int smb2_probe(struct platform_device *pdev)
 	batt_present = val.intval;
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/04/27, sjc Modify for charging */
 	rc = smblib_get_prop_batt_health(chg, &val);
 	if (rc < 0) {
 		pr_err("Couldn't get batt health rc=%d\n", rc);
@@ -10186,11 +10082,9 @@ static int smb2_probe(struct platform_device *pdev)
 
 	device_init_wakeup(chg->dev, true);
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/05/22, sjc Add for dump register */
 	init_proc_dump_registers_mask();
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// wenbin.liu@BSP.CHG.Basic, 2017/09/21
 // Add for charge log
 	chg_debug("QPNP SMB2 probed successfully usb:present=%d type=%d batt:present = %d health = %d charge = %d\n",
 		usb_present, chg->real_charger_type,
@@ -10247,7 +10141,6 @@ static void smb2_shutdown(struct platform_device *pdev)
 	struct smb_charger *chg = &chip->chg;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/22, sjc Add for charging*/
 	if (g_oplus_chip) {
 		smbchg_set_chargerid_switch_val(g_oplus_chip, 0);
 		msleep(30);
@@ -10273,7 +10166,7 @@ static void smb2_shutdown(struct platform_device *pdev)
 	smblib_masked_write(chg, USBIN_OPTIONS_1_CFG_REG,
 				 AUTO_SRC_DETECT_BIT, AUTO_SRC_DETECT_BIT);
 				 				 
-#ifdef OPLUS_FEATURE_CHG_BASIC//Fanhong.Kong@PSW.BSP.CHG,add 2017/12/02 for shipmode  stm6620				 
+#ifdef OPLUS_FEATURE_CHG_BASIC
 //ship_mode:
  	if(g_oplus_chip->enable_shipmode) {
 		msleep(1000);	
@@ -10293,7 +10186,6 @@ static struct platform_driver smb2_driver = {
 		.owner		= THIS_MODULE,
 		.of_match_table	= match_table,
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/01/25, sjc Add for charging */
 		.pm		= &smb2_pm_ops,
 #endif
 	},

@@ -161,7 +161,6 @@ static struct sysrq_key_op sysrq_reboot_op = {
 };
 
 #ifdef CONFIG_OPLUS_FEATURE_PANIC_FLUSH
-/* yanwu@TECH.Storage.FS.oF2FS, 2019-09-16, add for urgent flush */
 extern int panic_flush_device_cache(int timeout);
 static void sysrq_handle_flush(int key)
 {
@@ -500,7 +499,6 @@ static struct sysrq_key_op *sysrq_key_table[36] = {
 	NULL,				/* x */
 	/* y: May be registered on sparc64 for global register dump */
 #ifdef CONFIG_OPLUS_FEATURE_PANIC_FLUSH
-/* yanwu@TECH.Storage.FS.oF2FS, 2019-09-16, add for urgent flush */
 	&sysrq_flush_op,                 /* y */
 #else
 	NULL,				/* y */

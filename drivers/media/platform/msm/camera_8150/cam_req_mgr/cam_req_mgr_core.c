@@ -350,14 +350,12 @@ static void __cam_req_mgr_reset_req_slot(struct cam_req_mgr_core_link *link,
 	slot = &in_q->slot[idx];
 
 #ifndef VENDOR_EDIT
-/* jiangyi1@Camera.drv, 20190827, GSI testReprocessAbort */
 	CAM_DBG(CAM_CRM, "RESET: last applied idx %d: idx %d: slot->status %d",
 			in_q->last_applied_idx, idx, slot->status);
 #endif
 
 	/* Check if CSL has already pushed new request*/
 #ifndef VENDOR_EDIT
-/* jiangyi1@Camera.drv, 20190827, GSI testReprocessAbort */
 	if (slot->status == CRM_SLOT_STATUS_REQ_ADDED ||
 		in_q->last_applied_idx == idx)
 		return;
@@ -1180,7 +1178,6 @@ static int __cam_req_mgr_process_req(struct cam_req_mgr_core_link *link,
 			 * CRM. Below code retains the last applied request.
 			 */
 #ifndef VENDOR_EDIT
-/* jiangyi1@Camera.drv, 20190827, GSI testReprocessAbort */
 			if (slot->req_id > 0) {
 				last_app_idx = in_q->last_applied_idx;
 				in_q->last_applied_idx = idx;

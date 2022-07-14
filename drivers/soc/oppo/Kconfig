@@ -21,6 +21,5 @@ source "drivers/soc/oppo/project_info/Kconfig"
 source "drivers/soc/oppo/device_info/Kconfig"
 
 #ifdef OPLUS_ARCH_EXTENDS
-#GaoTing.Gan@PSW.MultiMedia.MediaServer, 2019/03/07, Add for kevent feedback
 source "drivers/soc/oppo/oppo_kevent_feedback/Kconfig"
 #endif /* OPLUS_ARCH_EXTENDS */

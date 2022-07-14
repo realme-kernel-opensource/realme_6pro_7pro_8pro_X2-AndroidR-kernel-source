@@ -703,9 +703,6 @@ enum dsi_pixel_format dsi_display_get_dst_format(
  */
 int dsi_display_cont_splash_config(void *display);
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.LCD.Stability,2018/10/21
- * Add for support aod,hbm,seed
-*/
 struct dsi_display *get_main_display(void);
 
 /* Add for implement panel register read */

@@ -51,9 +51,6 @@
 #include "soc/qcom/secure_buffer.h"
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability, 2020/3/31, for
- * decoupling display driver
-*/
 #include "oppo_display_private_api.h"
 #include "oppo_onscreenfingerprint.h"
 #endif /* OPLUS_BUG_STABILITY */
@@ -1386,9 +1383,6 @@ static int _sde_kms_setup_displays(struct drm_device *dev,
 		.pre_kickoff  = dsi_conn_pre_kickoff,
 		.clk_ctrl = dsi_display_clk_ctrl,
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability, 2020/3/31, for
- * decoupling display driver
-*/
 		.set_power = dsi_display_oppo_set_power,
 #else
 		.set_power = dsi_display_set_power,

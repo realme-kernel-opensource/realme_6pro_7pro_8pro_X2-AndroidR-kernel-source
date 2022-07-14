@@ -35,7 +35,6 @@ static struct device_type power_supply_dev_type;
 #define POWER_SUPPLY_DEFERRED_REGISTER_TIME	msecs_to_jiffies(10)
 
 #ifdef CONFIG_OPLUS_FEATURE_PANIC_FLUSH
-/*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add control ext4 fsync*/
 extern int sysctl_ext4_fsync_enable;
 extern int ext4_fsync_enable_status;
 
@@ -117,7 +116,6 @@ static void power_supply_changed_work(struct work_struct *work)
 				      __power_supply_changed_work);
 		power_supply_update_leds(psy);
 #ifdef CONFIG_OPLUS_FEATURE_PANIC_FLUSH
-/*jason.tang@TECH.BSP.Kernel.Storage, 2019-05-20, add control ext4 fsync*/
 		if(sysctl_ext4_fsync_enable) {
 			power_supply_update_fsync(psy);
 		} else {

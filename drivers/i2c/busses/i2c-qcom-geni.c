@@ -862,8 +862,16 @@ static int geni_i2c_xfer(struct i2c_adapter *adap,
 
 			if (!timeout) {
 				GENI_SE_ERR(gi2c->ipcl, true, gi2c->dev,
-					"Abort\n");
+					"Cancel failed\n");
+				reinit_completion(&gi2c->xfer);
 				geni_abort_m_cmd(gi2c->base);
+				mutex_unlock(&gi2c->i2c_ssr.ssr_lock);
+				timeout =
+				wait_for_completion_timeout(&gi2c->xfer, HZ);
+				mutex_lock(&gi2c->i2c_ssr.ssr_lock);
+				 if (!timeout)
+					GENI_SE_ERR(gi2c->ipcl, true, gi2c->dev,
+						"Abort failed\n");
 			}
 		}
 		gi2c->cur_wr = 0;

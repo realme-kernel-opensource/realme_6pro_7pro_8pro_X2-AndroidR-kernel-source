@@ -26,7 +26,6 @@
 #define MMC_AUTOSUSPEND_DELAY_MS	3000
 
 #ifdef VENDOR_EDIT
-//Gavin.Lei@BSP.Storage.SDCard 2020-7-20 Add for abnormal SD card compatible
 #define MAX_MULTIREAD_TIMEOUT_ERR_CNT 10
 #define MMC_MULTIREAD_CNT_WINDOW_S   (150)
 #define MAX_MULTIWRITE_TIMEOUT_ERR_CNT 10
@@ -612,7 +611,6 @@ struct mmc_host {
 	struct delayed_work	detect;
 	int			detect_change;	/* card detect flag */
 #ifdef VENDOR_EDIT
-//Lycan.Wang@Prd.BasicDrv, 2014-07-10 Add for retry 5 times when new sdcard init error
     int detect_change_retry;
 #endif /* VENDOR_EDIT */
 	struct mmc_slot		slot;
@@ -632,7 +630,6 @@ struct mmc_host {
 	atomic_t		sdio_irq_thread_abort;
 
 #ifdef VENDOR_EDIT
-//yh@bsp, 2015-10-21 Add for special card compatible
         bool                    card_stuck_in_programing_status;
 #endif /* VENDOR_EDIT */
 
@@ -648,7 +645,6 @@ struct mmc_host {
 	struct dentry		*debugfs_root;
 
 #ifdef VENDOR_EDIT
-//Gavin.Lei@BSP.Storage.SDCard 2020-7-20 Add for abnormal SD card compatible
 	unsigned int	card_multiread_timeout_err_cnt;
 	sector_t	old_blk_rq_rd_pos;
 	bool		card_first_rd_timeout;

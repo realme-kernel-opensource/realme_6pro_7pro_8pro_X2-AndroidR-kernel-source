@@ -17,7 +17,6 @@
 #include "include/cam_csiphy_1_2_hwreg.h"
 #include "include/cam_csiphy_2_0_hwreg.h"
 #ifdef VENDOR_EDIT
-/* houyujun@Camera, 2019/08/10, Add for mipi */
 #include <soc/oppo/oppo_project.h>
 #endif /* DBMDX_SOUND_TRIGGER_SUPPORT */
 

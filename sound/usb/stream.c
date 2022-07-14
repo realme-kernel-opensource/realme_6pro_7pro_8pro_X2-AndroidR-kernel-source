@@ -743,7 +743,6 @@ int snd_usb_parse_audio_interface(struct snd_usb_audio *chip, int iface_no)
 
 		switch (chip->usb_id) {
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* LiYue@BSP.CHG.Basic, 2019/09/12, add for ISK UK400 */
 		case USB_ID(0x0451, 0x17ed): /* ISK UK400 */
 			if (stream == SNDRV_PCM_STREAM_PLAYBACK)
 				fp->attributes &= ~(UAC_EP_CS_ATTR_FILL_MAX);

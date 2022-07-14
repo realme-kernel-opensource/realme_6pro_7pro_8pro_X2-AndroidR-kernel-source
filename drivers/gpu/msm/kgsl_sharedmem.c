@@ -275,7 +275,7 @@ void kgsl_process_init_sysfs(struct kgsl_device *device,
 	/* Keep private valid until the sysfs enries are removed. */
 	kgsl_process_private_get(private);
 
-	snprintf(name, sizeof(name), "%d", pid_nr(private->pid));
+	snprintf(name, sizeof(name), "%d", private->pid);
 
 	if (kobject_init_and_add(&private->kobj, &ktype_mem_entry,
 		kgsl_driver.prockobj, name)) {
@@ -304,7 +304,6 @@ void kgsl_process_init_sysfs(struct kgsl_device *device,
 }
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance, 2019-07-22, add for gpu total used account
 unsigned long gpu_total(void)
 {
 	return (unsigned long)atomic_long_read(&kgsl_driver.stats.page_alloc);

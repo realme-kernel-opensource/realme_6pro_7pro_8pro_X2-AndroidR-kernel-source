@@ -28,11 +28,9 @@
 		memory-region = <&dfps_data_memory>;
 		gdsc-supply = <&mdss_core_gdsc>;
 //#ifdef OPLUS_BUG_STABILITY
-// Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/11/30, disable ssc
 //		qcom,dsi-pll-ssc-en;
 //#endif /* OPLUS_BUG_STABILITY */
 		//#ifdef VENDOR_EDIT
-		//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/04/29, Add for ssc mode
 		//qcom,dsi-pll-ssc-mode = "down-spread";
 		qcom,dsi-pll-ssc-mode = "center-spread";
 		//#endif /* VENDOR_EDIT */

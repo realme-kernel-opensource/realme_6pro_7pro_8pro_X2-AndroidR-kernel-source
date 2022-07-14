@@ -43,7 +43,6 @@
 #include "p73.h"
 #include "../pn553-i2c/pn553.h"
 //#ifdef VENDOR_EDIT
-//shengtao.xiao@CN.NFC.Basic.Hardware, 2019/10/30,
 #include "../oppo_nfc/oppo_nfc.h"
 //#endif /* VENDOR_EDIT */
 
@@ -131,7 +130,6 @@ struct p61_dev {
     unsigned char enable_poll_mode; /* enable the poll mode */
     spinlock_t irq_enabled_lock; /*spin lock for read irq */
     //#ifdef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Add for buf for transceive SPI data
     /* read buffer */
     size_t kbuflen;
@@ -394,7 +392,6 @@ static ssize_t p61_dev_write(struct file *filp, const char *buf, size_t count,
     int ret = -1;
     struct p61_dev *p61_dev;
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Mod for buf for transceive SPI data
     //unsigned char tx_buffer[MAX_BUFFER_SIZE];
     //#else /* VENDOR_EDIT */
@@ -410,7 +407,6 @@ static ssize_t p61_dev_write(struct file *filp, const char *buf, size_t count,
         count = MAX_BUFFER_SIZE;
 
     //#ifdef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Add for buf for transceive SPI data
     /*memset(&tx_buffer[0], 0, sizeof(tx_buffer));
     if (copy_from_user(&tx_buffer[0], &buf[0], count))
@@ -433,7 +429,6 @@ static ssize_t p61_dev_write(struct file *filp, const char *buf, size_t count,
         p61_start_throughput_measurement(WRITE_THROUGH_PUT);
     /* Write data */
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Mod for buf for transceive SPI data
     //ret = spi_write(p61_dev->spi, &tx_buffer[0], count);
     //#else /* VENDOR_EDIT */
@@ -451,7 +446,6 @@ static ssize_t p61_dev_write(struct file *filp, const char *buf, size_t count,
     }
 
     //#ifdef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Add for buf for transceive SPI data
     kfree(tmp);
     //#endif /* VENDOR_EDIT */
@@ -534,7 +528,6 @@ static ssize_t p61_dev_read(struct file *filp, char *buf, size_t count,
     int ret = -EIO;
     struct p61_dev *p61_dev = filp->private_data;
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Mod for buf for transceive SPI data
     //unsigned char rx_buffer[MAX_BUFFER_SIZE];
     //#else /* VENDOR_EDIT */
@@ -550,7 +543,6 @@ static ssize_t p61_dev_read(struct file *filp, char *buf, size_t count,
     }
 
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Mod for buf for transceive SPI data
     //memset(&rx_buffer[0], 0x00, sizeof(rx_buffer));
     //#else /* VENDOR_EDIT */
@@ -568,7 +560,6 @@ static ssize_t p61_dev_read(struct file *filp, char *buf, size_t count,
 
         P61_DBG_MSG(KERN_INFO"SPI_READ returned 0x%zx", count);
         //#ifndef VENDOR_EDIT
-        //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
         //Mod for buf for transceive SPI data
         //ret = spi_read(p61_dev->spi, (void *)&rx_buffer[0], count);
         //#else /* VENDOR_EDIT */
@@ -614,7 +605,6 @@ static ssize_t p61_dev_read(struct file *filp, char *buf, size_t count,
     P61_DBG_MSG(" %s P61_IRQ_ENABLE not Enabled \n", __FUNCTION__);
 #endif
         //#ifndef VENDOR_EDIT
-        //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
         //Mod for buf for transceive SPI data
         //ret = spi_read(p61_dev->spi, (void *)&rx_buffer[0], count);
         //#else /* VENDOR_EDIT */
@@ -637,7 +627,6 @@ static ssize_t p61_dev_read(struct file *filp, char *buf, size_t count,
     P61_DBG_MSG(KERN_INFO"total_count = %zu", count);
 
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Mod for buf for transceive SPI data
     //if (copy_to_user(buf, &rx_buffer[0], count))
     //#else /* VENDOR_EDIT */
@@ -650,7 +639,6 @@ static ssize_t p61_dev_read(struct file *filp, char *buf, size_t count,
     }
     P61_DBG_MSG("p61_dev_read ret %d Exit\n", ret);
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Mod for buf for transceive SPI data
     //P61_DBG_MSG("p61_dev_read ret %d Exit\n", rx_buffer[0]);
     //#endif /* VENDOR_EDIT */
@@ -812,7 +800,6 @@ static int p61_probe(struct spi_device *spi)
 #endif
 
     //#ifdef OPLUS_FEATURE_NFC_CONSOFT
-    //Zhengzhou@CONNECTIVITY.NFC.BASIC,2674926, 2019/12/16,
     //Add for : ST NXP chip common software
     CHECK_NFC_CHIP(NQ330);
     //#endif /* OPLUS_FEATURE_NFC_CONSOFT */
@@ -849,7 +836,6 @@ static int p61_probe(struct spi_device *spi)
     }
 
     //#ifdef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Add for buf for transceive SPI data
     p61_dev->kbuflen = MAX_BUFFER_SIZE;
     p61_dev->kbuf = kzalloc(MAX_BUFFER_SIZE, GFP_KERNEL);
@@ -935,7 +921,6 @@ static int p61_probe(struct spi_device *spi)
     P61_DBG_MSG("Exit : %s\n", __FUNCTION__);
     return ret;
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware, 2019/01/14,
     //Modify for coverity:777213, not need code
     //err_exit1:
     //misc_deregister(&p61_dev->p61_device);
@@ -949,7 +934,6 @@ static int p61_probe(struct spi_device *spi)
     mutex_destroy(&p61_dev->read_mutex);
     mutex_destroy(&p61_dev->write_mutex);
     //#ifdef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware,1779213, 2019/01/08,
     //Add for buf for transceive SPI data
     kfree(p61_dev->kbuf);
     err_free_dev:
@@ -988,7 +972,6 @@ static int p61_remove(struct spi_device *spi)
     }
 #endif
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware, 2019/01/14,
     //Mod for coverity:776436, to judge p61_dev before use
     //gpio_free(p61_dev->rst_gpio);
     //#else /* VENDOR_EDIT */
@@ -1003,7 +986,6 @@ static int p61_remove(struct spi_device *spi)
 #endif
 
     //#ifndef VENDOR_EDIT
-    //Weiwei.Deng@CN.NFC.Basic.Hardware, 2019/01/14,
     //Mod for coverity:784378, to judge p61_dev before use
     /*
     mutex_destroy(&p61_dev->read_mutex);

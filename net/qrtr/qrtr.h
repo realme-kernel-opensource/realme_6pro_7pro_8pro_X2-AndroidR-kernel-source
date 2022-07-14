@@ -6,7 +6,6 @@
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.2120730, 2019/07/11
 *Add for: print qrtr debug msg and fix QMI wakeup statistics for QCOM platforms using glink.
 */
 #define MODEM_WAKEUP_SRC_NUM 3

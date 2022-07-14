@@ -22,10 +22,8 @@
 #include "cam_packet_util.h"
 
 #ifdef VENDOR_EDIT
-/*add by hongbo.dai@Camera 20181215, for OIS bu63169*/
 #define MODE_NOCONTINUE 1
 #define MODE_CONTINUE 0
-/*hongbo.dai@Camera.Drv, 2018/12/26, modify for [oppo ois]*/
 //#define MAX_LENGTH 128
 #define MAX_LENGTH_MAIN 160
 struct cam_sensor_i2c_reg_setting_array {
@@ -370,7 +368,6 @@ static int cam_ois_apply_settings(struct cam_ois_ctrl_t *o_ctrl,
 	int32_t rc = 0;
 	uint32_t i, size;
 	#ifdef VENDOR_EDIT
-	/*add by hongbo.dai@camera 20181219, for OIS*/
 	int mode = MODE_CONTINUE;
 	#endif
 	if (o_ctrl == NULL || i2c_set == NULL) {
@@ -384,7 +381,6 @@ static int cam_ois_apply_settings(struct cam_ois_ctrl_t *o_ctrl,
 	}
 
 	#ifdef VENDOR_EDIT
-	/*add by hongbo.dai@camera 20181219, for bu63139 OIS*/
 	if (MASTER_0 == o_ctrl->io_master_info.cci_client->cci_i2c_master) {
 		mode = MODE_NOCONTINUE;
 	}
@@ -394,7 +390,6 @@ static int cam_ois_apply_settings(struct cam_ois_ctrl_t *o_ctrl,
 		&(i2c_set->list_head), list) {
 		if (i2c_list->op_code ==  CAM_SENSOR_I2C_WRITE_RANDOM) {
 			#ifdef VENDOR_EDIT
-			/*add by hongbo.dai@camera 20181219, for OIS*/
 			if (mode == MODE_CONTINUE) {
 				rc = camera_io_dev_write(&(o_ctrl->io_master_info),
 					&(i2c_list->i2c_settings));
@@ -473,7 +468,6 @@ static int cam_ois_slaveInfo_pkt_parser(struct cam_ois_ctrl_t *o_ctrl,
 }
 
 #ifndef VENDOR_EDIT
-/*hongbo.dai@Camera.driver, 2019/02/01, Add for sem1215s OIS fw update*/
 #define PRJ_VERSION_PATH  "/proc/oppoVersion/prjVersion"
 #define PCB_VERSION_PATH  "/proc/oppoVersion/pcbVersion"
 static int getfileData(char *filename, char *context)
@@ -789,7 +783,6 @@ static int cam_ois_fw_download(struct cam_ois_ctrl_t *o_ctrl)
 		page_address(page));
 
 	#ifndef VENDOR_EDIT
-	/*hongbo.dai@Camera.Driver, 2018/12/26, modify for [oppo ois]*/
 	for (cnt = 0, ptr = (uint8_t *)fw->data; cnt < total_bytes;
 		cnt++, ptr++) {
 		i2c_reg_setting.reg_setting[cnt].reg_addr =
@@ -855,7 +848,6 @@ static int cam_ois_fw_download(struct cam_ois_ctrl_t *o_ctrl)
 		page_address(page));
 
 	#ifndef VENDOR_EDIT
-	/*hongbo.dai@Camera.Driver, 2018/12/26, modify for [oppo ois]*/
 	for (cnt = 0, ptr = (uint8_t *)fw->data; cnt < total_bytes;
 		cnt++, ptr++) {
 		i2c_reg_setting.reg_setting[cnt].reg_addr =
@@ -895,7 +887,6 @@ release_firmware:
 	return rc;
 }
 #ifdef VENDOR_EDIT
-/*add by hongbo.dai@camera 20190117, for Tele OIS GyroOffset*/
 static int cam_ois_read_gyrodata(struct cam_ois_ctrl_t *o_ctrl, uint32_t gyro_x_addr,
 	uint32_t gyro_y_addr, uint32_t *gyro_data, bool need_convert)
 {
@@ -928,7 +919,6 @@ static int cam_ois_read_gyrodata(struct cam_ois_ctrl_t *o_ctrl, uint32_t gyro_x_
 	*gyro_data = gyro_offset;
 	return rc;
 }
-/*add by hongbo.dai@camera 20190117, for Tele OIS GyroOffset*/
 static int cam_ois_sem1215s_calibration(struct cam_ois_ctrl_t *o_ctrl)
 {
 	int32_t                            rc = 0;
@@ -1063,7 +1053,6 @@ static int cam_ois_bu63169_calibration(
 	return rc;
 }
 
-/*add by hongbo.dai@camera 20190220, for get OIS hall data for EIS*/
 #define OIS_HALL_DATA_SIZE   52
 static int cam_ois_bu63169_getmultiHall(
 	struct cam_ois_ctrl_t *o_ctrl,
@@ -1111,7 +1100,6 @@ static int cam_ois_bu63169_GyroPower(
 {
 	int32_t        rc = 0;
 	#ifdef VENDOR_EDIT
-	/*add by hongbo.dai@camera 20181215, for set bu63139 OIS pll0*/
 	struct cam_sensor_i2c_reg_setting sensor_setting;
 	#endif
 
@@ -1191,7 +1179,6 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 	size_t                          len_of_buff = 0;
 	uint32_t                       *offset = NULL, *cmd_buf;
 	#ifdef VENDOR_EDIT
-	/*add by hongbo.dai@camera 20181215, for set bu63139 OIS pll0*/
 	struct cam_sensor_i2c_reg_setting sensor_setting;
 	#endif
 	struct cam_ois_soc_private     *soc_private =
@@ -1348,7 +1335,6 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 		}
 
 		#ifdef VENDOR_EDIT
-		/*add by hongbo.dai@camera 20181215, for set bu63139 OIS pll0*/
 		if (MASTER_0 == o_ctrl->io_master_info.cci_client->cci_i2c_master) {
 			CAM_ERR(CAM_OIS, "need to write pll0 settings");
 			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_WORD;
@@ -1387,7 +1373,6 @@ static int cam_ois_pkt_parse(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 		#endif
 
 		#ifdef VENDOR_EDIT
-		/*Added by hongbo.dai@Cam.Drv, 20181215, for check ois status*/
 		if (MASTER_0 == o_ctrl->io_master_info.cci_client->cci_i2c_master) {
 			uint32_t sum_check = 0;
         	rc = camera_io_dev_read(&(o_ctrl->io_master_info), 0x84F7, &sum_check,
@@ -1554,7 +1539,6 @@ int cam_ois_driver_cmd(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 	struct cam_ois_soc_private      *soc_private = NULL;
 	struct cam_sensor_power_ctrl_t  *power_info = NULL;
 	#ifdef VENDOR_EDIT
-	/*Added by hongbo.dai@Cam.Drv, 20181215, for read gyro and hall val*/
 	uint32_t gyro_x_addr = 0;
 	uint32_t gyro_y_addr = 0;
 	uint32_t hall_x_addr = 0;
@@ -1614,7 +1598,6 @@ int cam_ois_driver_cmd(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 		if (rc) {
 			CAM_ERR(CAM_OIS, "Failed in ois pkt Parsing");
 			#ifdef VENDOR_EDIT
-			/*Jinshui.Liu@Camera.Driver, 2018/03/28, add for [dont notify config err]*/
 			rc = 0;
 			#endif
 			goto release_mutex;
@@ -1679,11 +1662,9 @@ int cam_ois_driver_cmd(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 		break;
 
 	#ifdef VENDOR_EDIT
-	/*Added by Zhengrong.Zhang@Cam.Drv, 20180421, for [ois calibration]*/
 	case CAM_GET_OIS_GYRO_OFFSET: {
 		uint32_t gyro_offset = 0;
 		bool m_convert = 0;
-		/*add by hongbo.dai@camera 20181225, for get gyro position*/
 		if (MASTER_0 == o_ctrl->io_master_info.cci_client->cci_i2c_master) {
 			gyro_x_addr = 0x8455;
 			gyro_y_addr = 0x8456;
@@ -1728,7 +1709,6 @@ int cam_ois_driver_cmd(struct cam_ois_ctrl_t *o_ctrl, void *arg)
 		uint32_t hall_position = 0;
 		uint32_t hall_position_x = 0;
 		uint32_t hall_position_y = 0;
-		/*add by hongbo.dai@camera 20181225, for get hall position*/
 		if (MASTER_0 == o_ctrl->io_master_info.cci_client->cci_i2c_master) {
 			hall_x_addr = 0x843f;
 			hall_y_addr = 0x84bf;

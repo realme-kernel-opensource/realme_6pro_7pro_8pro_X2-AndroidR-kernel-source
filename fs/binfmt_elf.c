@@ -2189,7 +2189,6 @@ static void fill_extnum_info(struct elfhdr *elf, struct elf_shdr *shdr4extnum,
 }
 
 #ifdef OPLUS_BUG_STABILITY
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/1, transplant checklist: pre-allocation 64KB memory for coredump 
 static elf_addr_t *oppo_coredump_addr = NULL;
 #define PREALLOC_DUMPMEM_SIZE 64 * 1024
 #endif /* OPLUS_BUG_STABILITY */
@@ -2287,7 +2286,6 @@ static int elf_core_dump(struct coredump_params *cprm)
 		goto end_coredump;
 
 #ifdef OPLUS_BUG_STABILITY
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/1, transplant checklist: pre-allocation 64KB memory for coredump
 	if (oppo_coredump_addr && (segs - 1) * sizeof(*vma_filesz) <= PREALLOC_DUMPMEM_SIZE)
 		vma_filesz = oppo_coredump_addr;
 	else {
@@ -2406,9 +2404,6 @@ end_coredump:
 cleanup:
 	free_note_info(&info);
 	kfree(shdr4extnum);
-	/* yanghao@PSW.Kernel.stability add for the lowmomery or not have order 4 page size
-	 * will alloc failed and the coredump can't format success 2019/01/14
-	 */
 #ifdef OPLUS_BUG_STABILITY
 	if ((oppo_coredump_addr != NULL) && (vma_filesz == oppo_coredump_addr)) {
 		kvfree(vma_filesz);
@@ -2431,7 +2426,6 @@ static int __init init_elf_binfmt(void)
 	register_binfmt(&elf_format);
 
 #ifdef OPLUS_BUG_STABILITY
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/1, transplant checklist: pre-allocation 64KB memory for coredump
 	oppo_coredump_addr = kvmalloc(PREALLOC_DUMPMEM_SIZE, GFP_KERNEL);
 #endif /* OPLUS_BUG_STABILITY */
 
@@ -2441,7 +2435,6 @@ static int __init init_elf_binfmt(void)
 static void __exit exit_elf_binfmt(void)
 {
 #ifdef OPLUS_BUG_STABILITY
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/1, transplant checklist: pre-allocation 64KB memory for coredump
 	if (oppo_coredump_addr)
 		kvfree(oppo_coredump_addr);
 #endif /* OPLUS_BUG_STABILITY */

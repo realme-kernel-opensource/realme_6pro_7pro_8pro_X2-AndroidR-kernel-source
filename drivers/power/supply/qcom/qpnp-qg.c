@@ -54,10 +54,8 @@ static bool use_qpnp_qg = true;
 static struct qpnp_qg *the_chip = NULL;
 #endif
 #ifdef VENDOR_EDIT
-/* wangchao@ODM.BSP.charge, 2020/1/19, Add for batt ID check*/
 bool is_batt_id_valid(struct qpnp_qg *chip);
 
-/* wangyun@TECH.BSP.charge, 2020/07/03, Add for charge with vooc*/
 extern int oplus_chg_get_ffc_status(void);
 extern bool oplus_vooc_get_fastchg_ing(void);
 #endif
@@ -232,7 +230,6 @@ static void qg_notify_charger(struct qpnp_qg *chip)
 		return;
 
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 	prop.intval = chip->bp.float_volt_uv;
 	rc = power_supply_set_property(chip->batt_psy,
 			POWER_SUPPLY_PROP_VOLTAGE_MAX, &prop);
@@ -354,7 +351,6 @@ static int qg_config_s2_state(struct qpnp_qg *chip,
 		break;
 	case S2_DEFAULT:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 		fifo_length =  chip->dt.fast_chg_s2_fifo_length;
 #else
 		fifo_length = chip->dt.s2_fifo_length;
@@ -985,7 +981,6 @@ static int qg_process_esr_data(struct qpnp_qg *chip)
 	return 0;
 }
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 extern int oplus_chg_get_ffc_status(void);//kilody
 extern bool oplus_vooc_get_fastchg_ing(void);
 #endif
@@ -998,7 +993,6 @@ static int qg_esr_estimate(struct qpnp_qg *chip)
 	if (chip->dt.esr_disable)
 		return 0;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 	if(oplus_vooc_get_fastchg_ing())
 		return 0;
 #endif
@@ -2157,7 +2151,6 @@ static int qg_psy_get_property(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_VOLTAGE_MAX:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 		if(oplus_vooc_get_fastchg_ing()) {
 			chip->bp.float_volt_uv = 4400000;
 		} else if (0 == oplus_chg_get_ffc_status()){
@@ -2169,7 +2162,6 @@ static int qg_psy_get_property(struct power_supply *psy,
 		break;
 	case POWER_SUPPLY_PROP_BATT_FULL_CURRENT:
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 		if(oplus_chg_get_ffc_status() || oplus_vooc_get_fastchg_ing()) {
 			chip->dt.iterm_ma = 400;
 		} else {
@@ -2558,7 +2550,6 @@ static int qg_battery_status_update(struct qpnp_qg *chip)
 		goto done;
 	}
 #ifdef VENDOR_EDIT
-    /* wangchao@ODM.BSP.charge, 2020/1/19, Add for batt ID check*/
     if (prop.intval) //battery present
     {
         if (!is_batt_id_valid(chip)) {
@@ -2994,7 +2985,6 @@ static int get_batt_id_ohm(struct qpnp_qg *chip, u32 *batt_id_ohm)
 	return 0;
 }
 #ifdef VENDOR_EDIT
-/* wangchao@ODM.BSP.charge, 2020/1/19, Add for batt ID check*/
 static int get_batt_id_voltage(struct qpnp_qg *chip)
 {
     int rc, batt_id_mv;
@@ -3462,7 +3452,6 @@ static int qg_set_wa_flags(struct qpnp_qg *chip)
 		chip->wa_flags |= QG_CLK_ADJUST_WA |
 				QG_RECHARGE_SOC_WA;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 		qg_esr_mod_count = 5;
 #else
 		qg_esr_mod_count = 10;
@@ -4295,7 +4284,6 @@ static int qg_parse_dt(struct qpnp_qg *chip)
 
 	if (of_property_read_bool(node, "qcom,tcss-enable")) {
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*zhouhaikang@BSP.CHG.Basic,2020/10/31,add for chg*/
 		chip->dt.tcss_enable = false;
 #else
 		chip->dt.tcss_enable = true;

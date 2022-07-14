@@ -48,14 +48,12 @@
 #include "ion_secure_util.h"
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance, 2019/07/11, add for ion wait monitor
 #if defined(CONFIG_OPPO_HEALTHINFO) && defined (CONFIG_OPPO_MEM_MONITOR)
 #include <linux/oppo_healthinfo/memory_monitor.h>
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Kernel.Performance, 2020/03/24, add for ion total used account
 #include <linux/oppo_healthinfo/oppo_ion.h>
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 
@@ -186,7 +184,6 @@ static struct ion_buffer *ion_buffer_create(struct ion_heap *heap,
 	mutex_unlock(&dev->buffer_lock);
 	atomic_long_add(len, &heap->total_allocated);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-06-26, add ion total used account*/
 	if (ion_cnt_enable)
 		atomic_long_add(buffer->size, &ion_total_size);
 #endif /* OPLUS_FEATURE_HEALTHINFO */
@@ -207,7 +204,6 @@ void ion_buffer_destroy(struct ion_buffer *buffer)
 		buffer->heap->ops->unmap_kernel(buffer->heap, buffer);
 	}
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-06-26, add ion total used account*/
 	if (ion_cnt_enable)
 		atomic_long_sub(buffer->size, &ion_total_size);
 #endif /* OPLUS_FEATURE_HEALTHINFO */
@@ -1084,7 +1080,6 @@ struct dma_buf *ion_alloc_dmabuf(size_t len, unsigned int heap_id_mask,
 	struct dma_buf *dmabuf;
 	char task_comm[TASK_COMM_LEN];
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance, 2019/07/11, add for ion wait monitor
 #if defined(CONFIG_OPPO_HEALTHINFO) && defined (CONFIG_OPPO_MEM_MONITOR)
 	unsigned long oppo_ionwait_start = jiffies;
 #endif
@@ -1141,7 +1136,6 @@ struct dma_buf *ion_alloc_dmabuf(size_t len, unsigned int heap_id_mask,
 		kfree(exp_info.exp_name);
 	}
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance, 2019/07/11, add for ion wait monitor
 #if defined(CONFIG_OPPO_HEALTHINFO) && defined (CONFIG_OPPO_MEM_MONITOR)
 	oppo_ionwait_monitor(jiffies_to_msecs(jiffies - oppo_ionwait_start));
 #endif

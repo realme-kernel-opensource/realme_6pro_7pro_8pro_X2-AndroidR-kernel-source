@@ -2690,7 +2690,6 @@ EXPORT_SYMBOL_GPL(clk_set_flags);
 static struct dentry *rootdir;
 static int inited = 0;
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 static u32 debug_suspend;
 #else
 static u32 debug_suspend = 1;

@@ -17,7 +17,6 @@ enum flag_idn {
 	QUERY_FLAG_IDN_RESERVED3                        = 0x0A,
 	QUERY_FLAG_IDN_PERMANENTLY_DISABLE_FW_UPDATE    = 0x0B,
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	QUERY_FLAG_IDN_TW_EN				= 0x0E,
 	QUERY_FLAG_IDN_TW_BUF_FLUSH_EN			= 0x0F,
 	QUERY_FLAG_IDN_TW_FLUSH_DURING_HIBERN		= 0x10,
@@ -47,7 +46,6 @@ enum attr_idn {
 	QUERY_ATTR_IDN_FFU_STATUS               = 0x14,
 	QUERY_ATTR_IDN_REF_CLK_GATING_WAIT_TIME	= 0x17,
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSTW)
 	QUERY_ATTR_IDN_TW_FLUSH_STATUS		= 0x1C,
 	QUERY_ATTR_IDN_TW_BUF_SIZE		= 0x1D,

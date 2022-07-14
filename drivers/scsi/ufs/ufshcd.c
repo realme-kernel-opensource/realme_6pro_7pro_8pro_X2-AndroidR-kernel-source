@@ -52,16 +52,13 @@
 #include "ufs-qcom.h"
 
 #ifdef VENDOR_EDIT
-//zhenjian Jiang@PSW.BSP.Storage.UFS, 2018-05-04 add for ufs device in /proc/devinfo
 #include <soc/oppo/device_info.h>
-/*Hank.liu@PSW.BSP Kernel IO Latency  2019-03-19,ufs slot status */
 unsigned long ufs_outstanding;
 #endif
 
 #ifdef CONFIG_DEBUG_FS
 
 #ifdef VENDOR_EDIT
-//hank.liu@Tech.Storage.UFS, 2019-10-11 add for ufsplus status node in /proc/devinfo
 int ufsplus_tw_status = 0;
 EXPORT_SYMBOL(ufsplus_tw_status);
 int ufsplus_hpb_status = 0;
@@ -473,13 +470,11 @@ static int ufshcd_disable_clocks(struct ufs_hba *hba,
 static int ufshcd_disable_clocks_keep_link_active(struct ufs_hba *hba,
 					      bool is_gating_context);
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 void ufshcd_hold_all(struct ufs_hba *hba);
 #else
 static void ufshcd_hold_all(struct ufs_hba *hba);
 #endif
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 void ufshcd_release_all(struct ufs_hba *hba);
 #else
 static void ufshcd_release_all(struct ufs_hba *hba);
@@ -1778,7 +1773,6 @@ out:
 static int ufshcd_clock_scaling_prepare(struct ufs_hba *hba)
 {
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-	/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	#define DOORBELL_CLR_TOUT_US		(1500 * 1000) /* 1.5 sec */
 #else
 	#define DOORBELL_CLR_TOUT_US		(1000 * 1000) /* 1 sec */
@@ -2287,7 +2281,6 @@ static void ufshcd_gate_work(struct work_struct *work)
 
 	spin_lock_irqsave(hba->host->host_lock, flags);
 #ifdef VENDOR_EDIT
-//yh@BSP.Storage.UFS, 2020-1-15 add for fix race condition during hrtimer active(ufshcd_release/ufshcd_gate_work)
 	if (hba->clk_gating.state == CLKS_OFF)
 	{
 		goto rel_lock;
@@ -2647,7 +2640,6 @@ static void ufshcd_set_auto_hibern8_timer(struct ufs_hba *hba, u32 delay)
  * Return 0 on success, non-zero on failure.
  */
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 int ufshcd_hibern8_hold(struct ufs_hba *hba, bool async)
 #else
 static int ufshcd_hibern8_hold(struct ufs_hba *hba, bool async)
@@ -3018,7 +3010,6 @@ static void ufshcd_exit_hibern8_on_idle(struct ufs_hba *hba)
 }
 
 #if defined(VENDOR_EDIT) && defined (CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 void ufshcd_hold_all(struct ufs_hba *hba)
 #else
 static void ufshcd_hold_all(struct ufs_hba *hba)
@@ -3029,7 +3020,6 @@ static void ufshcd_hold_all(struct ufs_hba *hba)
 }
 
 #if defined(VENDOR_EDIT) && defined (CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 void ufshcd_release_all(struct ufs_hba *hba)
 #else
 static void ufshcd_release_all(struct ufs_hba *hba)
@@ -3334,7 +3324,6 @@ ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
  * Returns 0 in case of success, non-zero value in case of failure
  */
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 int ufshcd_map_sg(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
 #else
 static int ufshcd_map_sg(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
@@ -3610,7 +3599,6 @@ static int ufshcd_comp_devman_upiu(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
  * @lrb - pointer to local reference block
  */
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 int ufshcd_comp_scsi_upiu(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
 #else
 static int ufshcd_comp_scsi_upiu(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
@@ -3627,7 +3615,6 @@ static int ufshcd_comp_scsi_upiu(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
 
 	if (likely(lrbp->cmd)) {
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 		ufsf_hpb_change_lun(&hba->ufsf, lrbp);
 		ufsf_tw_prep_fn(&hba->ufsf, lrbp);
 		ufsf_hpb_prep_fn(&hba->ufsf, lrbp);
@@ -3739,7 +3726,6 @@ static int ufshcd_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmd)
 	int err = 0;
 	bool has_read_lock = false;
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE) && defined(CONFIG_UFSHPB)
 	struct scsi_cmnd *pre_cmd;
 	struct ufshcd_lrb *add_lrbp;
@@ -3849,7 +3835,6 @@ static int ufshcd_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *cmd)
 	if (ufshcd_is_hibern8_on_idle_allowed(hba))
 		WARN_ON(hba->hibern8_on_idle.state != HIBERN8_EXITED);
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE) && defined(CONFIG_UFSHPB)
 		add_tag = ufsf_hpb_prepare_pre_req(&hba->ufsf, cmd, lun);
 		if (add_tag == -EAGAIN) {
@@ -3874,7 +3859,6 @@ send_orig_cmd:
 	/* Vote PM QoS for the request */
 	ufshcd_vops_pm_qos_req_start(hba, cmd->request);
 #ifdef VENDOR_EDIT
-//hank.liu@Tech.Storage.UFS, 2019-10-17 add latency_hist node for ufs latency calculate in sysfs.
 	/* IO svc time latency histogram */
 	if (hba->latency_hist_enabled &&(!blk_rq_is_passthrough(cmd->request))) {
 			 cmd->request->lat_hist_io_start = ktime_get();
@@ -3946,7 +3930,6 @@ send_orig_cmd:
 	/* issue command to the controller */
 	spin_lock_irqsave(hba->host->host_lock, flags);
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE) && defined(CONFIG_UFSHPB)
 	if (!pre_req_err) {
 		ufshcd_vops_setup_xfer_req(hba, add_tag, (add_lrbp->cmd ? true : false));
@@ -3961,7 +3944,6 @@ send_orig_cmd:
 
 	err = ufshcd_send_command(hba, tag);
 #ifdef  VENDOR_EDIT
-		 //hank.liu@TECH.BSP.Storage.UFS, 2019-04-26, Add for monitor ufs driver io time
 		ufs_outstanding=hba->outstanding_reqs;
 		cmd->request->ufs_io_start = ktime_get();
 #endif
@@ -3982,7 +3964,6 @@ out_unlock:
 	spin_unlock_irqrestore(hba->host->host_lock, flags);
 out:
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE) && defined(CONFIG_UFSHPB)
 	if (!pre_req_err) {
 		pre_cmd = add_lrbp->cmd;
@@ -4185,7 +4166,6 @@ static inline void ufshcd_put_dev_cmd_tag(struct ufs_hba *hba, int tag)
  * it is expected you hold the hba->dev_cmd.lock mutex.
  */
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 int ufshcd_exec_dev_cmd(struct ufs_hba *hba,
 			enum dev_cmd_type cmd_type, int timeout)
 #else
@@ -5414,7 +5394,6 @@ static int ufshcd_link_recovery(struct ufs_hba *hba)
 }
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add ufs+ node to oppohealthinfo*/
 static void oppo_ufs_update_h8_info(struct ufs_hba *hba, bool hibern8_enter){
 	u64 calc_h8_time_ms = 0;
 	if (hibern8_enter) {
@@ -5482,7 +5461,6 @@ static int __ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
 		dev_dbg(hba->dev, "%s: Hibern8 Enter at %lld us", __func__,
 			ktime_to_us(ktime_get()));
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add ufs+ node to oppohealthinfo*/
 		oppo_ufs_update_h8_info(hba, true);
 #endif
 	}
@@ -5538,7 +5516,6 @@ int ufshcd_uic_hibern8_exit(struct ufs_hba *hba)
 		hba->ufs_stats.last_hibern8_exit_tstamp = ktime_get();
 		hba->ufs_stats.hibern8_exit_cnt++;
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add ufs+ node to oppohealthinfo*/
 		oppo_ufs_update_h8_info(hba, false);
 #endif
 	}
@@ -6277,7 +6254,6 @@ static int ufshcd_slave_configure(struct scsi_device *sdev)
 {
 	struct ufs_hba *hba = shost_priv(sdev->host);
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-	/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	struct ufsf_feature *ufsf = &hba->ufsf;
 	struct request_queue *q = sdev->request_queue;
 
@@ -6459,7 +6435,6 @@ ufshcd_transfer_rsp_status(struct ufs_hba *hba, struct ufshcd_lrb *lrbp)
 					pm_runtime_get_noresume(hba->dev);
 			}
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 			if (scsi_status == SAM_STAT_GOOD)
 				ufsf_hpb_noti_rb(&hba->ufsf, lrbp);
 #endif
@@ -6622,7 +6597,6 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
 			req = cmd->request;
 			if (req) {
 #ifdef VENDOR_EDIT
-            //hank.liu@Tech.Storage.UFS, 2019-10-17 add latency_hist node for ufs latency calculate in sysfs.
             	cmd->request->flash_io_latency = ktime_us_delta(ktime_get(), cmd->request->ufs_io_start);
 #endif
 				/* Update IO svc time latency histogram */
@@ -6644,7 +6618,6 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
             }
 #endif
 #if defined(VENDOR_EDIT) && defined(CONFIG_TRACEPOINTS)
-//yh@BSP.Storage.UFS, 2019-09-13 add for ufs io latency info calculate
             if (trace_ufshcd_command_enabled())
             {
                 struct request *req = cmd->request;
@@ -7071,7 +7044,6 @@ static void ufshcd_exception_event_handler(struct work_struct *work)
 	if (status & MASK_EE_URGENT_BKOPS)
 		ufshcd_bkops_exception_event_handler(hba);
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_tw_ee_handler(&hba->ufsf);
 #endif
 out:
@@ -7889,7 +7861,6 @@ out:
 	hba->req_abort_count = 0;
 	if (!err) {
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 		ufsf_hpb_reset_lu(&hba->ufsf);
 		ufsf_tw_reset_lu(&hba->ufsf);
 #endif
@@ -8124,7 +8095,6 @@ static int ufshcd_host_reset_and_restore(struct ufs_hba *hba)
 	spin_lock_irqsave(hba->host->host_lock, flags);
 	ufshcd_hba_stop(hba, false);
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_reset_host(&hba->ufsf);
 	ufsf_tw_reset_host(&hba->ufsf);
 #endif
@@ -8463,7 +8433,6 @@ static int ufshcd_scsi_add_wlus(struct ufs_hba *hba)
 	bool is_bootable_dev = false;
 	bool is_embedded_dev = false;
 #ifdef VENDOR_EDIT
-//yh@PSW.BSP.Storage.UFS, 2018-05-31 add for ufs device in /proc/devinfo
 	static char temp_version[5] = {0};
 	static char vendor[9] = {0};
 	static char model[17] = {0};
@@ -8489,7 +8458,6 @@ static int ufshcd_scsi_add_wlus(struct ufs_hba *hba)
 	scsi_device_put(hba->sdev_ufs_device);
 
 #ifdef VENDOR_EDIT
-//yh@PSW.BSP.Storage.UFS, 2018-05-31 add for ufs device in /proc/devinfo
 	strncpy(temp_version, hba->sdev_ufs_device->rev, 4);
 	strncpy(vendor, hba->sdev_ufs_device->vendor, 8);
 	strncpy(model, hba->sdev_ufs_device->model, 16);
@@ -9137,14 +9105,12 @@ reinit:
 
 		scsi_scan_host(hba->host);
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 		ufsf_device_check(hba);
 		ufsf_hpb_init(&hba->ufsf);
 		ufsf_tw_init(&hba->ufsf);
 #endif
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSTW_DEBUGDRV)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 		ufstwd_dev_init(hba);
 #endif
 		pm_runtime_put_sync(hba->dev);
@@ -9179,7 +9145,6 @@ out:
 		pm_runtime_put_sync(hba->dev);
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_reset(&hba->ufsf);
 	ufsf_tw_reset(&hba->ufsf);
 #endif
@@ -9402,7 +9367,6 @@ static int ufshcd_query_ioctl(struct ufs_hba *hba, u8 lun, void __user *buffer)
 	}
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	if (ufsf_check_query(ioctl_data->opcode)) {
 		err = ufsf_query_ioctl(&hba->ufsf, lun, buffer, ioctl_data,
 				       UFSFEATURE_SELECTOR);
@@ -10333,7 +10297,6 @@ static void ufshcd_vreg_set_lpm(struct ufs_hba *hba)
 		ufshcd_setup_vreg(hba, false);
 	} else if (!ufshcd_is_ufs_dev_active(hba)){
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 		dev_info(hba->dev, "enter LPM\n");
 		/*
 		 * Because the Turbo Write feature need flush the data from SLC buffer
@@ -10430,7 +10393,6 @@ static int ufshcd_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
 	}
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_suspend(&hba->ufsf);
 	ufsf_tw_suspend(&hba->ufsf);
 #endif
@@ -10560,7 +10522,6 @@ enable_gating:
 	hba->clk_gating.is_suspended = false;
 	ufshcd_release_all(hba);
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_resume(&hba->ufsf);
 	ufsf_tw_resume(&hba->ufsf);
 #endif
@@ -10689,7 +10650,6 @@ static int ufshcd_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
 		ufshcd_resume_clkscaling(hba);
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-	/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_resume(&hba->ufsf);
 	ufsf_tw_resume(&hba->ufsf);
 #endif
@@ -11305,7 +11265,6 @@ ufshcd_exit_latency_hist(struct ufs_hba *hba)
 void ufshcd_remove(struct ufs_hba *hba)
 {
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-	/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_release(&hba->ufsf);
 	ufsf_tw_release(&hba->ufsf);
 #endif
@@ -11599,7 +11558,6 @@ int ufshcd_init(struct ufs_hba *hba, void __iomem *mmio_base, unsigned int irq)
 	ufshcd_cmd_log_init(hba);
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-	/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 	ufsf_hpb_set_init_state(&hba->ufsf);
 	ufsf_tw_set_init_state(&hba->ufsf);
 #endif

@@ -5,7 +5,6 @@
 ** Description : oppo display panel common feature
 ** Version : 1.0
 ** Date : 2020/06/13
-** Author : Li.Sheng@MULTIMEDIA.DISPLAY.LCD
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -344,7 +343,6 @@ int oppo_display_panel_get_serial_number(void *buf)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* xupengcheng@MULTIMEDIA.DISPLAY.LCD.Feature,2020-10-21 optimize osc adaptive */
 int oplus_display_get_panel_parameters(struct dsi_panel *panel,
 	struct dsi_parser_utils *utils)
 {

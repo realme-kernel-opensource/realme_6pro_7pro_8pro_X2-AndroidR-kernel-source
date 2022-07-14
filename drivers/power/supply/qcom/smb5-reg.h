@@ -65,7 +65,6 @@ enum {
 #define BAT_TEMP_STATUS_TOO_COLD_AFP_BIT	BIT(0)
 
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  Add for charger */
 #define BATTERY_CHARGER_STATUS_8_REG			(CHGR_BASE + 0x0E)
 //#define PRE_FAST_BIT					BIT(7)
 #define PRE_FULLON_BIT					BIT(6)
@@ -91,7 +90,6 @@ enum {
 
 #define CHGR_FAST_CHARGE_CURRENT_CFG_REG	(CHGR_BASE + 0x61)
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  Add for charger */
 #define TCCC_CHARGE_CURRENT_TERMINATION_CFG_REG		(CHGR_BASE + 0x63)
 #define TCCC_CHARGE_CURRENT_TERMINATION_SETTING_MASK	GENMASK(3, 0)
 #endif
@@ -172,7 +170,6 @@ enum {
 #define DCDC_OTG_CURRENT_LIMIT_CFG_REG		(DCDC_BASE + 0x52)
 
 #ifdef VENDOR_EDIT
-/* Gang.Yan@PSW.BSP.CHG.Basic, 2020/03/25, Add for set otg current */
 #define DCDC_OTG_CURRENT_LIMIT_1000MA_BIT	BIT(2)
 #endif /* VENDOR_EDIT */
 
@@ -346,7 +343,6 @@ enum {
 #define USBIN_AICL_OPTIONS_CFG_REG		(USBIN_BASE + 0x80)
 #define SUSPEND_ON_COLLAPSE_USBIN_BIT		BIT(7)
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  lzj Add for charger */
 #define USBIN_AICL_HDC_EN_BIT			BIT(6)
 #define USBIN_AICL_START_AT_MAX_BIT		BIT(5)
 #endif
@@ -354,13 +350,11 @@ enum {
 #define USBIN_AICL_ADC_EN_BIT			BIT(3)
 #define USBIN_AICL_EN_BIT			BIT(2)
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  Add for charger */
 #define USBIN_HV_COLLAPSE_RESPONSE_BIT		BIT(1)
 #define USBIN_LV_COLLAPSE_RESPONSE_BIT		BIT(0)
 #endif
 
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  Add for charger */
 #define TYPE_C_CFG_REG				(USBIN_BASE + 0x58)
 #define APSD_START_ON_CC_BIT			BIT(7)
 #endif
@@ -454,7 +448,6 @@ enum {
 #define TYPEC_CCOUT_SRC_BIT			BIT(0)
 
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, add for close usb debug mode */
 #define DEBUG_ACCESS_SNK_CFG_REG               (TYPEC_BASE + 0x4a)
 #endif
 
@@ -563,7 +556,6 @@ enum {
 #define RESTART_AICL_BIT			BIT(1)
 #define RERUN_AICL_BIT				BIT(0)
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25,  Add for charger */
 #define RESTART_AICL_BIT            BIT(1)
 #endif
 

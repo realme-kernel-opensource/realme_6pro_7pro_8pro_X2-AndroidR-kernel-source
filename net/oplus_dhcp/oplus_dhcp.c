@@ -8,14 +8,11 @@
 **
 ** Version: 1.0
 ** Date :	2020-05-09
-** Author:	LianGenglin@CONNECTIVITY.WIFI.INTERNET
 ** TAG	:	OPLUS_FEATURE_WIFI_DHCP
 **
 ** ---------------------Revision History: ---------------------
 **	<author>					  <data>	 <version >   <desc>
 ** ---------------------------------------------------------------
-**	LianGenglin@CONNECTIVITY.WIFI.INTERNET	2020/05/09	1.0			 build this module
-**	LiYi@CONNECTIVITY.WIFI.INTERNET			2020/06/01	2.0			 modify this module
 **
 ************************************************************************************/
 #include <linux/types.h>

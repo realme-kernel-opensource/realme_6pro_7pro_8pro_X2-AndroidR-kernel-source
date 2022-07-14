@@ -43,9 +43,6 @@
 #include "sde_core_perf.h"
 #include "sde_trace.h"
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Lcd.Stability, 2018-11-21
- * Add for drm notifier for display connect
-*/
 #include <linux/msm_drm_notify.h>
 #include <linux/notifier.h>
 #include "oppo_display_private_api.h"
@@ -55,7 +52,6 @@ extern int oppo_dimlayer_fingerprint_failcount;
 extern int oppo_underbrightness_alpha;
 extern int msm_drm_notifier_call_chain(unsigned long val, void *v);
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-// Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless
 extern int oppo_display_atomic_check(struct drm_crtc *crtc, struct drm_crtc_state *state);
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 #endif /* OPLUS_BUG_STABILITY */
@@ -131,9 +127,6 @@ static inline struct sde_kms *_sde_crtc_get_kms(struct drm_crtc *crtc)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability, 2020/3/31, for
- * decoupling display driver
-*/
 struct sde_kms *_sde_crtc_get_kms_(struct drm_crtc *crtc)
 {
 	return _sde_crtc_get_kms(crtc);
@@ -1001,7 +994,6 @@ static void _sde_crtc_setup_blend_cfg(struct sde_crtc_mixer *mixer,
 	/* default to opaque blending */
 	fg_alpha = sde_plane_get_property(pstate, PLANE_PROP_ALPHA);
 	#ifdef OPLUS_BUG_STABILITY
-	/*Sachin@PSW.MM.Display.LCD.Stable,2019-01-12 support plane skip */
 	if (pstate->is_skip)
 		fg_alpha = 0;
 	#endif /* OPLUS_BUG_STABILITY */
@@ -2172,9 +2164,6 @@ static void _sde_crtc_blend_setup_mixer(struct drm_crtc *crtc,
 					mixer, &cstate->dim_layer[i]);
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Service.Feature,2018/11/21
- * For OnScreenFingerprint feature
-*/
 		if (cstate->fingerprint_dim_layer) {
 			bool is_dim_valid = true;
 			uint32_t zpos_max = 0;
@@ -3116,7 +3105,6 @@ static void sde_crtc_frame_event_work(struct kthread_work *work)
 	SDE_ATRACE_END("crtc_frame_event");
 }
 #ifdef OPLUS_BUG_STABILITY
-/*Mark.Yao@PSW.MM.Display.LCD.Feature,2019-07-25 support onscreenfinger */
 extern u32 oppo_onscreenfp_vblank_count;
 extern ktime_t oppo_onscreenfp_pressed_time;
 #endif /* OPLUS_BUG_STABILITY */
@@ -3135,9 +3123,6 @@ void sde_crtc_complete_commit(struct drm_crtc *crtc,
 
 	sde_core_perf_crtc_update(crtc, 0, false);
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.LCD.Feature,2018-11-21
- * Add for OnScreenFingerprint
-*/
 	{
 		struct sde_crtc_state *old_cstate;
 		struct sde_crtc_state *cstate;
@@ -5385,9 +5370,6 @@ static int _sde_crtc_check_secure_state(struct drm_crtc *crtc,
 
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.LCD.Feature,2018-11-21
- * Add for OnScreenFingerprint
-*/
 extern int oppo_onscreenfp_status;
 extern int lcd_closebl_flag_fp;
 extern int oppo_dimlayer_hbm;
@@ -5397,8 +5379,8 @@ extern bool oppo_ffl_trigger_finish;
 extern int oppo_dimlayer_bl;
 extern ktime_t oppo_backlight_time;
 extern u32 oppo_backlight_delta;
+extern bool oplus_dc_atomic_commit;
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-// Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless
 extern bool is_oppo_aod_ramless(void);
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 
@@ -5436,11 +5418,13 @@ static int sde_crtc_onscreenfinger_atomic_check(struct sde_crtc_state *cstate,
 
 		if (backlight > 1 && backlight < oppo_dimlayer_bl_alpha_value &&
 		    oppo_ffl_trigger_finish == true && !dimlayer_hbm) {
+			bool con;
 			ktime_t now = ktime_get();
 			ktime_t delta = ktime_sub(now, oppo_backlight_time);
+			con = oplus_dc_atomic_commit || (ktime_to_ns(delta) > 25000000);
 
 			if (oppo_backlight_delta > 9) {
-				if (oppo_dimlayer_bl == 0 && ktime_to_ns(delta) > 25000000)
+				if (oppo_dimlayer_bl == 0 && con)
 					oppo_dimlayer_bl = 1;
 			} else {
 				oppo_dimlayer_bl = 1;
@@ -5536,7 +5520,6 @@ static int sde_crtc_onscreenfinger_atomic_check(struct sde_crtc_state *cstate,
 			return -EINVAL;
 		}
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-// Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless
 		if (fppressed_index >= 0 && !(is_oppo_aod_ramless() && cstate->base.mode.flags & DRM_MODE_FLAG_CMD_MODE_PANEL))
 #else
 		if (fppressed_index >= 0)
@@ -5754,11 +5737,7 @@ static int sde_crtc_atomic_check(struct drm_crtc *crtc,
 	}
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Service.Feature,2018/11/21
- * For OnScreenFingerprint feature
-*/
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-// Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless
 	rc = oppo_display_atomic_check(crtc, state);
 	if (rc)
 		return rc;
@@ -6055,9 +6034,6 @@ static void sde_crtc_install_properties(struct drm_crtc *crtc,
 				CRTC_PROP_CAPTURE_OUTPUT);
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.LCD.Feature,2018-11-21
- * Support custom propertys
-*/
 	msm_property_install_range(&sde_crtc->property_info,"CRTC_CUST",
 		0x0, 0, INT_MAX, 0, CRTC_PROP_CUSTOM);
 #endif
@@ -6079,7 +6055,6 @@ static void sde_crtc_install_properties(struct drm_crtc *crtc,
 		msm_property_install_volatile_range(&sde_crtc->property_info,
 			"dim_layer_v1", 0x0, 0, ~0, 0, CRTC_PROP_DIM_LAYER_V1);
 #ifdef OPLUS_BUG_STABILITY
-/*Sachin Shukla@PSW.MM.Display.LCD.Stable,2019-04-17 fix dc backlight aging test fail */
 		sde_kms_info_add_keyint(info, "dim_layer_v1_max_layers",
 				SDE_MAX_DIM_LAYERS - 1);
 #else

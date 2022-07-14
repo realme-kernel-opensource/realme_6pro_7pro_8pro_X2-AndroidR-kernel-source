@@ -732,7 +732,6 @@ static int cam_sync_handle_deregister_user_payload(
 				user_payload_kernel->payload_data[1] ==
 				userpayload_info.payload[1]) {
 #else
-		/* Weicong.Li@Camera , 2019/10/15 , merge qcom patch to fix UpdateDependency crash, case:04229960 */
 		if (user_payload_kernel->payload_data[0] ==
 				userpayload_info.payload[0]) {
 			CAM_ERR(CAM_SYNC,

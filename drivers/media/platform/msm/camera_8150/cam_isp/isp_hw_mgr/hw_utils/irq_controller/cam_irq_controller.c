@@ -617,7 +617,6 @@ static void cam_irq_controller_th_processing(
 				evt_handler->bottom_half, &bh_cmd);
 			if (rc || !bh_cmd) {
 #ifndef VENDOR_EDIT
-                /* jiangyi1@Cam.Drv 20190619 merge qcom patch for break long exposure snapshot */
                 CAM_ERR_RATE_LIMIT(CAM_ISP,
                     "No payload, IRQ handling frozen");
                 continue;

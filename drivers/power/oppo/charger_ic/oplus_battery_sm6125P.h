@@ -23,7 +23,6 @@
 #include <linux/usb/class-dual-role.h>
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* LiYue@BSP.CHG.Basic, 2019/07/01, Add for charging */
 #include "../../../../kernel/msm-4.14/drivers/power/supply/qcom/storm-watch.h"
 #endif
 
@@ -68,12 +67,10 @@ enum print_reason {
 #define WBC_VOTER			"WBC_VOTER"
 #define HW_LIMIT_VOTER			"HW_LIMIT_VOTER"
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/01/30, sjc Add for using gpio as CC detect */
 #define CCDETECT_VOTER			"CCDETECT_VOTER"
 #define DIVIDER_SET_VOTER			"DIVIDER_SET_VOTER"
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/02/13, sjc Add for charging */
 #define PD_DIS_VOTER			"PD_DIS_VOTER"
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC//Fanhong.Kong@ProDrv.CHG,add 2018/06/02 for SVOOC OTG
@@ -95,14 +92,12 @@ enum print_reason {
 #define VOUT_VOTER			"VOUT_VOTER"
 #define DR_SWAP_VOTER			"DR_SWAP_VOTER"
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// Kun.Zhang@BSP.CHG.Basic, 2019/04/09  add for charge
 #define DEFAULT_100MA_VOTER     "DEFAULT_100MA_VOTER"
 #endif
 #define USB_SUSPEND_VOTER		"USB_SUSPEND_VOTER"
 #define CHARGER_TYPE_VOTER		"CHARGER_TYPE_VOTER"
 #define HDC_IRQ_VOTER			"HDC_IRQ_VOTER"
 #ifdef OPLUS_FEATURE_CHG_BASIC
-// LiYue@BSP.CHG.Basic, 2019/09/19, add for check camera and hotspot on
 #define THERMAL_USER_VOTER		"THERMAL_USER_VOTER"
 #endif
 
@@ -117,7 +112,6 @@ enum print_reason {
 
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/02/13, sjc Add for charging */
 #define USB_TEMP_HIGH	0x01//bit0
 #define USB_WATER_DETECT	0x02//bit1
 #define USB_RESERVE2	0x04//bit2
@@ -130,7 +124,6 @@ enum print_reason {
 #define SDP_CURRENT_UA			500000
 #define CDP_CURRENT_UA			1500000
 #ifndef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/01/19, sjc Modify for charging */
 #define DCP_CURRENT_UA			1500000
 #else
 #define DCP_CURRENT_UA			2000000
@@ -392,7 +385,6 @@ struct smb_iio {
 	struct iio_channel	*sbux_chan;
 	struct iio_channel	*vph_v_chan;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/02,  Add for charging chargerid adc*/
 	struct iio_channel	*chgid_v_chan;
 	struct iio_channel	*usbtemp_v_chan;
 #endif
@@ -429,7 +421,6 @@ struct smb_charger {
 	struct power_supply		*bms_psy;
 	struct power_supply		*usb_main_psy;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/07, sjc Add for charging*/
 	struct power_supply		*ac_psy;
 #endif
 	struct power_supply		*usb_port_psy;
@@ -481,7 +472,6 @@ struct smb_charger {
 	struct delayed_work	uusb_otg_work;
 	struct delayed_work	bb_removal_work;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/03/25, sjc Add for charging */
         struct delayed_work     chg_monitor_work;
 #endif
 	struct delayed_work	lpd_ra_open_work;
@@ -490,7 +480,6 @@ struct smb_charger {
 	struct delayed_work	usbov_dbc_work;
 	struct delayed_work	role_reversal_check;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* LiYue@BSP.CHG.Basic, 2019/09/24, add for ARB */
 struct delayed_work arb_monitor_work;
 #endif
 	struct alarm		lpd_recheck_timer;
@@ -503,7 +492,6 @@ struct delayed_work arb_monitor_work;
 	int			sec_chg_selected;
 	int			cp_reason;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/04/13, sjc Add for charging */
 	struct delayed_work typec_disable_cmd_work;
 #endif
 
@@ -593,7 +581,6 @@ struct delayed_work arb_monitor_work;
 	bool			dbc_usbov;
     bool			fake_usb_insertion;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/07/13, sjc Add for fake typec */
 	bool			fake_typec_insertion;
 #endif
 
@@ -620,14 +607,12 @@ struct delayed_work arb_monitor_work;
 	/* wireless */
 	int			wireless_vout;
 	#ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2017/08/10, sjc Add for charging */
 	int			pre_current_ma;
 	bool		is_dpdm_on_usb;
 	struct delayed_work	divider_set_work;
 	struct work_struct	dpdm_set_work;
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Jianchao.Shi@BSP.CHG.Basic, 2018/01/30, sjc Add for using gpio as CC detect */
 	struct work_struct	chargerid_switch_work;
 	struct mutex pinctrl_mutex;
 
@@ -641,7 +626,6 @@ struct delayed_work arb_monitor_work;
 	struct delayed_work	ccdetect_work;
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/09/27, sjc Add for set uart pinctrl to read chargerID */
 	struct pinctrl		*chg_2uart_pinctrl;
 	struct pinctrl_state	*chg_2uart_default;
 	struct pinctrl_state	*chg_2uart_sleep;
@@ -651,7 +635,6 @@ struct delayed_work arb_monitor_work;
 	struct pinctrl_state	*shipmode_id_active;
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* LiYue@BSP.CHG.Basic, 2019/08/17, add for check camera and hotspot on */
 	struct delayed_work     check_camera_and_hotspot_work;
 	bool 			ctrl_by_camera;
 	bool			ctrl_by_hotspot;
@@ -659,7 +642,6 @@ struct delayed_work arb_monitor_work;
 };
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Yichun Chen@BSP.CHG.Basic, 2018/04/25, Add for OPLUS_CHARGE */
 enum skip_reason {
 	REASON_OTG_ENABLED	= BIT(0),
 	REASON_FLASH_ENABLED	= BIT(1)
@@ -706,7 +688,6 @@ struct qcom_pmic {
 	struct qpnp_vadc_chip	*pmi632_vadc_dev;
 	struct qpnp_vadc_chip	*pm8953_vadc_dev;
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*LiYue@BSP.CHG.Basic, 2019/07/04, modefy for usb connector temp check*/	
 	struct iio_channel      *usb_temp_v_l_chan;
 	struct iio_channel      *usb_temp_v_r_chan;
 #endif

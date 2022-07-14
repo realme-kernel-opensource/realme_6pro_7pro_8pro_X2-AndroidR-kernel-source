@@ -24,7 +24,6 @@
 #include <linux/sched.h>
 #include <linux/freezer.h>
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 #include "fuse_shortcircuit.h"
 #endif /* VENDOR_EDIT */
 
@@ -578,7 +577,6 @@ ssize_t fuse_simple_request(struct fuse_conn *fc, struct fuse_args *args)
 	fuse_request_send(fc, req);
 	ret = req->out.h.error;
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	if (!ret) {
 		if (req->private_lower_rw_file != NULL)
 			args->private_lower_rw_file = req->private_lower_rw_file;
@@ -1944,7 +1942,6 @@ static ssize_t fuse_dev_do_write(struct fuse_dev *fud,
 		req->out.h.error = kern_path(path, 0, req->out.canonical_path);
 	}
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	fuse_setup_shortcircuit(fc, req);
 #endif /* VENDOR_EDIT */
 

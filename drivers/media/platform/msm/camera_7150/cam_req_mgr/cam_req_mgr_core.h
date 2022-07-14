@@ -244,7 +244,6 @@ struct cam_req_mgr_req_queue {
 	int32_t                     rd_idx;
 	int32_t                     wr_idx;
 #ifndef VENDOR_EDIT
-/* jiangyi1@Camera.drv, 20190827, GSI testReprocessAbort */
 	int32_t                     last_applied_idx;
 #endif
 };

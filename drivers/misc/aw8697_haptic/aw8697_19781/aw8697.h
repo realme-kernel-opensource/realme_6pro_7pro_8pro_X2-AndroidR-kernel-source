@@ -55,7 +55,6 @@
 #define AW8697_HAPTIC_F0_PRE                1700    // 170Hz
 #define AW8697_HAPTIC_F0_CALI_PERCEN        7       // -7%~7%
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/01/09,  Add for F0  voltage */
 #define AW8697_HAPTIC_CONT_DRV_LVL          52     // 105*6.1/256=2.50v
 #else
 #define AW8697_HAPTIC_CONT_DRV_LVL          105     // 105*6.1/256=2.50v
@@ -76,7 +75,6 @@
 #define AW8697_HAPTIC_CONT_NUM_BRK          3
 #endif
 #ifdef VENDOR_EDIT
-/* Hang.Zhao@PSW.BSP.CHG.Basic,2019/10/25, Modify for different haptics */
 #define AW8697_19696_HAPTIC_F0_PRE                2350    // 235Hz
 #define AW8697_19696_HAPTIC_F0_CALI_PERCEN        7       // -7%~7%
 #define AW8697_19696_HAPTIC_CONT_DRV_LVL          105     // 125*6.1/256=2.98v
@@ -375,7 +373,6 @@ struct aw8697 {
     struct haptic_audio haptic_audio;
 	
 #ifdef VENDOR_EDIT
-	/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/24,  Add for operat para */
 	struct work_struct	motor_old_test_work;
 	unsigned int motor_old_test_mode;
 #endif
@@ -412,7 +409,6 @@ struct aw8697_que_seq {
 #define AW8697_HAPTIC_PLAY_REPEAT_SEQ     _IOWR(AW8697_HAPTIC_IOCTL_MAGIC, 7, unsigned int)
 
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/24,  Add for operat para */
 #define OPPO_F0_VAL_MAX                     1780
 #define OPPO_F0_VAL_MIN                     1650
 #define OPPO_F0_VAL_MAX_19696               2400

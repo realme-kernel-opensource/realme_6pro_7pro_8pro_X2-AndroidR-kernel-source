@@ -26,9 +26,6 @@
 #include "sde_core_irq.h"
 #include "dsi_panel.h"
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability, 2020/3/31, for
- * decoupling display driver
-*/
 #include "oppo_display_private_api.h"
 #include "oppo_onscreenfingerprint.h"
 extern struct drm_msm_pcc oppo_save_pcc;
@@ -356,7 +353,6 @@ static struct sde_kms *get_kms(struct drm_crtc *crtc)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* QianXu@MM.Display.LCD.Stability, 2020/3/31, for decoupling display driver */
 struct sde_kms *get_kms_(struct drm_crtc *crtc)
 {
 	return get_kms(crtc);
@@ -663,7 +659,6 @@ static void sde_cp_crtc_setfeature(struct sde_cp_node *prop_node,
 	sde_cp_get_hw_payload(prop_node, &hw_cfg, &feature_enabled);
 
 #ifdef OPLUS_BUG_STABILITY
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-28 fix pcc abnormal on onscreenfinger scene */
 	if (prop_node->feature == SDE_CP_CRTC_DSPP_PCC && is_dsi_panel(&sde_crtc->base)) {
 		if (hw_cfg.payload && (hw_cfg.len == sizeof(oppo_save_pcc))) {
 			memcpy(&oppo_save_pcc, hw_cfg.payload, hw_cfg.len);
@@ -909,9 +904,6 @@ void sde_cp_crtc_apply_properties(struct drm_crtc *crtc)
 	struct sde_hw_ctl *ctl;
 	u32 num_mixers = 0, i = 0;
 	#ifdef OPLUS_BUG_STABILITY
-	/*Sachin Shukla@PSW.MM.Display.LCD.Stable,2019-04-28 fix
-	* pcc abnormal on onscreenfinger scene
-	*/
 	bool dirty_pcc = false;
 	#endif /* OPLUS_BUG_STABILITY */
 
@@ -936,9 +928,6 @@ void sde_cp_crtc_apply_properties(struct drm_crtc *crtc)
 	mutex_lock(&sde_crtc->crtc_cp_lock);
 
 	#ifdef OPLUS_BUG_STABILITY
-	/*@PSW.MM.Display.LCD.Stable,2019-04-28 fix pcc abnormal
-	* on onscreenfinger scene
-	*/
 	dirty_pcc = sde_cp_crtc_update_pcc(crtc);
 	if (dirty_pcc) {
 		set_dspp_flush = true;
@@ -950,9 +939,6 @@ void sde_cp_crtc_apply_properties(struct drm_crtc *crtc)
 	 * dspp flush.
 	 **/
 	#ifdef OPLUS_BUG_STABILITY
-	/*Sachin Shukla@PSW.MM.Display.LCD.Stable,2019-04-28 fix
-	 *pcc abnormal on onscreenfinger scene
-	 */
 	if (!dirty_pcc && list_empty(&sde_crtc->dirty_list) &&
 		list_empty(&sde_crtc->ad_dirty)) {
 	#else

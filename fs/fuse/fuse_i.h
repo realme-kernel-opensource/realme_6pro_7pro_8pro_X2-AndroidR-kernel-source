@@ -157,7 +157,6 @@ struct fuse_file {
 	bool flock:1;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	/* the read write file */
 	struct file *rw_lower_file;
 #endif /* VENDOR_EDIT */
@@ -248,7 +247,6 @@ struct fuse_args {
 		struct path *canonical_path;
 	} out;
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	/** fuse shortcircuit file  */
 	struct file *private_lower_rw_file;
 #endif /* VENDOR_EDIT */
@@ -400,7 +398,6 @@ struct fuse_req {
 	struct file *stolen_file;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	/** fuse shortcircuit file  */
 	struct file *private_lower_rw_file;
 #endif /* VENDOR_EDIT */
@@ -568,7 +565,6 @@ struct fuse_conn {
 	unsigned handle_killpriv:1;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	/** Shortcircuited IO. */
 	unsigned shortcircuit_io:1;
 #endif /* VENDOR_EDIT */
@@ -1015,7 +1011,6 @@ struct posix_acl *fuse_get_acl(struct inode *inode, int type);
 int fuse_set_acl(struct inode *inode, struct posix_acl *acl, int type);
 
 #ifdef CONFIG_OPLUS_FEATURE_ACM
-//Yuwei.Guan@BSP.Kernel.FS,2020/07/08, Add for acm
 void acm_fuse_init_cache(void);
 void acm_fuse_free_cache(void);
 #endif

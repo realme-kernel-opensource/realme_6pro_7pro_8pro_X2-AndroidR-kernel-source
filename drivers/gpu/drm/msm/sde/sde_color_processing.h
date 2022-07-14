@@ -154,7 +154,6 @@ int sde_cp_hist_interrupt(struct drm_crtc *crtc_drm, bool en,
 	struct sde_irq_callback *hist_irq);
 
 #ifdef OPLUS_BUG_STABILITY
-/* QianXu@MM.Display.LCD.Stability, 2020/3/31, for decoupling display driver */
 struct sde_kms *get_kms_(struct drm_crtc *crtc);
 #endif
 

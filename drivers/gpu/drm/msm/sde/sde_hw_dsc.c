@@ -147,7 +147,6 @@ static void sde_hw_dsc_config_thresh(struct sde_hw_dsc *hw_dsc,
 	u32 off = 0x0;
 
 	#ifdef OPLUS_BUG_STABILITY
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-18 sync NULL pointer fix from oneplus */
 	if (!dsc->buf_thresh) {
 		SDE_ERROR("dsc->buf_thresh is NULL pointer");
 		return;

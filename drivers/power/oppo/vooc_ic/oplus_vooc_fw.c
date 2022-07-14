@@ -13,7 +13,6 @@
 ** --------------------------- Revision History: ------------------------------------------------------------
 * <version>       <date>        <author>                                <desc>
 * Revision 1.0    2015-06-22    Fanhong.Kong@ProDrv.CHG                 Created for new architecture
-* Revision 2.0    2018-3-31     YIchun.Chen@BSP.CHG                     ADD for log
 ************************************************************************************************************/
 
 #ifdef CONFIG_OPLUS_CHARGER_MTK

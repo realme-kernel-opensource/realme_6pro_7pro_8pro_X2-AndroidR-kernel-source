@@ -449,7 +449,6 @@ CLANG_FLAGS :=
 
 
 #ifdef OPLUS_FEATURE_BUILD
-#Sunliang@TECH.SysTech.Build.BaseConfig, 2020/03/18, oplus customzation for flags or other variabls
 -include OplusKernelEnvConfig.mk
 #endif // OPLUS_FEATURE_BUILD
 
@@ -463,7 +462,6 @@ endif
 
 
 # ifdef OPLUS_FEATURE_CHG_BASIC
-# Gang.Yan@PSW.BSP.CHG.Basic, 2020/03/12, sjc Add for 806 high/low temp aging test
 ifeq ($(OPPO_HIGH_TEMP_VERSION),true)
 KBUILD_CFLAGS += -DCONFIG_HIGH_TEMP_VERSION
 KBUILD_CPPFLAGS += -DCONFIG_HIGH_TEMP_VERSION

@@ -1127,9 +1127,7 @@ static int cam_soc_util_get_dt_regulator_info
 
 	soc_info->rgltr_ctrl_support = true;
 
-	/*WangChao@Cam.Drv 2020.1.16 add for fixing the issue of different sensor using same devicetree*/
 	if (19696 == get_project() && (31 == get_Operator_Version()||33 == get_Operator_Version())) {
-		/*WangChao@Cam.Drv 2020.1.16 Add for test*/
 		CAM_INFO(CAM_UTIL, "get_Operator_Version= %d", get_Operator_Version());
 		rc = of_property_read_u32_array(of_node, "rgltr-min-voltage-19710",
 			soc_info->rgltr_min_volt, soc_info->num_rgltr);

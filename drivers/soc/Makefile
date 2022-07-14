@@ -30,19 +30,15 @@ obj-$(CONFIG_IOMONITOR)    +=  oplus/iomonitor/
 #endif /*OPLUS_FEATURE_IOMONITOR*/
 
 #ifdef VENDOR_EDIT
-#/*ye.zhang@BSP.Bootloader.Bootflow, 2020-6-18, Add for oppo project*/
 obj-y				+= oppo/
 #endif
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-#SunFaliang@BSP.Power.Basic, 2020/07/09, add for oplus_wakelock_profile.
 obj-$(CONFIG_OPLUS_WAKELOCK_PROFILER) += oplus/owakelock/
 #endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 #ifdef OPLUS_FEATURE_HEALTHINFO
-#//wenbin.liu@PSW.Kernel.MM, 2018/05/23, Add for Healthinfo monitor
 obj-y     +=  oplus/oppo_healthinfo/
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 #ifdef OPLUS_FEATURE_SENSOR_SMEM
-#ChenYajie@BSP.SENSOR, 2020/06/16, Add for sensor info
 obj-y                     += oplus/sensor/
 #endif
 #Add for NandSwap

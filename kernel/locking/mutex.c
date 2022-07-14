@@ -50,7 +50,6 @@ __mutex_init(struct mutex *lock, const char *name, struct lock_class_key *key)
 	osq_lock_init(&lock->osq);
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	lock->ux_dep_task = NULL;
 #endif /* OPLUS_FEATURE_UIFIRST */
 
@@ -804,7 +803,6 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
 	if (!use_ww_ctx) {
 		/* add waiting tasks to the end of the waitqueue (FIFO): */
 #ifndef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		list_add_tail(&waiter.list, &lock->wait_list);
 #else /* OPLUS_FEATURE_UIFIRST */
 		if (sysctl_uifirst_enabled) {
@@ -863,7 +861,6 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
 				goto err;
 		}
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		if (sysctl_uifirst_enabled) {
 			mutex_set_inherit_ux(lock, current);
 		}
@@ -871,7 +868,6 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
 
 		spin_unlock(&lock->wait_lock);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		if (state & TASK_UNINTERRUPTIBLE) {
 			current->in_mutex = 1;
@@ -880,7 +876,6 @@ __mutex_lock_common(struct mutex *lock, long state, unsigned int subclass,
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 		schedule_preempt_disabled();
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		if (state & TASK_UNINTERRUPTIBLE) {
 			current->in_mutex = 0;
@@ -1107,7 +1102,6 @@ static noinline void __sched __mutex_unlock_slowpath(struct mutex *lock, unsigne
 	spin_lock(&lock->wait_lock);
 	debug_mutex_unlock(lock);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		mutex_unset_inherit_ux(lock, current);
 	}

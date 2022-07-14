@@ -272,7 +272,6 @@
 		};
 
 		//#ifdef VENDOR_EDIT
-		/* ZhangKe@Network.RF 2020/10/15 modify for rf-cable */
 		rf_cable0_active: rf_cable0_active {
 			mux {
 				pins = "gpio118";
@@ -671,7 +670,6 @@
 					pins = "gpio25", "gpio26";
 					drive-strength = <2>;
 //#ifdef OPLUS_ARCH_EXTENDS
-//Kaiqin.Huang@MM.AUDIODRIVERE.MACHINE 2020/11/28 add for i2c
 					input-enable;
 //#endif /* OPLUS_ARCH_EXTENDS */
 					bias-pull-up;
@@ -935,7 +933,6 @@
 		};
 
 		//#ifdef VENDOR_EDIT
-		//Qicai.gu@Bsp.Group.Tp, 2020/02/26, Add for oppo project
 		pmx_ts_int_active {
 			ts_int_active: ts_int_active {
 				mux {
@@ -969,7 +966,6 @@
 		//#endif
 
 		//#ifdef /*VENDOR_EDIT*/
-		/*#zoulian@BSP.Fingerprint.Basic, 2020/03/02, add for fingerprint driver */
 		oppo_fp_common{
 			gpio_id2_default: gpio_id2_default {
 				mux {
@@ -984,7 +980,6 @@
 				};
 			};
 		};
-		/*#ifdef VENDOR_EDIT#zoulian@BSP.Fingerprint.Basic, 2020/03/02, add for fingerprint driver */
 		goodix_fp{
 			gpio_goodix_irq_default: gpio_goodix_irq_default {
 				mux {
@@ -993,6 +988,21 @@
 				};
 				config {
 					pins = "gpio90";
+					drive-strength = <2>;
+					bias-disable;
+					input-enable;
+				};
+			};
+		};
+
+		fpc1020{
+			gpio_fpc_irq_default: gpio_fpc_irq_default {
+				mux {
+					pins = "gpio92";
+					function = "gpio";
+				};
+				config {
+					pins = "gpio92";
 					drive-strength = <2>;
 					bias-disable;
 					input-enable;
@@ -1680,7 +1690,6 @@
 		};
 
 //#ifdef OPLUS_FEATURE_TP_BASIC
-//Cong.Dai@psw.bsp.tp,2020/03/05 add for config vol down key
 		key_vol_down {
 			key_vol_down_default: key_vol_down_default {
 				mux {
@@ -1786,7 +1795,6 @@
 			};
 		};
                 /* #ifdef OPLUS_ARCH_EXTENDS */
-                //Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for Tertiary MI2S gpio
                 mi2s_2_pins: mi2s_2_pins {
                         mi2s_2_active: mi2s_2_active {
                                 mux {
@@ -1851,7 +1859,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//huyu@BSP.Storage.Sdcard, 2020/08/12, Add for SDcard detect	
 	sd_card_detect {
         sd_detect_default: sd_detect_default {
            pins = "gpio12"; /* GPIO 12 */
@@ -1865,7 +1872,6 @@
 };
 
 //#ifdef VENDOR_EDIT
-//LiPING-m@PSW.MM.Display.LCD.Stable, 2020/03/04, Add for pm6250 gpio4
 &pm6150_gpios {
 	disp_1p2_pins {
 		disp_1p2_pins_default: disp_1p2_pins_default{

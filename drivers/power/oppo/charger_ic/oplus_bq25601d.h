@@ -7,11 +7,9 @@
 **
 ** Version: 1.0
 ** Date created: 2018-09-24
-** Author: Jianchao.Shi@PSW.BSP.CHG
 **
 ** --------------------------- Revision History: ------------------------------------
 * <version>       <date>         <author>              			<desc>
-* Revision 1.0    2018-09-24   Jianchao.Shi@PSW.BSP.CHG   	Created for new architecture
 *************************************************************************************/
 
 #ifndef __OPLUS_BQ25601D_H__

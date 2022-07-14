@@ -6,7 +6,6 @@
 **
 ** Version: 1.0
 ** Date : 2019/07/31
-** Author: Asiga@PSW.NW.DATA
 **
 ** ------------------ Revision History:------------------------
 ** <author> <data> <version > <desc>

@@ -40,7 +40,6 @@
 			qcom,system-reset;
 			qcom,store-hard-reset-reason;
                         //#ifdef OPLUS_FEATURE_QCOM_PMICWD
-                        //shukai@BSP.Kernel.Stability, 2020/08/06, Add for qcom pmic watchdog
                         qcom,pmicwd;
 			qcom,s3-debounce = <128>;
 			qcom,s3-src = "kpdpwr-and-resin";
@@ -60,7 +59,6 @@
 				qcom,pon-type = <PON_POWER_ON_TYPE_RESIN>;
 				qcom,pull-up;
 				/*#ifdef ODM_LQ_EDIT*/
-				/*shentaotao@ODM_LQ@BSP.KEY,2019/11/22,modified for EVT2-2 volume key*/
 				linux,code = <KEY_VOLUMEUP>;
 				/*#else*/
 				/*linux,code = <KEY_VOLUMEDOWN>;*/
@@ -230,7 +228,6 @@
 				interrupts =
 					<0x0 0x10 0x0 IRQ_TYPE_EDGE_RISING>,
 					//#ifdef VENDOR_EDIT
-					/// LIZHIJIE@BSP.CHG.Basic 2020/03/07 add for charger
 					//<0x0 0x10 0x1 IRQ_TYPE_EDGE_RISING>,
 					//#endif
 					<0x0 0x10 0x2 IRQ_TYPE_EDGE_RISING>,
@@ -242,7 +239,6 @@
 
 				interrupt-names = "chgr-error",
 						//#ifdef VENDOR_EDIT
-						/// LIZHIJIE@BSP.CHG.Basic 2020/03/07 add for charger
 						// "chg-state-change",
 						//#endif
 						  "step-chg-state-change",
@@ -263,7 +259,6 @@
 					<0x0 0x11 0x4 IRQ_TYPE_EDGE_BOTH>,
 					<0x0 0x11 0x5 IRQ_TYPE_EDGE_BOTH>,
 					//#ifndef VENDOR_EDIT
-					/// LIZHIJIE@BSP.CHG.Basic 2020/03/07 add for charger
 					//<0x0 0x11 0x6 IRQ_TYPE_EDGE_RISING>,
 					//<0x0 0x11 0x7 IRQ_TYPE_EDGE_BOTH>;
 					//#else
@@ -277,7 +272,6 @@
 						  "high-duty-cycle",
 						  "input-current-limiting",
 						 //#ifndef VENDOR_EDIT
-						/// LIZHIJIE@BSP.CHG.Basic 2020/03/07 add for charger
 						 // "concurrent-mode-disable",
 						 // "switcher-power-ok";
 						 //#else
@@ -309,7 +303,6 @@
 				reg = <0x1300 0x100>;
 				interrupts =
 					//#ifdef VENDOR_EDIT
-					/*modify by lizhijie @BSP.Basic.CHG 2020/03/07*/
 					//<0x0 0x13 0x0 IRQ_TYPE_EDGE_BOTH>,
 					//#endif
 					<0x0 0x13 0x1 IRQ_TYPE_EDGE_BOTH>,
@@ -320,7 +313,7 @@
 					<0x0 0x13 0x6 IRQ_TYPE_EDGE_RISING>,
 					<0x0 0x13 0x7 IRQ_TYPE_EDGE_RISING>;
 
-				interrupt-names = /*"usbin-collapse",*/ //modify by lizhijie @BSP.Basic.CHG 2020/03/07
+				interrupt-names = /*"usbin-collapse",*/
 						  "usbin-vashdn",
 						  "usbin-uv",
 						  "usbin-ov",
@@ -376,12 +369,10 @@
 				reg = <0x1600 0x100>;
 				interrupts =
 					//#ifdef VENDOR_EDIT
-					/*modify by GangYan @BSP.Basic.CHG 2020/04/21*/
 					//<0x0 0x16 0x0 IRQ_TYPE_EDGE_RISING>,
 					//#endif
 					<0x0 0x16 0x1 IRQ_TYPE_EDGE_RISING>,
 					//#ifdef VENDOR_EDIT
-					/*modify by lizhijie @BSP.Basic.CHG 2020/03/07*/
 					//<0x0 0x16 0x2 IRQ_TYPE_EDGE_RISING>,
 					//<0x0 0x16 0x3 IRQ_TYPE_EDGE_RISING>,
 					//#endif
@@ -392,12 +383,10 @@
 
 				interrupt-names = 
 						//#ifdef VENDOR_EDIT
-						/*modify by GangYan @BSP.Basic.CHG 2020/04/21*/
 						//"wdog-snarl",
 						//#endif
 						  "wdog-bark",
 						 //#ifdef VENDOR_EDIT
-						 /*modify by lizhijie @BSP.Basic.CHG 2020/03/07*/
 						 // "aicl-fail",
 						 // "aicl-done",
 						 //#endif
@@ -471,7 +460,6 @@
 					   "batt-id";
 
 			//#ifdef VENDOR_EDIT
-			/* lizhijie@BSP.CHG.Basic, 2020/02/25,  add for charging */
 			status = "disable";
 			///#endif
 
@@ -508,7 +496,6 @@
 						"bcl-lvl2";
 			#thermal-sensor-cells = <1>;
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl 
 			status = "disabled";
 //#endif
 		};
@@ -517,7 +504,6 @@
 			compatible = "qcom,msm-bcl-soc";
 			#thermal-sensor-cells = <0>;
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl 
 			status = "disabled";
 //#endif
 		};
@@ -654,7 +640,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic  2020/04/10  Modify for disable bcl 
 /*
 	pm6150-vbat-lvl0 {
 		polling-delay-passive = <0>;

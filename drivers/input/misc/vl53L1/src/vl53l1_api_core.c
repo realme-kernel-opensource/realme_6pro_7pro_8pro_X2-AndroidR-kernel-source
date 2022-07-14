@@ -4228,7 +4228,6 @@ VL53L1_Error VL53L1_get_device_results(
 
 
 
-		/*removed by hongbo.dai@camera 20190202*/
 		/*
 		if (status != VL53L1_ERROR_NONE)
 			goto UPDATE_DYNAMIC_CONFIG;

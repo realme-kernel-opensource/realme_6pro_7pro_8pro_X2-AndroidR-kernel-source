@@ -5,13 +5,10 @@
 *                          Manage all charger IC and define abstarct function flow.
 * Version   : 1.0
 * Date          : 2015-06-22
-* Author        : fanhui@PhoneSW.BSP
 *                         : Fanhong.Kong@ProDrv.CHG
 * ------------------------------ Revision History: --------------------------------
 * <version>           <date>                <author>                            <desc>
-* Revision 1.0        2015-06-22        fanhui@PhoneSW.BSP             Created for new architecture
 * Revision 1.0        2015-06-22        Fanhong.Kong@ProDrv.CHG        Created for new architecture
-* Revision 1.1        2016-03-07        wenbin.liu@SW.Bsp.Driver       edit for log optimize
 * Revision 2.0        2018-04-14        Fanhong.Kong@ProDrv.CHG        Upgrade for SVOOC
 ***********************************************************************************/
 #include <linux/delay.h>
@@ -103,7 +100,6 @@ int tbatt_pwroff_enable = 1;
 static int mcu_status = 0;
 extern bool oplus_is_power_off_charging(struct oplus_vooc_chip *chip);
 
-/* wenbin.liu@SW.Bsp.Driver, 2016/03/01  Add for log tag*/
 #define charger_xlog_printk(num, fmt, ...) \
 		do { \
 			if (enable_charger_log >= (int)num) { \
@@ -616,7 +612,6 @@ int oplus_battery_get_property(struct power_supply *psy,
 	struct oplus_chg_chip *chip = g_charger_chip;
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* daili@BSP.CHG.Basic, 2020/1/2, Add for solve can't sleep problem  */
 	if (NULL == g_charger_chip)
 		return -EINVAL;
 #endif
@@ -3675,6 +3670,12 @@ void oplus_chg_set_input_current_limit(struct oplus_chg_chip *chip)
 	if (chip->chg_ctrl_by_cool_down && (current_limit > chip->limits.input_current_cool_down_ma)) {
 		current_limit = chip->limits.input_current_cool_down_ma;
 	}
+	if (19771 == get_project()) {
+		if (chip->chg_ops->oplus_chg_get_pd_type() == true) {
+		current_limit = 3000;
+		charger_xlog_printk(CHG_LOG_CRTI, "pd_active, current_limit = %d\n", current_limit);
+		}
+        }
 	charger_xlog_printk(CHG_LOG_CRTI,
 		" led_on = %d, \
 		current_limit = %d, \
@@ -4577,7 +4578,6 @@ static bool oplus_chg_check_vbatt_is_good(struct oplus_chg_chip *chip)
 static bool oplus_chg_check_time_is_good(struct oplus_chg_chip *chip)
 {
 #ifdef SELL_MODE
-	/* Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/10/26, delete over_time for sell_mode */
 	chip->chging_over_time = false;
 	printk("oplus_chg_check_time_is_good_sell_mode\n");
 	return true;
@@ -5001,7 +5001,6 @@ void oplus_chg_variables_reset(struct oplus_chg_chip *chip, bool in)
 	chip->stop_voter = 0x00;
 	chip->charging_state = CHARGING_STATUS_CCCV;
 #ifndef SELL_MODE
-	/* Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/12/12, delete for sell_mode */
 	if(chip->mmi_fastchg == 0){
 		chip->mmi_chg = 0;
 	} else {
@@ -6887,7 +6886,6 @@ static void oplus_chg_kpoc_power_off_check(struct oplus_chg_chip *chip)
 
 static void oplus_chg_print_log(struct oplus_chg_chip *chip)
 {
-	/* wenbin.liu@SW.Bsp.Driver, 2016/02/29  Add for log tag*/
 	if(chip->vbatt_num == 1){
 		charger_xlog_printk(CHG_LOG_CRTI,
 			" CHGR[ %d / %d / %d / %d / %d ], "
@@ -7112,6 +7110,12 @@ static void oplus_chg_ibatt_check_and_set(struct oplus_chg_chip *chip)
 		} else {
 			current_limit = chip->batt_capacity_mah * 65 / 100;
 		}
+		if (19771 == get_project()) {
+		 	if (chip->chg_ops->oplus_chg_get_pd_type() == true) {
+		 		current_limit = 3000;
+		 		charger_xlog_printk(CHG_LOG_CRTI, "pd_active, current_limit = %d\n", current_limit);
+		 	}
+		 }
 		threshold = 70;
 	} else if (chip->tbatt_status == BATTERY_STATUS__COOL_TEMP) {
 		recharge_volt = chip->limits.temp_cool_vfloat_mv - chip->limits.recharge_mv;
@@ -7210,6 +7214,7 @@ static void oplus_chg_pd_config(struct oplus_chg_chip *chip)
 	if (chip->pd_chging == false && chip->chg_ops->oplus_chg_get_pd_type() == true
 			&& oplus_chg_show_vooc_logo_ornot() == false) {
 		ret = chip->chg_ops->oplus_chg_pd_setup();
+
 		if (ret >= 0) {
 			chip->pd_chging = true;
 			chip->limits.temp_little_cool_fastchg_current_ma

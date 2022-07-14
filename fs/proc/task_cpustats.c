@@ -1,5 +1,4 @@
 #ifdef VENDOR_EDIT
-/* Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick. */
 #include <linux/kernel_stat.h>
 #include <linux/slab.h>
 #include <linux/sched.h>

@@ -2681,7 +2681,6 @@
 	};
 
     //#ifdef VENDOR_EDIT
-    //Zhengpeng.Tan@NW.AP.NV.892767, 2016/11/30
     //#ifdef FEATURE_OPPO_NV_BACKUP
     //add for creating a shared memory with uio for nv backup and restore
     qcom,oembackup_sharedmem@0 {

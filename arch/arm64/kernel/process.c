@@ -69,7 +69,6 @@ EXPORT_SYMBOL(__stack_chk_guard);
 #endif
 
 #ifndef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE
-/* YiXue.Ge@PSW.BSP.Kernel.Drv, 2017/11/27, add for some fault device can not reboot early */
 /*
  * Function pointers to optional machine specific functions
  */
@@ -271,7 +270,7 @@ void __show_regs(struct pt_regs *regs)
 		top_reg = 29;
 	}
 
-#ifdef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE //yixue.ge@bsp.drv add for dump cpu contex for minidump
+#ifdef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE
 	dumpcpuregs(regs);
 #endif
 

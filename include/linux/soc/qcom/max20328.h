@@ -50,12 +50,9 @@ struct max20328_data {
 	struct blocking_notifier_head max20328_notifier;
 	atomic_t usbc_mode;
 #ifdef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, solve hs detection fail when hs pluged and restart phone*/
 	bool hs_det_ready;    //hs detection module ready flag
 #endif /*OPLUS_ARCH_EXTENDS*/
 	#ifdef OPLUS_ARCH_EXTENDS
-	/* Zhao.Pan@PSW.MM.AudioDriver.HeadsetDet, 2019/04/19,
-	 * change to Mic's voltage detection. */
 	int mode;    //switch mode
 	#endif /*OPLUS_ARCH_EXTENDS*/
 	s32 int_pin;
@@ -83,13 +80,9 @@ int max20328_set_switch_mode(int mode);
 int max20328_swap_mic_gnd(void);
 int max20328_switch_event(enum max20328_function event);
 #ifdef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
- * solve hs detection fail when hs pluged and restart phone*/
 void max20328_set_det_ready(void);
 #endif /*VENDOR_EDIT*/
 #ifdef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
- * change to Mic's voltage detection. */
 int max20328_set_LR_cnt(bool state);
 #endif /*OPLUS_ARCH_EXTENDS*/
 int max20328_reg_notifier(struct notifier_block *nb, struct device_node *node);

@@ -15,7 +15,6 @@
 #include "cam_sensor_soc.h"
 #include "cam_sensor_core.h"
 
-/* hongbo.dai@camera 20181122 add for at camera test */
 #ifdef VENDOR_EDIT
 struct cam_sensor_i2c_reg_setting_array {
 	struct cam_sensor_i2c_reg_array reg_setting[4600];
@@ -42,11 +41,9 @@ struct cam_sensor_settings {
 struct cam_sensor_settings sensor_settings = {
 #include "CAM_SENSOR_SETTINGS.h"
 };
-/* add by fangyan@Cam.Drv 2019/08/06, for diff version of the gw1*/
 #define S5KGW1_VERSION_REG (0x0002)  //s5kgw1 version register address(0x0002)
 #define SAMSUNG_SENSOR_MP1 (0xA101)  //s5kgw1 evt0.1(0xA101)
 #define SAMSUNG_SENSOR_MP2 (0xA201)  //s5kgw1 evt0.2(0xA201)
-/*add by hongbo.dai@camera 20181213, for Camera AT current test*/
 static bool is_ftm_current_test = false;
 #endif
 
@@ -58,7 +55,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 	uint32_t sensor_version = 0;
 	struct cam_sensor_ctrl_t *s_ctrl =
 		v4l2_get_subdevdata(sd);
-	/* hongbo.dai@camera 20181122 add for at camera test */
 	#ifdef VENDOR_EDIT
 	struct cam_sensor_i2c_reg_setting sensor_setting;
 	#endif
@@ -68,7 +64,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 		rc = cam_sensor_driver_cmd(s_ctrl, arg);
 		break;
 	#ifdef VENDOR_EDIT
-	/* hongbo.dai@camera 20181122 add for at camera test */
 	case VIDIOC_CAM_FTM_POWNER_DOWN:
 		CAM_ERR(CAM_SENSOR, "FTM power down");
 		return cam_sensor_power_down(s_ctrl);
@@ -149,7 +144,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 			sensor_setting.delay = sensor_settings.hi846_setting.delay;
 			CAM_ERR(CAM_SENSOR,"FTM GET HI846 setting");
 		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x0841) {
-			/*Xianglong@Lu.RM.Camera, 20190816, add this "else if" for s5kgd1sp test*/
 			sensor_setting.reg_setting = sensor_settings.s5kgd1sp_setting.reg_setting;
 			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_WORD;
 			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_WORD;
@@ -227,7 +221,6 @@ static int cam_sensor_subdev_close(struct v4l2_subdev *sd,
 
 	mutex_lock(&(s_ctrl->cam_sensor_mutex));
 	#ifdef VENDOR_EDIT
-	//add by hongbo.dai@camea 20181213,ftm test will do it by powerdown
 	if(!is_ftm_current_test)
 	#endif
 	cam_sensor_shutdown(s_ctrl);

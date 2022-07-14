@@ -79,12 +79,10 @@
 #include "binder_trace.h"
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 #include <linux/uifirst/uifirst_sched_binder.h>
 #endif /* OPLUS_FEATURE_UIFIRST */
 
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-// Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 #include <linux/hans.h>
 #endif /*OPLUS_FEATURE_HANS_FREEZE*/
 static HLIST_HEAD(binder_deferred_list);
@@ -516,7 +514,6 @@ struct binder_proc {
 	int deferred_work;
 	bool is_dead;
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 	int proc_type;
 #endif /* OPLUS_FEATURE_UIFIRST */
 
@@ -2842,7 +2839,6 @@ static int binder_fixup_parent(struct binder_transaction *t,
 }
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 static inline bool is_binder_proc_sf(struct binder_proc *proc)
 {
 	return proc && proc->tsk && strstr(proc->tsk->comm, "surfaceflinger")
@@ -2905,7 +2901,6 @@ static bool binder_proc_transaction(struct binder_transaction *t,
 					    node->inherit_rt);
 		binder_enqueue_thread_work_ilocked(thread, &t->work);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		if (sysctl_uifirst_enabled) {
 			if (!oneway || proc->proc_type)
 				binder_set_inherit_ux(thread->task, current);
@@ -2995,7 +2990,6 @@ static void binder_transaction(struct binder_proc *proc,
 	char *secctx = NULL;
 	u32 secctx_sz = 0;
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 	char buf_data[INTERFACETOKEN_BUFF_SIZE];
 	size_t buf_data_size;
 	char buf[INTERFACETOKEN_BUFF_SIZE] = {0};
@@ -3119,7 +3113,6 @@ static void binder_transaction(struct binder_proc *proc,
 		}
 
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 		if (!(tr->flags & TF_ONE_WAY) //report sync binder call
 			&& target_proc
 			&& (task_uid(target_proc->tsk).val > MIN_USERAPP_UID)
@@ -3348,7 +3341,6 @@ static void binder_transaction(struct binder_proc *proc,
 		goto err_bad_offset;
 	}
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 	if ((tr->flags & TF_ONE_WAY) //report async binder call
 		&& target_proc
 		&& (task_uid(target_proc->tsk).val > MIN_USERAPP_UID)
@@ -3582,7 +3574,6 @@ static void binder_transaction(struct binder_proc *proc,
 		binder_inner_proc_unlock(target_proc);
 		wake_up_interruptible_sync(&target_thread->wait);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		if (sysctl_uifirst_enabled && !proc->proc_type) {
 			binder_unset_inherit_ux(thread->task);
 		}
@@ -4229,7 +4220,6 @@ static int binder_wait_for_work(struct binder_thread *thread,
 		if (binder_has_work_ilocked(thread, do_proc_work))
 			break;
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 		if (do_proc_work) {
 			list_add(&thread->waiting_thread_node,
 				 &proc->waiting_threads);
@@ -4245,7 +4235,6 @@ static int binder_wait_for_work(struct binder_thread *thread,
 #endif /* OPLUS_FEATURE_UIFIRST */
 		binder_inner_proc_unlock(proc);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		if (!do_proc_work)
 			current->in_binder = 1;
@@ -4253,7 +4242,6 @@ static int binder_wait_for_work(struct binder_thread *thread,
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 		schedule();
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		current->in_binder = 0;
 #endif
@@ -4551,7 +4539,6 @@ retry:
 				task_tgid_nr_ns(sender,
 						task_active_pid_ns(current));
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 			if (sysctl_uifirst_enabled) {
 				binder_set_inherit_ux(thread->task, t_from->task);
 			}
@@ -5301,7 +5288,6 @@ static int binder_open(struct inode *nodp, struct file *filp)
 	get_task_struct(current->group_leader);
 	proc->tsk = current->group_leader;
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 	proc->proc_type = is_binder_proc_sf(proc) ? 1 : 0;
 #endif /* OPLUS_FEATURE_UIFIRST */
 	mutex_init(&proc->files_lock);
@@ -6087,7 +6073,6 @@ static void get_uid_pid(int *from_pid, int *from_uid, int *to_pid, int *to_uid, 
         *to_uid = tr->to_thread ? task_uid(tr->to_thread->task).val : -1;
 }
 
-// Kun.Zhou@ROM.Framework, 2019/09/23, add for hans freeze manager
 static void hans_check_uid_proc_status(struct binder_proc *proc, enum message_type type)
 {
 	struct rb_node *n = NULL;

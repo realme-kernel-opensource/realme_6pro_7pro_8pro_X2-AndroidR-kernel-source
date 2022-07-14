@@ -55,7 +55,6 @@
 //#ifndef VENDOR_EDIT
 //#define CCI_I2C_MAX_READ 8192
 //#else
-//add by litao@camera, 20200311 for read eeprom data
 #define CCI_I2C_MAX_READ 16384
 //#endif
 #define CCI_I2C_MAX_WRITE 8192

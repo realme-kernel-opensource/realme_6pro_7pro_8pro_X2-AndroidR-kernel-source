@@ -491,7 +491,6 @@
 	pinctrl-2 = <&sde_dp_aux_suspend>;
 	qcom,aux-en-gpio = <&tlmm 55 0>;
 //#ifdef VENDOR_EDIT
-//lizhijie@BSP.CHG.Basic. 2020/02/25 add for charger
 	qcom,aux-sel-gpio = <&tlmm 93 0>;
 //#else
 //	qcom,aux-sel-gpio = <&tlmm 33 0>;

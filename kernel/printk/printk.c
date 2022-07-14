@@ -60,7 +60,6 @@
 #include "internal.h"
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01  Add for debug console reg issue 969323*/
 #include <soc/oppo/boot_mode.h>
 static bool __read_mostly printk_disable_uart = true; /*set true avoid early console output*/
 static int __init printk_uart_disabled(char *str)
@@ -1006,7 +1005,6 @@ static int devkmsg_open(struct inode *inode, struct file *file)
 	if (!user)
 		return -ENOMEM;
 
-	/* Lijingxiang@BSP.Kernel.Debug,2020/07/17, Modify for debug kernel init */
 	ratelimit_state_init(&user->rs, HZ, 300);
 
 	ratelimit_set_flags(&user->rs, RATELIMIT_MSG_ON_RELEASE);
@@ -1755,7 +1753,6 @@ static void call_console_drivers(const char *ext_text, size_t ext_len,
 
 	for_each_console(con) {
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01  Add for debug console reg issue 969323*/
 		if ((con->flags & CON_CONSDEV) &&
 				(printk_disable_uart ||
 				get_boot_mode() == MSM_BOOT_MODE__FACTORY ||

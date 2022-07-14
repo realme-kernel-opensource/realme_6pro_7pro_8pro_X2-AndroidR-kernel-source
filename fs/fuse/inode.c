@@ -50,7 +50,6 @@ MODULE_PARM_DESC(max_user_congthresh,
  "unprivileged user can set");
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 static bool shortcircuit = true;
 module_param(shortcircuit, bool, 0644);
 MODULE_PARM_DESC(shortcircuit, "Enable or disable fuse shortcircuit. Default: y/Y/1");
@@ -919,7 +918,6 @@ static void process_init_reply(struct fuse_conn *fc, struct fuse_req *req)
 			if (arg->flags & FUSE_WRITEBACK_CACHE)
 				fc->writeback_cache = 1;
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 			if (arg->flags & FUSE_SHORTCIRCUIT || fc->writeback_cache) {
 				/** an ugly way to determine FuseDaemon by writeback_cache
 				 *  since currently only FuseDaemon enable WBC
@@ -970,7 +968,6 @@ static void fuse_send_init(struct fuse_conn *fc, struct fuse_req *req)
 		FUSE_DO_READDIRPLUS | FUSE_READDIRPLUS_AUTO | FUSE_ASYNC_DIO |
 		FUSE_WRITEBACK_CACHE | FUSE_NO_OPEN_SUPPORT |
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 		FUSE_SHORTCIRCUIT |
 #endif /* VENDOR_EDIT */
 		FUSE_PARALLEL_DIROPS | FUSE_HANDLE_KILLPRIV | FUSE_POSIX_ACL;
@@ -1191,7 +1188,6 @@ static int fuse_fill_super(struct super_block *sb, void *data, int silent)
 	fuse_send_init(fc, init_req);
 
 #ifdef CONFIG_OPLUS_FEATURE_ACM
-//Yuwei.Guan@BSP.Kernel.FS,2020/07/08, Add for acm
 	acm_fuse_init_cache();
 #endif
 
@@ -1227,7 +1223,6 @@ static void fuse_sb_destroy(struct super_block *sb)
 
 	if (fc) {
 #ifdef CONFIG_OPLUS_FEATURE_ACM
-//Yuwei.Guan@BSP.Kernel.FS,2020/07/08, Add for acm
 		acm_fuse_free_cache();
 #endif
 		fuse_send_destroy(fc);

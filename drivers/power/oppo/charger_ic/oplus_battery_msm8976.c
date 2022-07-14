@@ -2062,7 +2062,7 @@ done:
 	mutex_unlock(&chip->pmic_spmi.parallel.lock);
 	smbchg_relax(chip, PM_PARALLEL_TAPER);
 }
-#if 0 //PengNan@CHG.BSP 2015.12.30 modified for aicl_rerun
+#if 0
 static bool smbchg_is_aicl_complete(struct oplus_chg_chip *chip)
 {
 	int rc;
@@ -4625,7 +4625,7 @@ static void handle_usb_insertion(struct oplus_chg_chip *chip)
 	if (usb_supply_type == POWER_SUPPLY_TYPE_USB_DCP)
 //		schedule_delayed_work(&chip->pmic_spmi.hvdcp_det_work,
 //					msecs_to_jiffies(HVDCP_NOTIFY_MS));
-#if 0 //PengNan@CHG.BSP 2015.12.30 deleted the init current which not used
+#if 0
 	mutex_lock(&chip->pmic_spmi.current_change_lock);
 	if (usb_supply_type == POWER_SUPPLY_TYPE_USB)
 		chip->pmic_spmi.usb_target_current_ma = DEFAULT_SDP_MA;
@@ -8321,7 +8321,6 @@ static int smbchg_probe(struct spmi_device *spmi)
 
 	dump_regs(chip);
 	create_debugfs_entries(chip);	
-//PengNan@SW.BSP add for custom code.
 	oplus_chg_parse_dt(chip);
 	oplus_chg_init(chip);
 

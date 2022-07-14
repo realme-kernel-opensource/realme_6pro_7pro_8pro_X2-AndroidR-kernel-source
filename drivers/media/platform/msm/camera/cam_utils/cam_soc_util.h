@@ -37,7 +37,6 @@
 
 /* maximum number of device regulator */
 //#ifndef VENDOR_EDIT
-/*litao@Cam.Drv, 20200306, add for 19365 sensor porting*/
 //#define CAM_SOC_MAX_REGULATOR       5
 //#else
 #define CAM_SOC_MAX_REGULATOR       7

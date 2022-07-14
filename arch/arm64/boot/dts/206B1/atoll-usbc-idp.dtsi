@@ -13,7 +13,6 @@
 #include "atoll-audio-overlay.dtsi"
 
 //#ifndef OPLUS_ARCH_EXTENDS
-//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.HEADSETDET, 2020/07/30, Delete for headset detect
 /*
 &atoll_snd {
 	qcom,msm-mbhc-usbc-audio-supported = <1>;

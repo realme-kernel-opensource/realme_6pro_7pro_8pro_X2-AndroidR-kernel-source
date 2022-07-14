@@ -646,7 +646,6 @@
 	};
 
 //#ifdef VENDOR_EDIT
-// Gang.Yan@BSP.CHG.Basic 2020/04/14  for add usbtemp
 /*
     conn-therm-usr {
     	polling-delay-passive = <0>;
@@ -745,7 +744,6 @@
 		polling-delay = <0>;
 		thermal-governor = "user_space";
 	/*#ifndef ODM_LQ_EDIT*/
-	/*liujiawei@ODM_LQ.BSP.CHG,2020/07/22, modified for camera-therm */
 		/*thermal-sensors = <&pm6150l_adc_tm ADC_GPIO1_PU2>;*/
 	/*#else*/
 		thermal-sensors = <&pm6150l_adc_tm ADC_AMUX_THM3_PU2>;

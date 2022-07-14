@@ -21,13 +21,11 @@
 #include <linux/netfilter/xt_owner.h>
 
 
-//Yuanhua.Du@NETWORK.DATA, 2020/04/018, Add for new TAG format
 #ifndef OPLUS_FEATURE_XTOWNER_INPUT
 #define OPLUS_FEATURE_XTOWNER_INPUT
 #endif
 
 #ifdef OPLUS_FEATURE_XTOWNER_INPUT
-//Shangjin.Tang@NETWORK.DATA, 2019/09/05
 //add for BUG 2212301
 #include <net/netfilter/ipv4/nf_defrag_ipv4.h>
 #if IS_ENABLED(CONFIG_IP6_NF_IPTABLES)
@@ -81,7 +79,6 @@ static int owner_check(const struct xt_mtchk_param *par)
 }
 
 #ifdef OPLUS_FEATURE_XTOWNER_INPUT
-//Shangjin.Tang@NETWORK.DATA, 2019/09/05
 //add for BUG 2212301
 static struct sock *oem_qtaguid_find_sk(const struct sk_buff *skb,
 				struct xt_action_param *par)
@@ -129,7 +126,6 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
 	struct net *net = xt_net(par);
 
 	#ifdef OPLUS_FEATURE_XTOWNER_INPUT
-	//Shangjin.Tang@NETWORK.DATA, 2019/09/05
 	//add for BUG 2212301
 	/*
 	* When in TCP_TIME_WAIT the sk is not a "struct sock" but
@@ -163,7 +159,6 @@ owner_mt(const struct sk_buff *skb, struct xt_action_param *par)
 			sk = NULL;
 		}
 		//#ifdef OPLUS_FEATURE_XTOWNER_INPUT
-		/* Wen.Luo@BSP.Kernel.Stability 2019/12/20 add for bug-id:2710161, sock memleak, add WRAN_ON follow other sk_state */
 		else if (sk && sk->sk_state == TCP_CLOSE) {
 			sock_gen_put(sk);
 		} else if (sk) {
@@ -222,7 +217,6 @@ static struct xt_match owner_mt_reg __read_mostly = {
 	.match      = owner_mt,
 	.matchsize  = sizeof(struct xt_owner_match_info),
 #ifndef OPLUS_FEATURE_XTOWNER_INPUT
-//Yuanhua.Du@NETWORK.DATA.2180713, 2019/07/20, Add NF_INET_LOCAL_IN for iptables owner match rules
 	.hooks      = (1 << NF_INET_LOCAL_OUT) |
 	              (1 << NF_INET_POST_ROUTING),
 #else

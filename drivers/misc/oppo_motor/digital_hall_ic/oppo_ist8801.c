@@ -8,12 +8,9 @@
 **
 ** Version: 1.0
 ** Date created: 2018/01/14,20:27
-** Author: Fei.Mo@PSW.BSP.Sensor
 **
 ** --------------------------- Revision History: -------------------------------------
 * <version>		<date>		<author>		<desc>
-* Revision 1.0		2018/01/14	Fei.Mo@PSW.BSP.Sensor	Created
-* Revision 2.0		2018/10/15	Fei.Mo@PSW.BSP.Sensor	Modify for common software
 **************************************************************************************/
 #include <linux/delay.h>
 #include <linux/errno.h>
@@ -1333,5 +1330,5 @@ module_exit(ist8801_exit);
 
 MODULE_DESCRIPTION("ist8801 hallswitch driver");
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("");
+MODULE_AUTHOR("zengchao@oppo.com");
 

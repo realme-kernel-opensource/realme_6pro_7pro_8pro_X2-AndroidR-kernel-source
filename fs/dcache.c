@@ -1418,7 +1418,6 @@ static enum d_walk_ret select_collect(void *_data, struct dentry *dentry)
 
 	if (dentry->d_flags & DCACHE_SHRINK_LIST) {
 	#ifdef OPLUS_BUG_STABILITY
-	/*xing.xiong@BSP.Kernel.Stability, Modify for hungtask dcache*/
 		goto out;
 	#else
 		data->found++;

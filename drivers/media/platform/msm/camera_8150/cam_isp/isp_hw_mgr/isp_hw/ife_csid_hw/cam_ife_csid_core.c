@@ -56,12 +56,10 @@ extern void __iomem *csphy3_base;
 #define MIPI_CSIPHY_INTERRUPT_STATUS0_ADDR             0x8B0
 #define MIPI_CSIPHY_INTERRUPT_CLEAR0_ADDR              0x858
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
 static int cam_ife_csid_reset_regs(
     struct cam_ife_csid_hw *csid_hw, bool reset_hw);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 static int cam_ife_csid_is_ipp_ppp_format_supported(
 	uint32_t in_format)
@@ -375,13 +373,11 @@ static int cam_ife_csid_global_reset(struct cam_ife_csid_hw *csid_hw)
 	const struct cam_ife_csid_reg_offset  *csid_reg;
 	int rc = 0;
 	uint32_t val = 0, i;
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     unsigned long flags;
 #else
 	uint32_t status;
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	soc_info = &csid_hw->hw_info->soc_info;
 	csid_reg = csid_hw->csid_info->csid_reg;
@@ -396,11 +392,9 @@ static int cam_ife_csid_global_reset(struct cam_ife_csid_hw *csid_hw)
 	CAM_DBG(CAM_ISP, "CSID:%d Csid reset",
 		csid_hw->hw_intf->hw_idx);
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     spin_lock_irqsave(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	/* Mask all interrupts */
 	cam_io_w_mb(0, soc_info->reg_map[0].mem_base +
@@ -444,11 +438,9 @@ static int cam_ife_csid_global_reset(struct cam_ife_csid_hw *csid_hw)
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
 		csid_reg->cmn_reg->csid_irq_cmd_addr);
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     spin_unlock_irqrestore(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	cam_io_w_mb(0x80, soc_info->reg_map[0].mem_base +
 		csid_hw->csid_info->csid_reg->csi2_reg->csid_csi2_rx_cfg1_addr);
@@ -466,7 +458,6 @@ static int cam_ife_csid_global_reset(struct cam_ife_csid_hw *csid_hw)
 		cam_io_w_mb(0x2, soc_info->reg_map[0].mem_base +
 			csid_reg->rdi_reg[i]->csid_rdi_cfg0_addr);
 
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     /* reset HW regs first, then SW */
     rc = cam_ife_csid_reset_regs(csid_hw, true);
@@ -505,10 +496,8 @@ static int cam_ife_csid_global_reset(struct cam_ife_csid_hw *csid_hw)
 			  csid_hw->hw_intf->hw_idx, rc);
 		rc = -ETIMEDOUT;
 	}
-	/* Liuweiqiang@camera, 20191021, add timeout time, case:04228629 */
 	usleep_range(5000, 5010);
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	val = cam_io_r_mb(soc_info->reg_map[0].mem_base +
 		csid_reg->csi2_reg->csid_csi2_rx_irq_mask_addr);
@@ -519,15 +508,12 @@ static int cam_ife_csid_global_reset(struct cam_ife_csid_hw *csid_hw)
 #ifdef VENDOR_EDIT
 	for (i = 0 ; i < CAM_IFE_PIX_PATH_RES_MAX; i++)
 		csid_hw->res_sof_cnt[i] = 0;
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	csid_hw->first_sof_ts = 0;
 #endif
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
 end:
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 	return rc;
 }
 
@@ -619,18 +605,15 @@ static int cam_ife_csid_path_reset(struct cam_ife_csid_hw *csid_hw,
 			csid_reg->rdi_reg[id]->csid_rdi_irq_mask_addr);
 	}
 
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     reinit_completion(complete);
 #else
 	init_completion(complete);
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	reset_strb_val = csid_reg->cmn_reg->path_rst_stb_all;
 
 #ifndef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 remove it for bug:1877373, case:03906628 patch */
 	/* Enable the Test gen before reset */
 	cam_io_w_mb(1,	csid_hw->hw_info->soc_info.reg_map[0].mem_base +
 		csid_reg->tpg_reg->csid_tpg_ctrl_addr);
@@ -651,7 +634,6 @@ static int cam_ife_csid_path_reset(struct cam_ife_csid_hw *csid_hw,
 	}
 
 #ifndef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 remove it for bug:1877373, case:03906628 patch */
 	/* Disable Test Gen after reset*/
 	cam_io_w_mb(0, soc_info->reg_map[0].mem_base +
 		csid_reg->tpg_reg->csid_tpg_ctrl_addr);
@@ -1139,11 +1121,9 @@ static int cam_ife_csid_enable_hw(struct cam_ife_csid_hw  *csid_hw)
 	struct cam_hw_soc_info              *soc_info;
 	uint32_t i, val, clk_lvl;
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     unsigned long flags;
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	csid_reg = csid_hw->csid_info->csid_reg;
 	soc_info = &csid_hw->hw_info->soc_info;
@@ -1182,11 +1162,9 @@ static int cam_ife_csid_enable_hw(struct cam_ife_csid_hw  *csid_hw)
 		goto disable_soc;
 	}
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     spin_lock_irqsave(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	/* clear all interrupts */
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
@@ -1214,11 +1192,9 @@ static int cam_ife_csid_enable_hw(struct cam_ife_csid_hw  *csid_hw)
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
 		csid_reg->cmn_reg->csid_irq_cmd_addr);
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     spin_unlock_irqrestore(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	val = cam_io_r_mb(soc_info->reg_map[0].mem_base +
 			csid_reg->cmn_reg->csid_hw_version_addr);
@@ -1285,7 +1261,6 @@ static int cam_ife_csid_disable_hw(struct cam_ife_csid_hw *csid_hw)
 	csid_hw->hw_info->hw_state = CAM_HW_STATE_POWER_DOWN;
 	csid_hw->error_irq_count = 0;
 #ifdef VENDOR_EDIT
-	/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 		csid_hw->first_sof_ts = 0;
 #endif
 
@@ -2618,7 +2593,6 @@ static int cam_ife_csid_get_time_stamp(
 		CAM_IFE_CSID_QTIMER_DIV_FACTOR);
 
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	get_monotonic_boottime64(&ts);
 	time_stamp->boot_timestamp = (uint64_t)((ts.tv_sec * 1000000000) +
 		ts.tv_nsec);
@@ -2717,11 +2691,9 @@ static int cam_ife_csid_reset(void *hw_priv,
 	csid_hw = (struct cam_ife_csid_hw   *)csid_hw_info->core_info;
 	reset   = (struct cam_csid_reset_cfg_args  *)reset_args;
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     mutex_lock(&csid_hw->hw_info->hw_mutex);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	switch (reset->reset_type) {
 	case CAM_IFE_CSID_RESET_GLOBAL:
@@ -2737,11 +2709,9 @@ static int cam_ife_csid_reset(void *hw_priv,
 		break;
 	}
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     mutex_unlock(&csid_hw->hw_info->hw_mutex);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	return rc;
 }
@@ -2873,7 +2843,6 @@ end:
 	return rc;
 }
 
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
 /*
  * reset_hw = true : reset HW regs
@@ -2885,35 +2854,28 @@ static int cam_ife_csid_reset_regs(
 static int cam_ife_csid_reset_retain_sw_reg(
 	struct cam_ife_csid_hw *csid_hw)
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 {
 	int rc = 0;
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifndef VENDOR_EDIT
 	uint32_t status;
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	const struct cam_ife_csid_reg_offset *csid_reg =
 		csid_hw->csid_info->csid_reg;
 	struct cam_hw_soc_info          *soc_info;
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     uint32_t val = 0;
     unsigned long flags;
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	soc_info = &csid_hw->hw_info->soc_info;
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     reinit_completion(&csid_hw->csid_top_complete);
 
     spin_lock_irqsave(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	/* clear the top interrupt first */
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
@@ -2921,7 +2883,6 @@ static int cam_ife_csid_reset_retain_sw_reg(
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
 		csid_reg->cmn_reg->csid_irq_cmd_addr);
 
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     if (reset_hw) {
         /* enable top reset complete IRQ */
@@ -2988,7 +2949,6 @@ end:
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
 		csid_reg->cmn_reg->csid_irq_cmd_addr);
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	return rc;
 }
@@ -3063,7 +3023,6 @@ static int cam_ife_csid_init_hw(void *hw_priv,
 		break;
 	}
 
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     rc = cam_ife_csid_reset_regs(csid_hw, true);
     if (rc < 0) {
@@ -3075,7 +3034,6 @@ static int cam_ife_csid_init_hw(void *hw_priv,
 		CAM_ERR(CAM_ISP, "CSID: Failed in SW reset");
 	}
 #endif
-/* Modify by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	if (rc)
 		cam_ife_csid_disable_hw(csid_hw);
@@ -3476,19 +3434,15 @@ irqreturn_t cam_ife_csid_irq(int irq_num, void *data)
 		irq_status_rdi[i] = cam_io_r_mb(soc_info->reg_map[0].mem_base +
 		csid_reg->rdi_reg[i]->csid_rdi_irq_status_addr);
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     spin_lock_irqsave(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	/* clear */
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     cam_io_w_mb(irq_status_top, soc_info->reg_map[0].mem_base +
         csid_reg->cmn_reg->csid_top_irq_clear_addr);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 	cam_io_w_mb(irq_status_rx, soc_info->reg_map[0].mem_base +
 		csid_reg->csi2_reg->csid_csi2_rx_irq_clear_addr);
 	if (csid_reg->cmn_reg->num_pix)
@@ -3506,11 +3460,9 @@ irqreturn_t cam_ife_csid_irq(int irq_num, void *data)
 	cam_io_w_mb(1, soc_info->reg_map[0].mem_base +
 		csid_reg->cmn_reg->csid_irq_cmd_addr);
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     spin_unlock_irqrestore(&csid_hw->hw_info->hw_lock, flags);
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	CAM_DBG(CAM_ISP,
 		"CSID %d irq status 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x 0x%x",
@@ -3518,7 +3470,6 @@ irqreturn_t cam_ife_csid_irq(int irq_num, void *data)
 		irq_status_rx, irq_status_ipp, irq_status_ppp,
 		irq_status_rdi[0], irq_status_rdi[1], irq_status_rdi[2]);
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
     if (irq_status_top & CSID_TOP_IRQ_DONE) {
         CAM_DBG(CAM_ISP, "csi top reset complete");
@@ -3527,7 +3478,6 @@ irqreturn_t cam_ife_csid_irq(int irq_num, void *data)
         return IRQ_HANDLED;
     }
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 
 	if (irq_status_rx & BIT(csid_reg->csi2_reg->csi2_rst_done_shift_val)) {
 		CAM_DBG(CAM_ISP, "csi rx reset complete");
@@ -4052,7 +4002,6 @@ int cam_ife_csid_hw_probe_init(struct cam_hw_intf  *csid_hw_intf,
 	ife_csid_hw->csid_debug = 0;
 	ife_csid_hw->error_irq_count = 0;
 #ifdef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	ife_csid_hw->first_sof_ts = 0;
 #endif
 

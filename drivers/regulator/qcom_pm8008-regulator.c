@@ -26,7 +26,6 @@
 #include <linux/regulator/of_regulator.h>
 #include <linux/string.h>
 #ifdef VENDOR_EDIT
-/*zhixian.Mai@Cam.drv , 20191001 add for pm8008 reset*/
 #include <linux/gpio.h>
 #include <linux/of_gpio.h>
 #include <linux/mutex.h>
@@ -118,7 +117,6 @@ static struct regulator_data reg_data[] = {
 };
 
 #ifdef VENDOR_EDIT
-/*zhixian.Mai@Cam.drv , 20191001 add for pm8008 reset*/
 struct pm8008_reset_info  {
 	struct platform_device *pdev;
 	int reset_gpio;
@@ -173,7 +171,16 @@ static int pm8008_read(struct regmap *regmap,  u16 reg, u8 *val, int count)
 	rc = regmap_bulk_read(regmap, reg, val, count);
 	if (rc < 0)
 		pr_err("failed to read 0x%04x\n", reg);
-
+#ifdef VENDOR_EDIT
+	if ((rc < 0) && (19721 == get_project())) {
+		int retry = 0;
+		for (; retry < 3 && rc < 0; retry++) {
+			rc = regmap_bulk_read(regmap, reg, val, count);
+			pr_err("failed to read 0x%04x at pm8008_read, retry rc %d, retry sequence %d\n", reg, rc, retry);
+			msleep(20);
+		}
+	}
+#endif
 	return rc;
 }
 
@@ -185,7 +192,16 @@ static int pm8008_write(struct regmap *regmap, u16 reg, u8 *val, int count)
 	rc = regmap_bulk_write(regmap, reg, val, count);
 	if (rc < 0)
 		pr_err("failed to write 0x%04x\n", reg);
-
+#ifdef VENDOR_EDIT
+	if ((rc < 0) && (19721 == get_project())) {
+		int retry = 0;
+		for (; retry < 3 && rc < 0; retry++) {
+			rc = regmap_bulk_write(regmap, reg, val, count);
+			pr_err("failed to write 0x%04x at pm8008_write, retry rc %d, retry sequence %d\n", reg, rc, retry);
+			msleep(20);
+		}
+	}
+#endif
 	return rc;
 }
 
@@ -199,7 +215,16 @@ static int pm8008_masked_write(struct regmap *regmap, u16 reg, u8 mask,
 	if (rc < 0)
 		pr_err("failed to write 0x%02x to 0x%04x with mask 0x%02x\n",
 				val, reg, mask);
-
+#ifdef VENDOR_EDIT
+	if ((rc < 0) && (19721 == get_project())) {
+		int retry = 0;
+		for (; retry < 3 && rc < 0; retry++) {
+			rc = regmap_update_bits(regmap, reg, mask, val);
+			pr_err("failed to write 0x%02x to 0x%04x with mask 0x%02x, retry rc %d, retry sequence %d\n",val, reg, mask, rc, retry);
+			msleep(20);
+		}
+	}
+#endif
 	return rc;
 }
 
@@ -210,14 +235,13 @@ static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
 	u8 vset_raw[2];
 	int rc;
 	int retry = 0;
-	/*zhixian.Mai @Cam.Drv, 2019/9/29, Add for PM8008 i2c error */
 	if( (19781 == get_project()) || (19696 == get_project()) ) {
 		for (; retry < 3 && rc == -71; retry++) {
 			reset_pm8008_max98927();
 			rc = pm8008_read(pm8008_reg->regmap,
 				LDO_VSET_VALID_LB_REG(pm8008_reg->base),
 				vset_raw, 2);
-			pr_err("failed at pm8008_regulator_get_voltage repty %d \n", retry);
+			pr_err("failed at pm8008_regulator_get_voltage retry sequence %d \n", retry);
 			msleep(20);
 		}
 		if (retry == 3 && rc == -71) {
@@ -235,7 +259,7 @@ static int pm8008_regulator_get_voltage(struct regulator_dev *rdev)
 				rc = pm8008_read(pm8008_reg->regmap,
 					LDO_VSET_VALID_LB_REG(pm8008_reg->base),
 					vset_raw, 2);
-				pr_err("failed at pm8008_regulator_get_voltage repty %d \n", retry);
+				pr_err("failed at pm8008_regulator_get_voltage retry sequence %d \n", retry);
 				msleep(20);
 			}
 		}
@@ -261,7 +285,6 @@ static int pm8008_regulator_is_enabled(struct regulator_dev *rdev)
 	u8 reg;
 
 #ifndef VENDOR_EDIT
-/* Bin.Liu@Cam.Drv, 20201221, Add for pm8008 I2C error */
 	rc = pm8008_read(pm8008_reg->regmap,
 			LDO_ENABLE_REG(pm8008_reg->base), &reg, 1);
 	if (rc < 0) {
@@ -277,7 +300,7 @@ static int pm8008_regulator_is_enabled(struct regulator_dev *rdev)
 			for (; retry < 3 && rc < 0; retry++) {
 				rc = pm8008_read(pm8008_reg->regmap,
 					LDO_ENABLE_REG(pm8008_reg->base), &reg, 1);
-				pr_err("failed at pm8008_regulator_is_enabled repty %d \n", retry);
+				pr_err("failed at pm8008_regulator_is_enabled retry sequence %d \n", retry);
 				msleep(20);
 			}
 		}
@@ -348,7 +371,6 @@ static int pm8008_regulator_enable(struct regulator_dev *rdev)
 	 * calculated from the current commanded voltage.
 	 */
 	if( (19781 == get_project()) || (19696 == get_project()) ) {
-		/*zhixian.Mai @Cam.Drv, 2019/10/01, Add for PM8008 i2c error */
 		pm8008_debug(pm8008_reg," pm8008-ldo current_uv = %d",current_uv);
 		/* Get fingherprint regulator for pm8008 reset*/
 		if( current_uv > 3200000 && g_fingherprint_rdev == NULL ) {
@@ -755,7 +777,6 @@ static int pm8008_register_ldo(struct pm8008_regulator *pm8008_reg,
 }
 
 #ifdef VENDOR_EDIT
-/*zhixian.Mai @Cam.Drv, 2019/9/29, Add for PM8008 i2c error */
 void  pm8008_do_reset()
 {
 	unsigned int val = 0;
@@ -836,7 +857,6 @@ static int pm8008_parse_regulator(struct regmap *regmap, struct device *dev)
 }
 
 #ifdef VENDOR_EDIT
-/*zhixian.Mai @Cam.Drv, 2019/10/01, Add for PM8008 i2c error */
 static int pm8008_do_probe(struct platform_device *pdev){
 	int rc = 0;
 	struct regmap *regmap;
@@ -873,7 +893,6 @@ static int pm8008_regulator_probe(struct platform_device *pdev)
 	const char * regulator_name;
 	struct device_node *regulator_node =  pdev->dev.of_node;
 	if( (19781 == get_project()) || (19696 == get_project()) ) {
-	/*zhixian.Mai @Cam.Drv, 2019/10/01, Add for PM8008 i2c error */
 		rc = of_property_read_string(regulator_node, "pm8008-name",&regulator_name);
 		pr_debug("pm8008 regulaot name is %s\n",regulator_name);
 	}
@@ -890,7 +909,6 @@ static int pm8008_regulator_probe(struct platform_device *pdev)
 		return rc;
 	}
 	if( (19781 == get_project()) || (19696 == get_project()) ) {
-	/*zhixian.Mai @Cam.Drv, 2019/10/01, Add for PM8008 i2c error */
 		if (0 == strcmp(regulator_name,"pm8008_regulator-1")) {
 			/*g_pm8008_reset_info[0] use defualt pm8008 i2c 8bit address  0x8/9  */
 			g_pm8008_reset_info[0].pdev = pdev ;
@@ -919,7 +937,6 @@ static int pm8008_enable_regulator_enable(struct regulator_dev *rdev)
 	int rc;
 
 #ifndef VENDOR_EDIT
-/* Bin.Liu@Cam.Drv, 20201221, Add for pm8008 I2C error */
 	rc = pm8008_masked_write(chip->regmap, MISC_CHIP_ENABLE_REG,
 				CHIP_ENABLE_BIT, CHIP_ENABLE_BIT);
 	if (rc  < 0) {
@@ -1026,7 +1043,6 @@ static int pm8008_chip_probe(struct platform_device *pdev)
 	chip->regmap = dev_get_regmap(pdev->dev.parent, NULL);
 
 	if( (19781 == get_project()) || (19696 == get_project()) ) {
-	/*zhixian.Mai @Cam.Drv, 2019/10/01, Add for PM8008 i2c error */
 		if (g_reset_regmap == NULL) {
 			g_reset_regmap = chip->regmap;
 		}

@@ -1117,7 +1117,6 @@ struct dst_entry *inet_csk_update_pmtu(struct sock *sk, u32 mtu)
 	}
 	dst->ops->update_pmtu(dst, sk, NULL, mtu, true);
 	#ifdef OPLUS_FEATURE_WIFI_MTUDETECT
-	//TangRongzheng@CONNECTIVITY.WIFI.NETWORK.1066205, 2016/11/03.
 	//Add for [1066205] when receives ICMP_FRAG_NEEDED, reduces the mtu of net_device.
 	pr_err("%s: current_mtu = %d , frag_mtu = %d mtu = %d\n", __func__, dst->dev->mtu, dst_mtu(dst),mtu);
 	//do not use dst_mtu here, because dst_mtu should be changed by update_pmtu after inet_csk_rebuild_route

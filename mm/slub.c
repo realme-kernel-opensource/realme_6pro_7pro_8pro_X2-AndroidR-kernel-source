@@ -40,7 +40,6 @@
 
 #include "internal.h"
 
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 /* Enalbe slabtrace:
  * CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG=y
  * Get more info disable Randomize_base
@@ -216,7 +215,6 @@ struct track {
 	unsigned long addr;	/* Called from address */
 #ifdef CONFIG_STACKTRACE
 #if defined(COMPACT_OPLUS_SLUB_TRACK)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 /* Store the offset after MODULES_VADDR for
  * kernel module and kernel text address
  */
@@ -482,7 +480,6 @@ static inline bool cmpxchg_double_slab(struct kmem_cache *s, struct page *page,
  * not vanish from under us.
  */
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 void
 #else
 static void
@@ -496,7 +493,6 @@ get_map(struct kmem_cache *s, struct page *page, unsigned long *map)
 		set_bit(slab_index(p, s, addr), map);
 }
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 EXPORT_SYMBOL(get_map);
 #endif
 
@@ -598,7 +594,6 @@ static void set_track(struct kmem_cache *s, void *object,
 	if (addr) {
 #ifdef CONFIG_STACKTRACE
 #if defined(COMPACT_OPLUS_SLUB_TRACK)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 		unsigned long addrs[TRACK_ADDRS_COUNT];
 		struct stack_trace trace;
 		int i;
@@ -672,7 +667,6 @@ static void print_track(const char *s, struct track *t)
 	       s, (void *)t->addr, jiffies - t->when, t->cpu, t->pid);
 #ifdef CONFIG_STACKTRACE
 #if defined(COMPACT_OPLUS_SLUB_TRACK)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 	{
 		int i;
 		unsigned long addrs[TRACK_ADDRS_COUNT];
@@ -2478,7 +2472,6 @@ static bool has_cpu_slab(int cpu, void *info)
 }
 
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 void
 #else
 static void
@@ -2488,7 +2481,6 @@ flush_all(struct kmem_cache *s)
 	on_each_cpu_cond(has_cpu_slab, flush_cpu_slab, s, 1, GFP_ATOMIC);
 }
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 EXPORT_SYMBOL(flush_all);
 #endif
 
@@ -4646,7 +4638,6 @@ static long validate_slab_cache(struct kmem_cache *s)
  */
 
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 #define OPLUS_MEMCFG_SLABTRACE_CNT 4
 #if (OPLUS_MEMCFG_SLABTRACE_CNT > TRACK_ADDRS_COUNT)
 #error (OPLUS_MEMCFG_SLABTRACE_CNT > TRACK_ADDRS_COUNT)
@@ -4656,7 +4647,6 @@ struct location {
 	unsigned long count;
 	unsigned long addr;
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 #ifdef CONFIG_STACKTRACE
 	unsigned long addrs[OPLUS_MEMCFG_SLABTRACE_CNT]; /* caller address */
 #endif
@@ -4684,7 +4674,6 @@ static void free_loc_track(struct loc_track *t)
 }
 
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 int
 #else
 static int
@@ -4709,7 +4698,6 @@ alloc_loc_track(struct loc_track *t, unsigned long max, gfp_t flags)
 	return 1;
 }
 #if defined(CONFIG_OPLUS_FEATURE_SLABTRACE_DEBUG)
-/* wen.luo@BSP.Kernel.Stability 2020-03-10, simple slabtrce for memleak analysis */
 EXPORT_SYMBOL(alloc_loc_track);
 #endif
 

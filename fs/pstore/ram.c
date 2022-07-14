@@ -57,7 +57,6 @@ module_param_named(pmsg_size, ramoops_pmsg_size, ulong, 0400);
 MODULE_PARM_DESC(pmsg_size, "size of user space message log");
 
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 static ulong ramoops_device_info_size = MIN_MEM_SIZE;
 module_param_named(device_info_size, ramoops_device_info_size, ulong, 0400);
 MODULE_PARM_DESC(device_info_size, "size of device info");
@@ -91,7 +90,6 @@ MODULE_PARM_DESC(ramoops_ecc,
 		"bytes ECC)");
 
 #ifndef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 /*move this define to  pstore.h*/
 struct ramoops_context {
 	struct persistent_ram_zone **dprzs;	/* Oops dump zones */
@@ -131,7 +129,6 @@ static int ramoops_pstore_open(struct pstore_info *psi)
 	cxt->ftrace_read_cnt = 0;
 	cxt->pmsg_read_cnt = 0;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	cxt->device_info_read_cnt = 0;
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	return 0;
@@ -295,7 +292,6 @@ static ssize_t ramoops_pstore_read(struct pstore_record *record)
 					   PSTORE_TYPE_PMSG, 0);
 
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	if (!prz_ok(prz))
 		prz = ramoops_get_next_prz(&cxt->dprz, &cxt->device_info_read_cnt,
 					1, &record->id, &record->type,
@@ -425,7 +421,6 @@ static int notrace ramoops_pstore_write(struct pstore_record *record)
 		pr_warn_ratelimited("PMSG shouldn't call %s\n", __func__);
 		return -EINVAL;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	} else if (record->type == PSTORE_TYPE_DEVICE_INFO) {
 		if (!cxt->dprz)
 			return -ENOMEM;
@@ -523,7 +518,6 @@ static int ramoops_pstore_erase(struct pstore_record *record)
 		prz = cxt->mprz;
 		break;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	case PSTORE_TYPE_DEVICE_INFO:
 		prz = cxt->dprz;
 		break;
@@ -747,7 +741,6 @@ static int ramoops_parse_dt(struct platform_device *pdev,
 	parse_size("ftrace-size", pdata->ftrace_size);
 	parse_size("pmsg-size", pdata->pmsg_size);
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	parse_size("devinfo-size", pdata->device_info_size);
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	parse_size("ecc-size", pdata->ecc_info.ecc_size);
@@ -800,7 +793,6 @@ static int ramoops_probe(struct platform_device *pdev)
 
 	if (!pdata->mem_size || (!pdata->record_size && !pdata->console_size &&
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 			!pdata->ftrace_size && !pdata->pmsg_size  && !pdata->device_info_size)) {
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 		pr_err("The memory size and the record/console size must be "
@@ -817,7 +809,6 @@ static int ramoops_probe(struct platform_device *pdev)
 	if (pdata->pmsg_size && !is_power_of_2(pdata->pmsg_size))
 		pdata->pmsg_size = rounddown_pow_of_two(pdata->pmsg_size);
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	if (pdata->device_info_size && !is_power_of_2(pdata->device_info_size))
 		pdata->device_info_size = rounddown_pow_of_two(pdata->device_info_size);
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
@@ -833,7 +824,6 @@ static int ramoops_probe(struct platform_device *pdev)
 	cxt->flags = pdata->flags;
 	cxt->ecc_info = pdata->ecc_info;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	cxt->device_info_size = pdata->device_info_size;
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 
@@ -841,7 +831,6 @@ static int ramoops_probe(struct platform_device *pdev)
 
 	dump_mem_sz = cxt->size - cxt->console_size - cxt->ftrace_size
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 			- cxt->pmsg_size  - cxt->device_info_size;
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	err = ramoops_init_przs("dump", dev, cxt, &cxt->dprzs, &paddr,
@@ -872,7 +861,6 @@ static int ramoops_probe(struct platform_device *pdev)
 		goto fail_init_mprz;
 
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	err = ramoops_init_prz("devinfo", dev, cxt, &cxt->dprz, &paddr,
                 cxt->device_info_size, 0);
 	if (err)
@@ -929,7 +917,6 @@ static int ramoops_probe(struct platform_device *pdev)
 	ramoops_ftrace_size = pdata->ftrace_size;
 
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	ramoops_device_info_size = pdata->device_info_size;
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 
@@ -945,7 +932,6 @@ fail_clear:
 	cxt->pstore.bufsize = 0;
 	persistent_ram_free(cxt->mprz);
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 fail_init_dprz:
 	persistent_ram_free(cxt->dprz);
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
@@ -970,7 +956,6 @@ static int ramoops_remove(struct platform_device *pdev)
 	persistent_ram_free(cxt->mprz);
 	persistent_ram_free(cxt->cprz);
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	persistent_ram_free(cxt->dprz);
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	ramoops_free_przs(cxt);
@@ -1012,7 +997,6 @@ static void ramoops_register_dummy(void)
 	dummy_data->console_size = ramoops_console_size;
 	dummy_data->ftrace_size = ramoops_ftrace_size;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	dummy_data->device_info_size = ramoops_device_info_size;
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	dummy_data->pmsg_size = ramoops_pmsg_size;

@@ -195,4 +195,4 @@ module_exit(oppo_nfc_exit);
 
 MODULE_DESCRIPTION("OPPO nfc chipset version");
 MODULE_LICENSE("GPL v2");
-MODULE_AUTHOR("Yukun Wang <>");
+MODULE_AUTHOR("Yukun Wang <keith.wong@oppo.com>");

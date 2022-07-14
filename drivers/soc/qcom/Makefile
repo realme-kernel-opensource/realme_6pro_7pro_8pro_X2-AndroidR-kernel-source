@@ -94,7 +94,6 @@ obj-$(CONFIG_MSM_IDLE_STATS)	+= lpm-stats.o
 obj-$(CONFIG_QCOM_FSA4480_I2C)	+= fsa4480-i2c.o
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-#Nanwei.Deng@BSP.POWER.Basic   2010/10/15  for rpm debug
 obj-$(CONFIG_QTI_RPMH_API) += rpm_stats.o
 obj-$(CONFIG_QTI_RPMH_API) += rpmh_master_stat.o
 #else
@@ -125,7 +124,6 @@ obj-$(CONFIG_QCOM_HGSL) += hgsl/
 obj-$(CONFIG_QCOM_HYP_CORE_CTL) += hyp_core_ctl.o
 obj-$(CONFIG_QCOM_AOP_DDRSS_COMMANDS) += aop_ddrss_cmds.o
 #ifdef OPLUS_ARCH_EXTENDS
-#Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, Add for max20328
 obj-$(CONFIG_QCOM_MAX20328_I2C) += max20328.o
 #endif
 obj-$(CONFIG_RMNET_CTL) += rmnet_ctl/

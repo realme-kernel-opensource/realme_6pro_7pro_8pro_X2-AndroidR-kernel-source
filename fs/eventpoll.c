@@ -1828,7 +1828,6 @@ fetch_events:
 
 			spin_unlock_irqrestore(&ep->lock, flags);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 			current->in_epoll = 1;
 #endif
@@ -1837,7 +1836,6 @@ fetch_events:
 								HRTIMER_MODE_ABS))
 				timed_out = 1;
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 			current->in_epoll = 0;
 #endif

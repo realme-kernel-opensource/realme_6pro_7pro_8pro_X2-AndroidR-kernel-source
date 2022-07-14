@@ -5,7 +5,6 @@
 ** Description : oppo display panel hbm feature
 ** Version : 1.0
 ** Date : 2020/07/06
-** Author : Li.Sheng@MULTIMEDIA.DISPLAY.LCD
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>

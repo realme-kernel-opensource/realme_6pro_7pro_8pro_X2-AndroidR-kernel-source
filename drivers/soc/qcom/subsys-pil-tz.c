@@ -745,7 +745,6 @@ static int pil_shutdown_trusted(struct pil_desc *pil)
 	int rc;
 	struct scm_desc desc = {0};
 	#ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-	//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Modify for skip mini dump encryption
 	int i = 0;
 	struct md_ss_toc *toc = NULL;
 	#endif
@@ -778,7 +777,6 @@ static int pil_shutdown_trusted(struct pil_desc *pil)
 		goto err_clks;
 
 	#ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-	//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Modify for skip mini dump encryption
 	if ( pil->minidump_id ==3 ) {  //only check for modem . currently 3 is modem
 		pil->minidump_ss->md_ss_enable_status = 0;
 		pil->minidump_ss->encryption_status = 0;
@@ -800,7 +798,6 @@ static int pil_shutdown_trusted(struct pil_desc *pil)
 		scm_ret = desc.ret[0];
 	}
 	#ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-	//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Modify for skip mini dump encryption
 	if( pil->minidump_id == 3 ) {  //only check for modem . currently 3 is modem
 		pil->minidump_ss->md_ss_enable_status  =MD_SS_ENABLED;
 		pil->minidump_ss->encryption_status =MD_SS_ENCR_DONE;
@@ -877,7 +874,6 @@ static struct pil_reset_ops pil_ops_trusted = {
 };
 
 #ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-//MaiWentian@NETWORK.RF,1213568, 2018/01/05,Add for customized subsystem ramdump to skip generate dump cause by SAU
 bool SKIP_GENERATE_RAMDUMP = false;
 extern void mdmreason_set(char * buf);
 #endif
@@ -886,7 +882,6 @@ static void log_failure_reason(const struct pil_tz_data *d)
 	size_t size;
 	char *smem_reason, reason[MAX_SSR_REASON_LEN];
 	#ifdef OPLUS_FEATURE_AGINGTEST
-	/* Yong.Qian@bsp.kernel.stability, 2020/5/14, Add for dump reason */
 	char *function_name;
 	#endif /*OPLUS_FEATURE_AGINGTEST*/
 	const char *name = d->subsys_desc.name;
@@ -907,13 +902,11 @@ static void log_failure_reason(const struct pil_tz_data *d)
 
 	strlcpy(reason, smem_reason, min(size, (size_t)MAX_SSR_REASON_LEN));
 	#ifdef OPLUS_FEATURE_AGINGTEST
-	/* Yong.Qian@bsp.kernel.stability, 2020/5/14, Add for dump reason */
 	function_name = parse_function_builtin_return_address((unsigned long)__builtin_return_address(0));
 	save_dump_reason_to_smem(reason, function_name);
 	#endif /*OPLUS_FEATURE_AGINGTEST*/
 	pr_err("%s subsystem failure reason: %s.\n", name, reason);
     #ifdef OPLUS_FEATURE_MODEM_MINIDUMP
-    //MaiWentian@NETWORK.RF,1213568, 2018/01/05,Add for customized subsystem ramdump to skip generate dump cause by SAU
     if (!strncmp(name, "modem", 4)) {
         mdmreason_set(reason);
 

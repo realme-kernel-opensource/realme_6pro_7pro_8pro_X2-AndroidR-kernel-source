@@ -65,7 +65,6 @@ struct mutex {
 	struct lockdep_map	dep_map;
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	struct task_struct *ux_dep_task;
 #endif /* OPLUS_FEATURE_UIFIRST */
 };
@@ -89,7 +88,6 @@ struct mutex_waiter {
 };
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 #include <linux/uifirst/uifirst_sched_mutex.h>
 #endif /* OPLUS_FEATURE_UIFIRST */
 
@@ -131,7 +129,6 @@ do {									\
 #endif
 
 #ifndef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 #define __MUTEX_INITIALIZER(lockname) \
 		{ .owner = ATOMIC_LONG_INIT(0) \
 		, .wait_lock = __SPIN_LOCK_UNLOCKED(lockname.wait_lock) \

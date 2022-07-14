@@ -507,7 +507,6 @@ struct cam_ir_led_set_on_off {
 } __attribute__((packed));
 
 #ifdef VENDOR_EDIT
-// Feiping.Li@Cam.Drv, 20200421, add dpc read for imx471
 #define FD_DFCT_MAX_NUM 5
 #define SG_DFCT_MAX_NUM 299
 #define FD_DFCT_NUM_ADDR 0x7678

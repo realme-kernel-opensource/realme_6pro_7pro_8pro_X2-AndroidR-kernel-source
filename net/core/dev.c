@@ -144,7 +144,6 @@
 #include <linux/netfilter_ingress.h>
 #include <linux/crash_dump.h>
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 #include <linux/imq.h>
 #endif /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
 
@@ -3009,7 +3008,6 @@ static int xmit_one(struct sk_buff *skb, struct net_device *dev,
 	int rc;
 
 	#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-	//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 	if ((!list_empty(&ptype_all) || !list_empty(&dev->ptype_all)) &&
 		!(skb->imq_flags & IMQ_F_ENQUEUE))
 	#else /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
@@ -3053,7 +3051,6 @@ out:
 	return skb;
 }
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 EXPORT_SYMBOL_GPL(dev_hard_start_xmit);
 #endif /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
 

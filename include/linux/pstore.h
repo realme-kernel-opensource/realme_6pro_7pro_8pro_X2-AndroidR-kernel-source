@@ -31,7 +31,6 @@
 #include <linux/types.h>
 
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 #include <linux/pstore_ram.h>
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 
@@ -50,7 +49,6 @@ enum pstore_type_id {
 	PSTORE_TYPE_PMSG	= 7,
 	PSTORE_TYPE_PPC_OPAL	= 8,
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	PSTORE_TYPE_DEVICE_INFO	= 9,
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	PSTORE_TYPE_UNKNOWN	= 255
@@ -286,7 +284,6 @@ pstore_ftrace_write_timestamp(struct pstore_ftrace_record *rec, u64 val)
 #endif
 
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 /*move from ram.c*/
 struct ramoops_context {
 	struct persistent_ram_zone **dprzs;	/* Oops dump zones */

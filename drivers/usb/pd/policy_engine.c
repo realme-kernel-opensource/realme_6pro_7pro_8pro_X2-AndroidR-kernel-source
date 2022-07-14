@@ -414,7 +414,6 @@ struct usbpd {
 	bool			pd_connected;
 	bool			in_explicit_contract;
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 	bool			in_good_connect;
 #endif
 	bool			peer_usb_comm;
@@ -495,7 +494,6 @@ struct usbpd {
 
 static LIST_HEAD(_usbpd);	/* useful for debugging */
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 int oplus_usbpd_send_svdm(u16 svid, u8 cmd, enum usbpd_svdm_cmd_type cmd_type,
 		int obj_pos, const u32 *vdos, int num_vdos);
 #endif
@@ -870,7 +868,6 @@ static int pd_select_pdo(struct usbpd *pd, int pdo_pos, int uv, int ua)
 }
 
 #ifdef VENDOR_EDIT
-/*lizhijie@BSP.CHG.Basic 2020/03/16 lzj add for TYPE c to c*/
 extern void oplus_set_opluschg_pd_sdp(bool value);
 #endif
 static int pd_eval_src_caps(struct usbpd *pd)
@@ -912,7 +909,6 @@ static int pd_eval_src_caps(struct usbpd *pd)
 			POWER_SUPPLY_PROP_PD_ACTIVE, &val);
 
 #ifdef VENDOR_EDIT
-/*lizhijie@BSP.CHG.Basic 2020/03/16 lzj add for TYPE c to c*/
 	if (pd->peer_usb_comm && pd->current_dr == DR_UFP && !pd->pd_connected) {
 			printk("set opluschg_pd_sdp = true\n");
 			oplus_set_opluschg_pd_sdp(true);
@@ -1431,7 +1427,6 @@ static void usbpd_set_state(struct usbpd *pd, enum usbpd_state next_state)
 			phy_params.power_role = pd->current_pr;
 
 #ifndef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2020/02/13,  add for pd+vooc adapter compatibility */
 		//if (pd->vconn_enabled)
 		//	phy_params->frame_filter_val |= FRAME_FILTER_EN_SOPI;
 #endif
@@ -1610,7 +1605,6 @@ static void usbpd_set_state(struct usbpd *pd, enum usbpd_state next_state)
 		pd_send_hard_reset(pd);
 		pd->in_explicit_contract = false;
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 		pd->in_good_connect = false;
 #endif
 		pd->rdo = 0;
@@ -1674,7 +1668,6 @@ static void usbpd_set_state(struct usbpd *pd, enum usbpd_state next_state)
 			phy_params.data_role = pd->current_dr;
 			phy_params.power_role = pd->current_pr;
 #ifndef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2020/02/13,  add for pd+vooc adapter compatibility */
 			//if (pd->vconn_enabled)
 				//phy_params.frame_filter_val |=
 					//FRAME_FILTER_EN_SOPI;
@@ -1751,7 +1744,6 @@ static void usbpd_set_state(struct usbpd *pd, enum usbpd_state next_state)
 
 		pd->in_explicit_contract = true;
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 		pd->in_good_connect = true;
 		oplus_usbpd_send_svdm(USBPD_SID, USBPD_SVDM_DISCOVER_SVIDS,
 			SVDM_CMD_TYPE_INITIATOR, 0, NULL, 0);
@@ -1879,7 +1871,6 @@ int usbpd_send_vdm(struct usbpd *pd, u32 vdm_hdr, const u32 *vdos, int num_vdos)
 		pd->vdm_tx = NULL;
 	}
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 	if (pd->current_state != PE_SRC_READY &&
 			pd->current_state != PE_SNK_READY) {
 		usbpd_err(&pd->dev, "VDM not allowed: PD not in Ready state\n");
@@ -2444,7 +2435,6 @@ static void vconn_swap(struct usbpd *pd)
 		pd->vconn_enabled = true;
 
 #ifndef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2020/02/13,  add for  pd+vooc adapter compatibility */
 		//pd_phy_update_frame_filter(FRAME_FILTER_EN_SOP |
 		//			   FRAME_FILTER_EN_SOPI |
 		//			   FRAME_FILTER_EN_HARD_RESET);
@@ -2580,7 +2570,6 @@ static void usbpd_sm(struct work_struct *w)
 		pd->pd_connected = false;
 		pd->in_explicit_contract = false;
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 		pd->in_good_connect = false;
 #endif
 		pd->hard_reset_recvd = false;
@@ -2672,7 +2661,6 @@ static void usbpd_sm(struct work_struct *w)
 
 		pd->in_explicit_contract = false;
 #ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.BASIC, 2020/09/09,add for PD+SVOOC adapter*/
 		pd->in_good_connect = false;
 #endif
 		pd->selected_pdo = pd->requested_pdo = 0;
@@ -4559,7 +4547,6 @@ static void usbpd_release(struct device *dev)
 	kfree(pd);
 }
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/03/06, lzj Add for PD */
 struct usbpd *pd_lobal = NULL;
 int oplus_usbpd_send_svdm(u16 svid, u8 cmd, enum usbpd_svdm_cmd_type cmd_type,
 		int obj_pos, const u32 *vdos, int num_vdos) {
@@ -4840,7 +4827,6 @@ struct usbpd *usbpd_create(struct device *parent)
 	psy_changed(&pd->psy_nb, PSY_EVENT_PROP_CHANGED, pd->usb_psy);
 
 #ifdef VENDOR_EDIT
-/* lizhijie@PSW.BSP.CHG.Basic, 2020/03/06, lzj Add for handle xiaomi typec headset dsp crash issue(1+) */
 	pd_lobal = pd;
 #endif
 

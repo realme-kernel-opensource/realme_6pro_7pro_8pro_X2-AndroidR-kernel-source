@@ -186,7 +186,6 @@ enum {
 	BLK_RW_ASYNC	= 0,
 	BLK_RW_SYNC	= 1,
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 	BLK_RW_BG	= 2,

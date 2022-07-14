@@ -273,7 +273,6 @@ struct cam_isp_context {
 	uint64_t                         irq_timestamps;
 	uint32_t                         fps;
 #ifdef VENDOR_EDIT
-	//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 	int32_t                         bubble_frame_cnt;
 #endif
 };

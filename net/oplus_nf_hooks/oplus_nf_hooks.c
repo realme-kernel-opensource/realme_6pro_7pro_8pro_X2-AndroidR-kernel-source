@@ -8,13 +8,11 @@
 **
 ** Version: 1.0
 ** Date :   2020-03-20
-** Author:  HuangYuan@CONNECTIVITY.WIFI.INTERNET
 ** TAG  :   OPLUS_FEATURE_WIFI_LUCKYMONEY
 **
 ** ---------------------Revision History: ---------------------
 **  <author>                      <data>     <version >   <desc>
 ** ---------------------------------------------------------------
-**  HuangYuan@CONNECTIVITY.WIFI.INTERNET  2020/03/20  1.0          build this module
 **
 ************************************************************************************/
 #include <linux/types.h>

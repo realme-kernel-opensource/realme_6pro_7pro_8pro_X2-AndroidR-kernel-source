@@ -54,7 +54,6 @@
 		swr1 = &swr1;
 		swr2 = &swr2;
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		/* Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Add for audio SmartPA i2c */
 		i2c0 = &qupv3_se0_i2c;
 		/* #endif OPLUS_ARCH_EXTENDS */
 	};
@@ -472,7 +471,6 @@
 				parts = "vbmeta,boot,system,vendor,dtbo";
 			};
 //ifdef VENDOR_EDIT
-/*ye.zhang@BSP.Bootloader.Bootflow, 2020-7-4, Delete for dynamic partion*/
 /*
 			fstab {
 				compatible = "android,fstab";
@@ -522,12 +520,10 @@
 		removed_region: removed_region@80b00000 {
 			compatible = "removed-dma-pool";
 			no-map;
-			/*zoulian@Bsp.Fingerprint.Basic, 2020/07/27, expend tz memory to 140*/
 			//reg = <0 0x80b00000 0 0x3900000>;
 			reg = <0 0x80b00000 0 0xa300000>;
 		};
 
-		/*zoulian@Bsp.Fingerprint.Basic, 2020/07/27, expend tz memory to 140*/
 		//pil_modem_mem: modem_region@86000000 {
 		//	compatible = "removed-dma-pool";
 		//	no-map;
@@ -588,14 +584,12 @@
 			reg = <0 0x93b15000 0 0x2000>;
 		};
 
-		/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 		pil_modem_mem: modem_region@93C00000 {
 			compatible = "removed-dma-pool";
 			no-map;
 			reg = <0 0x93C00000 0 0x8400000>;
 		};
 
-		/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 		uio_mem: uio_mem_region {
 			compatible = "removed-dma-pool";
 			alloc-ranges = <0 0x00000000 0 0xffffffff>;
@@ -604,7 +598,6 @@
 			size = <0 0x200000>;
 		};
 
-		/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 		uio_oem: uio_oem_region {
 			compatible = "removed-dma-pool";
 			alloc-ranges = <0 0x00000000 0 0xffffffff>;
@@ -1253,10 +1246,8 @@
 	qcom_seecom: qseecom@82200000 {
 		compatible = "qcom,qseecom";
 		//#ifdef VENDOR_EDIT
-		/*Ran.Chen@Bsp.Fingerprint.Basic, 2019/09/11, expend tz memory to 62*/
 		//reg = <0x82200000 0x2200000>;
 		//#else
-		/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 		reg = <0x82200000 0x8C00000>;
 		//#endif /* VENDOR_EDIT */
 		reg-names = "secapp-region";
@@ -1276,10 +1267,8 @@
 	qcom_smcinvoke: smcinvoke@82200000 {
 		compatible = "qcom,smcinvoke";
 		//#ifdef VENDOR_EDIT
-		/*Ran.Chen@Bsp.Fingerprint.Basic, 2019/09/11, expend tz memory to 62*/
 		//reg = <0x82200000 0x2200000>;
 		//#else
-		/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 		reg = <0x82200000 0x8C00000>;
 		//#endif /* VENDOR_EDIT */
 		reg-names = "secapp-region";
@@ -1508,11 +1497,9 @@
 				  "l3-scu-faultirq";
 	};
 
-	/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 	qcom,rmtfs_sharedmem@0 {
 		compatible = "qcom,sharedmem-uio";
 		//#ifdef VENDOR_EDIT
-		//Wentian.Mai@PSW.NW.2256913, 2019/08/16
 		reg = <0x0 0x200000>;
 		//#else
 		//reg = <0x9b000000 0x200000>;
@@ -1521,7 +1508,6 @@
 		reg-names = "rmtfs";
 		qcom,client-id = <0x00000001>;
 		//#ifdef VENDOR_EDIT
-		//Wentian.Mai@PSW.NW.2256913, 2019/08/16
 		//#ifdef FEATURE_OPPO_NV_BACKUP
 		//add for oem share mem mapping virtual addr fail
 		//memory-region = <&uio_mem>;
@@ -1531,10 +1517,8 @@
 	};
 
 	//#ifdef VENDOR_EDIT
-	//Zhengpeng.Tan@NW.AP.NV.892767, 2016/11/30
 	//#ifdef FEATURE_OPPO_NV_BACKUP
 	//add for creating a shared memory with uio for nv backup and restore
-	/*zoulian@Bsp.Fingerprint.Basic, 2020/04/10, expend tz memory to 140*/
 	qcom,oembackup_sharedmem@0 {
 		compatible = "qcom,sharedmem-uio";
 		reg = <0x0 0x00100000>;
@@ -4129,7 +4113,6 @@
 	};
 
 //#ifdef VENDOR_EDIT
-// Gang.Yan@BSP.CHG.Basic 2020/04/14  for add usbtemp
 /*
 	conn_therm {
 		reg = <ADC_AMUX_THM3_PU2>;
@@ -4227,7 +4210,6 @@
 		qcom,hw-settle-time = <200>;
 	};
 
-//zengwujun@ODM_LQ@BSP.power remove conn_therm for dt_chan_count match iio_channel_num on 20200509
 //	conn_therm {
 //		reg = <ADC_AMUX_THM3_PU2>;
 //		qcom,ratiometric;
@@ -4249,7 +4231,6 @@
 
 &pm6150l_vadc {
 	/*#ifndef ODM_LQ_EDIT*/
-	/*liujiawei@ODM_LQ.BSP.CHG,2020/07/22, modified for camera-therm */
 	//pinctrl-names = "default";
 	//pinctrl-0 = <&camera_flash_therm_default>;
 	/*endif*/
@@ -4280,7 +4261,6 @@
 };
 
 /*#ifndef ODM_LQ_EDIT*/
-/*liujiawei@ODM_LQ.BSP.CHG,2020/07/22, modified for camera-therm */
 /*
 &pm6150l_gpios {
 	camera_flash_therm {

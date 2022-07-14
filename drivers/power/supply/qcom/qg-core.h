@@ -152,7 +152,6 @@ struct qpnp_qg {
 	bool			force_soc;
 	bool			fvss_active;
 #ifdef VENDOR_EDIT
-/* wangchao@ODM.BSP.charge, 2019/12/10, Add for oplus gauge*/
 	bool			enable_qpnp_qg;
 #endif
 	bool			tcss_active;

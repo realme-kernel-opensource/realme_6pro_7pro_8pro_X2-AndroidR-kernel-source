@@ -760,10 +760,9 @@ static const struct adc_channels adc_chans_pmic5[ADC_MAX_CHANNEL] = {
 	[ADC_AMUX_THM1_PU2]	= ADC_CHAN_TEMP("amux_thm1_pu2", 1,
 					SCALE_HW_CALIB_THERM_100K_PULLUP)
 #ifdef VENDOR_EDIT
-/*lizhijie@BSP.CHG.Basic 2020/02/05 lzj add for usbtemp*/
 	[ADC_AMUX_THM2_PU2]	= ADC_CHAN_TEMP("amux_thm2_pu2", 1,
 					SCALE_HW_CALIB_THERM_100K_PULLUP)
-#ifdef CONFIG_OPLUS_SM8150R_CHARGER /* tongfeng.huang@BSP.CHG.Basic, 2019/01/16,  for pm8150b gpio1 adc  */
+#ifdef CONFIG_OPLUS_SM8150R_CHARGER
 	[ADC_AMUX_THM3_PU2] = ADC_CHAN_VOLT("amux_thm3_pu2", 1,
 					SCALE_HW_CALIB_DEFAULT)
 #else
@@ -776,7 +775,7 @@ static const struct adc_channels adc_chans_pmic5[ADC_MAX_CHANNEL] = {
 	[ADC_AMUX_THM3_PU2]	= ADC_CHAN_VOLT("amux_thm3_pu2", 1,
 					SCALE_HW_CALIB_DEFAULT)
 #endif /*VENDOR_EDIT*/
-#ifdef CONFIG_OPLUS_SM8150R_CHARGER /* tongfeng.huang@BSP.CHG.Basic, 2019/01/16,  for pm8150b gpio1 adc  */
+#ifdef CONFIG_OPLUS_SM8150R_CHARGER
 	[ADC_AMUX_THM4_PU2] = ADC_CHAN_VOLT("amux_thm4_pu2", 1,
 					SCALE_HW_CALIB_DEFAULT)
 #else
@@ -815,14 +814,12 @@ static const struct adc_channels adc_chans_pmic5[ADC_MAX_CHANNEL] = {
 #endif
 
 #ifdef CONFIG_OPLUS_SM7125R_CHARGER
-/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 	[ADC_AMUX_THM3] = ADC_CHAN_VOLT("usb_temp_adc", 1, SCALE_HW_CALIB_DEFAULT)
 	[ADC_AMUX_THM2] = ADC_CHAN_VOLT("usb_supplementary_temp_adc", 1, SCALE_HW_CALIB_DEFAULT)
 #endif
 
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-/*xing.xiong@BSP.Kernel.Driver, 2019/09/10, Add for adc read for aboard */
 	[ADC_GPIO4] 	= ADC_CHAN_VOLT("board_id_vdata", 1,
 						SCALE_HW_CALIB_DEFAULT)
 #endif/*OPLUS_FEATURE_TP_BASIC*/

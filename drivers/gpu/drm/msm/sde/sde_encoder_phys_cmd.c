@@ -35,7 +35,6 @@
 #define PP_TIMEOUT_MAX_TRIALS	4
 
 #ifdef OPLUS_BUG_STABILITY
-/*Sachin Shukl@PSW.MM.Display.Lcd.Stability, 2019-09-01, add for runing SDE_RECOVERY_HARD_RESET when pingpong timeout many times*/
 #define PP_TIMEOUT_BAD_TRIALS   10
 #include "oppo_mm_kevent_fb.h"
 extern int oppo_dimlayer_fingerprint_failcount;
@@ -553,7 +552,6 @@ static int _sde_encoder_phys_cmd_handle_ppdone_timeout(
 	conn = phys_enc->connector;
 	sde_conn = to_sde_connector(conn);
 #ifdef OPLUS_BUG_STABILITY
-/*Mark.Yao@PSW.MM.Display.Lcd.Stability, 2018-05-24,avoid recursion handle*/
 	if (cmd_enc->pp_timeout_report_cnt >= PP_TIMEOUT_BAD_TRIALS)
 		return -EFAULT;
 #endif /* OPLUS_BUG_STABILITY */
@@ -586,7 +584,6 @@ static int _sde_encoder_phys_cmd_handle_ppdone_timeout(
 		goto exit;
 
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/10/29, Add log for ramdump,bugID:509564
 	SDE_DBG_DUMP("all", "dbg_bus", "vbif_dbg_bus", "panic");
 //#endif /* VENDOR_EDIT */
 
@@ -618,8 +615,6 @@ static int _sde_encoder_phys_cmd_handle_ppdone_timeout(
 				sizeof(uint8_t), event);
 	} else if (cmd_enc->pp_timeout_report_cnt) {
 		#ifndef OPLUS_BUG_STABILITY
-		/*Sachin@PSW.MM.Display.LCD.Stable,2019-12-15 add wr_ptr_irq
-		irq kevent data */
 		{
 			unsigned char payload[150] = "";
 			scnprintf(payload, sizeof(payload), "NULL$$EventID@@%d$$wr_ptr_irq_timeout@@%d",
@@ -721,7 +716,6 @@ static int _sde_encoder_phys_cmd_poll_write_pointer_started(
 				timeout_us,
 				ret);
 		#ifndef OPLUS_BUG_STABILITY
-		/*Mark.Yao@PSW.MM.Display.LCD.Stable,2018-12-18 fix crash when unplug screen*/
 		SDE_DBG_DUMP("all", "dbg_bus", "vbif_dbg_bus", "panic");
 		#else /* OPLUS_BUG_STABILITY */
 		SDE_DBG_DUMP("all", "dbg_bus", "vbif_dbg_bus");

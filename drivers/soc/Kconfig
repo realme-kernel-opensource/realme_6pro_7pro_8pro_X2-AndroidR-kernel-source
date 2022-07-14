@@ -22,21 +22,17 @@ source "drivers/soc/oplus/Kconfig"
 source "drivers/soc/oplus/iomonitor/Kconfig"
 #endif /*OPLUS_FEATURE_IOMONITOR*/
 #ifdef VENDOR_EDIT
-#/*ye.zhang@BSP.Bootloader.Bootflow, 2020-6-18, Add for oppo project*/
 source "drivers/soc/oppo/Kconfig"
 #endif
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-#SunFaliang@BSP.Power.Basic, 2020/07/09, add for owakelock.
 source "drivers/soc/oplus/owakelock/Kconfig"
 #endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 #ifdef VENDOR_EDIT
-#Jiheng.Xie@BSP.Kernel.Performance 2020/06/18 add for oppo healthinfo
 source "drivers/soc/oplus/oppo_healthinfo/Kconfig"
 #endif
 
 #ifdef OPLUS_FEATURE_SENSOR_SMEM
-#qiuzuolin@BSP.Sensor.Basic 2020/07/31 add for oplus sensor smem
 source "drivers/soc/oplus/sensor/Kconfig"
 #endif /* OPLUS_FEATURE_SENSOR_SMEM */
 

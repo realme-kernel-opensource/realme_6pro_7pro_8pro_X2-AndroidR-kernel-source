@@ -62,7 +62,6 @@ enum pon_restart_reason {
 	PON_RESTART_REASON_DMVERITY_ENFORCE	= 0x05,
 	PON_RESTART_REASON_KEYS_CLEAR		= 0x06,
 #ifdef VENDOR_EDIT
-/*xing.xing@BSP.Bootloader.Bootflow, 2019/04/11, Add for oppo boot mode*/
 	PON_RESTART_REASON_SILENCE			= 0x21,
 	PON_RESTART_REASON_SAU				= 0x22,
 	PON_RESTART_REASON_RF				= 0x23,
@@ -74,7 +73,6 @@ enum pon_restart_reason {
 	PON_RESTART_REASON_ANDROID			= 0x29,
 	PON_RESTART_REASON_SAFE				= 0x2A,
 	#ifdef OPLUS_FEATURE_AGINGTEST
-	//xiaofan.yang@PSW.TECH.AgingTest, 2019/01/07,Add for factory agingtest
 	PON_RESTART_REASON_SBL_DDRTEST			= 0x2B,
 	PON_RESTART_REASON_SBL_DDR_CUS			= 0x2C,
 	PON_RESTART_REASON_MEM_AGING			= 0x2D,

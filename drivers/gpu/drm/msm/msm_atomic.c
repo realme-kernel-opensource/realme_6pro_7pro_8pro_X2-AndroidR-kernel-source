@@ -75,9 +75,6 @@ EXPORT_SYMBOL(msm_drm_unregister_client);
  */
 
 #ifndef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Lcd.Stability, 2018-05-31
-* add for export drm_notifier
-*/
 static int msm_drm_notifier_call_chain(unsigned long val, void *v)
 {
 	return blocking_notifier_call_chain(&msm_drm_notifier_list, val,
@@ -277,8 +274,6 @@ msm_disable_outputs(struct drm_device *dev, struct drm_atomic_state *old_state)
 			notifier_data.data = &blank;
 			notifier_data.id = crtc_idx;
 			#ifndef OPLUS_BUG_STABILITY
-			/*Sachin @PSW.MM.Display.LCD.Stable, 2020/04/09, Add for
-			 remove original drm notify for bug 12684 */
 				msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK,
 			     &notifier_data);
 			#endif /* OPLUS_BUG_STABILITY */
@@ -302,8 +297,6 @@ msm_disable_outputs(struct drm_device *dev, struct drm_atomic_state *old_state)
 			connector->state->crtc->state->active_changed) {
 			DRM_DEBUG_ATOMIC("Notify blank\n");
 			#ifndef OPLUS_BUG_STABILITY
-			/* Saching@PSW.MM.Display.LCD.Stable, 2020/04/09, Add for
-			 remove original drm notify for bug 12684 */
 			msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK,
 						&notifier_data);
 			#endif /* OPLUS_BUG_STABILITY */
@@ -524,8 +517,6 @@ static void msm_atomic_helper_commit_modeset_enables(struct drm_device *dev,
 				connector->state->crtc->index;
 			DRM_DEBUG_ATOMIC("Notify early unblank\n");
 			#ifndef OPLUS_BUG_STABILITY
-			/* Sachin@PSW.MM.Display.LCD.Stable, 2020/04/09, Add for
-			 remove original drm notify for bug 12684 */
 			msm_drm_notifier_call_chain(MSM_DRM_EARLY_EVENT_BLANK,
 			     &notifier_data);
 			#endif /* OPLUS_BUG_STABILITY */
@@ -583,8 +574,6 @@ static void msm_atomic_helper_commit_modeset_enables(struct drm_device *dev,
 			connector->state->crtc->state->active_changed)) {
 			DRM_DEBUG_ATOMIC("Notify unblank\n");
 			#ifndef OPLUS_BUG_STABILITY
-			/*Sachin @PSW.MM.Display.LCD.Stable, 2020/04/09, Add for
-			remove original drm notify for bug 12684 */
 			msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK,
 						&notifier_data);
 			#endif /* OPLUS_BUG_STABILITY */

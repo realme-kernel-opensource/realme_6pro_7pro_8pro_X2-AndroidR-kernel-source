@@ -96,7 +96,6 @@ struct rpmh_master_stats_prv_data {
 	struct kobj_attribute ka;
 	struct kobject *kobj;
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats.
     struct kobj_attribute  opluska;
 	struct kobject * opluskobj;
 #endif /* OPLUS_FEATURE_POWERINFO_RPMH */
@@ -108,7 +107,6 @@ static void __iomem *rpmh_unit_base;
 static DEFINE_MUTEX(rpmh_stats_mutex);
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats.
 static DEFINE_MUTEX( oplus_rpmh_stats_mutex);
 
 #define MSM_ARCH_TIMER_FREQ 19200000
@@ -156,7 +154,6 @@ static ssize_t msm_rpmh_master_stats_print_data(char *prvbuf, ssize_t length,
 				(arch_counter_get_cntvct()
 				- record->last_entered);
 #ifndef OPLUS_FEATURE_POWERINFO_RPMH
-//yunqing.zeng@bsp.power.basic	2019-06-23 modify for rpmh master info output
 	return snprintf(prvbuf, length, "%s\n\tVersion:0x%x\n"
 			"\tSleep Count:0x%x\n"
 			"\tSleep Last Entered At:0x%llx\n"
@@ -212,7 +209,6 @@ static ssize_t msm_rpmh_master_stats_show(struct kobject *kobj,
 }
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats
 static ssize_t  oplus_rpmh_master_stats_show(struct kobject *kobj,
 				struct kobj_attribute *attr, char *buf)
 {
@@ -327,7 +323,6 @@ static int msm_rpmh_master_stats_probe(struct platform_device *pdev)
 	}
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats
 	prvdata->opluskobj = rpmh_master_stats_kobj;
 
 	sysfs_attr_init(&prvdata-> opluska.attr);
@@ -356,7 +351,6 @@ static int msm_rpmh_master_stats_probe(struct platform_device *pdev)
 
 fail_iomap:
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/05/23 add for get sys/power/oppo/rpm_stats	
 	sysfs_remove_file(prvdata->opluskobj, &prvdata->opluska.attr);
 fail_sysfs_oplus:
 #endif /* OPLUS_FEATURE_POWERINFO_RPMH */
@@ -376,7 +370,6 @@ static int msm_rpmh_master_stats_remove(struct platform_device *pdev)
 	prvdata = (struct rpmh_master_stats_prv_data *)
 				platform_get_drvdata(pdev);
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//SunFaliang@BSP.Power.Basic 2020/05/26 add for fix unappropriately release logic.
 	sysfs_remove_file(prvdata->opluskobj, &prvdata->opluska.attr);
 #endif /* OPLUS_FEATURE_POWERINFO_RPMH */
 	sysfs_remove_file(prvdata->kobj, &prvdata->ka.attr);

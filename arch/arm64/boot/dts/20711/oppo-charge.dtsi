@@ -175,7 +175,6 @@
 			output-low;
 		};
 	};
-			//#ifdef VENDOR_EDIT /* Jianchao.Shi@BSP.CHG.Basic, 2018/04/05, sjc Add for charging */
 			qupv3_se5_i2c_pulldown: qupv3_se5_i2c_pulldown {
 				mux {
 					pins = "gpio25", "gpio26";
@@ -469,7 +468,6 @@
 &qupv3_se5_i2c {
 	status = "ok";
 	qcom,clk-freq-out = <100000>;
-//#ifdef VENDOR_EDIT /* Jianchao.Shi@PSW.BSP.CHG.Basic, 2018/04/05, sjc Add for charging */
 	pinctrl-names = "default", "sleep", "pulldown", "pullup";
 	pinctrl-2 = <&qupv3_se5_i2c_pulldown>;
 	pinctrl-3 = <&qupv3_se5_i2c_pullup>;

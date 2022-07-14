@@ -76,7 +76,6 @@
 #include "internal.h"
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-07-07, add alloc wait monitor support*/
 #ifdef CONFIG_OPPO_MEM_MONITOR
 #include <linux/oppo_healthinfo/memory_monitor.h>
 #endif
@@ -3242,7 +3241,17 @@ bool __zone_watermark_ok(struct zone *z, unsigned int order, unsigned long mark,
 		if (alloc_flags & ALLOC_OOM)
 			min -= min / 2;
 		else
-			min -= min / 4;
+		#if defined(OPLUS_FEATURE_ZRAM_OPT) && defined(CONFIG_OPLUS_ZRAM_OPT)
+		/* 
+		 * ALLOC_HIGH:ALLOC_HARDER is about 1:10, so more for ALLOC_HARDER
+		 * and since 2-order might allocate from MIGRATE_HIGHATOMIC as fallback,
+		 * so here should make it easier for ALLOC_HARDER.
+		 * after this change, kswapd might reclaim a bit more, which is what we want.
+		 */
+					min -= min / 4 + min / 8;
+		#else
+					min -= min / 4;
+		#endif /*OPLUS_FEATURE_ZRAM_OPT*/	
 	}
 
 
@@ -4213,7 +4222,6 @@ __alloc_pages_slowpath(gfp_t gfp_mask, unsigned int order,
 	unsigned int cpuset_mems_cookie;
 	int reserve_flags;
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-07-07, add alloc wait monitor support*/
 #ifdef CONFIG_OPPO_MEM_MONITOR
 	unsigned long oppo_alloc_start = jiffies;
 #endif
@@ -4454,7 +4462,6 @@ fail:
 			"page allocation failure: order:%u", order);
 got_pg:
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-07-07, add alloc wait monitor support*/
 #ifdef CONFIG_OPPO_MEM_MONITOR
 	memory_alloc_monitor(gfp_mask, order, jiffies_to_msecs(jiffies - oppo_alloc_start));
 #endif

@@ -4,10 +4,8 @@
 * Description: Provide some utils for watchdog to enhance log and action after wdt
 * Version   : 1.0
 * Date      : 2016-06-22
-* Author    : fanhui@PhoneSW.BSP
 * ------------------------------ Revision History: --------------------------------
 * <version>       <date>        <author>		<desc>
-* Revision 1.0    2016-06-22    fanhui@PhoneSW.BSP	Created file
 ***********************************************************************************/
 
 #ifndef _OPPO_WATCHDOG_UTIL_H_

@@ -13,7 +13,6 @@
 
 #include <linux/module.h>
 #ifdef VENDOR_EDIT
-/*Add by Zhengrong.Zhang@Camera 20160630 for flash*/
 #include <linux/proc_fs.h>
 #include <linux/time.h>
 #include <linux/rtc.h>
@@ -25,7 +24,6 @@ struct cam_flash_ctrl *front_flash_ctrl = NULL;
 #include "cam_flash_core.h"
 #include "cam_common_util.h"
 #ifdef VENDOR_EDIT
-/*Add by hongbo.dai@Camera 20180319 for flash*/
 #include "cam_res_mgr_api.h"
 #endif
 
@@ -219,7 +217,6 @@ release_mutex:
 }
 
 #ifdef VENDOR_EDIT
-/*add by hongbo.dai@camera 20180319, suitable proc dev for flash as same as SDM660*/
 volatile static int flash_mode;
 volatile static int pre_flash_mode;
 static ssize_t flash_on_off(struct cam_flash_ctrl *flash_ctrl)
@@ -239,7 +236,6 @@ static ssize_t flash_on_off(struct cam_flash_ctrl *flash_ctrl)
 	if(pre_flash_mode == flash_mode)
 		return rc;
 
-	/*Add by Jindian.Guan@Camera 20170426 not use flashlight when use camera*/
 	if(pre_flash_mode == 5 && flash_mode == 0){
 		pr_err("camera is opened,not to set flashlight off");
 		return rc;
@@ -333,7 +329,6 @@ static int flash_proc_init(struct cam_flash_ctrl *flash_ctl)
 	return ret;
 }
 
-/*add by hongbo.dai@camera 20181126, for front flashlight*/
 static ssize_t cam_flash_switch_store(struct device *dev,
 				struct device_attribute *attr, const char *buf,
 				size_t count)
@@ -661,7 +656,6 @@ static int32_t cam_flash_platform_probe(struct platform_device *pdev)
 
 	fctrl->flash_state = CAM_FLASH_STATE_INIT;
 #ifdef VENDOR_EDIT
-	/*Add by hongbo.dai@Camera 20181126 for flash*/
 	if (flash_proc_init(fctrl) < 0) {
 		device_create_file(&pdev->dev, &dev_attr_fswitch);
 	}

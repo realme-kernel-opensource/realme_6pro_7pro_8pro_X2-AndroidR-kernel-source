@@ -8,11 +8,9 @@
 **
 ** Version: 1.0
 ** Date created: 2018/01/14,20:27
-** Author: Fei.Mo@PSW.BSP.Sensor
 **
 ** --------------------------- Revision History: ------------------------------------
 * <version>		<date>		<author>		<desc>
-* Revision 1.0		2018/01/14	Fei.Mo@PSW.BSP.Sensor	Created
 **************************************************************************************/
 #include <linux/delay.h>
 #include <linux/errno.h>

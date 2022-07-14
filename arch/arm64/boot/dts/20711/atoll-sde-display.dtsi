@@ -17,7 +17,6 @@
 #include "dsi-panel-sim-dsc375-cmd.dtsi"
 #include "dsi-panel-nt36672c-fhd-plus-video.dtsi"
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for 19365 samsung cmd panel
 #include "dsi-panel-oppo19365samsung-ams644vk01-1080-2400-dsi-cmd.dtsi"
 #include "dsi-panel-oppo19365samsung-ams643xf01-1080-2400-dsi-cmd.dtsi"
 #include "dsi-panel-oppo19567samsung-amb655uv01-1080-2400-90fps.dtsi"
@@ -168,7 +167,6 @@
 	};
 
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for samsung cmd panel
 	dsi_oppo19365samsung_ams644vk01_1080_2400_cmd_display: qcom,dsi-display@6 {
 		label = "dsi_oppo19365samsung_ams644vk01_1080_2400_cmd_display";
 		qcom,display-type = "primary";
@@ -243,7 +241,6 @@
 		pinctrl-0 = <&sde_te_active &disp_pins_default>;
 		pinctrl-1 = <&sde_te_suspend>;
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for 19365 samsung cmd panel
 		qcom,platform-te-gpio = <&tlmm 10 0>;
 		qcom,platform-reset-gpio = <&pm6150l_gpios 3 0>;
 		qcom,panel-te-source = <0>;
@@ -296,7 +293,6 @@
 &mdss_mdp {
 	//connectors = <&sde_rscc &sde_wb &sde_dp &sde_dsi>;
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for 19365 samsung cmd panel
 	connectors = <&sde_rscc &sde_wb &sde_dsi>;
 //#endif /* VENDOR_EDIT */
 };

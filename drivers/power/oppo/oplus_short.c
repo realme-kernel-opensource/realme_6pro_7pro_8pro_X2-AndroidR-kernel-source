@@ -4,10 +4,8 @@
 * Description: For short circuit battery check
 * Version   : 1.0
 * Date      : 2017-10-01
-* Author    : SJC@PhoneSW.BSP
 * ------------------------------ Revision History: --------------------------------
 * <version>       <date>        	<author>              		<desc>
-* Revision 1.0    2017-10-01  	SJC@PhoneSW.BSP    		Created for new architecture
 ***********************************************************************************/
 #include <linux/delay.h>
 #include <linux/power_supply.h>

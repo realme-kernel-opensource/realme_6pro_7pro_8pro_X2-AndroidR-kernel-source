@@ -232,6 +232,5 @@ config BLK_MQ_RDMA
 source block/Kconfig.iosched
 
 #ifdef OPLUS_FEATURE_FG_IO_OPT
-#/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 source block/oppo_foreground_io_opt/Kconfig
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/

@@ -235,7 +235,6 @@ msm_drm-y += oplus/oppo_mm_kevent_fb.o \
 	oplus/oppo_display_panel_common.o \
 	oplus/oppo_display_panel_hbm.o
 
-#xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature
 msm_drm-y += oplus/oplus_display_panel_cabc.o
 
 obj-$(CONFIG_DRM_MSM)	+= msm_drm.o

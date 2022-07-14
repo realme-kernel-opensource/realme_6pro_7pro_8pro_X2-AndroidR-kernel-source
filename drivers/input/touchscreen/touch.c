@@ -6,7 +6,6 @@
  *             tp dev
  * Version:1.0:
  * Date created:2016/09/02
- * Author: hao.wang@Bsp.Driver
  * TAG: BSP.TP.Init
 */
 
@@ -86,14 +85,12 @@ int tp_util_get_vendor(struct hw_resource *hw_res, struct panel_info *panel_data
     if (strstr(saved_command_line, "dsi_oppo19696jdi_nt36672c_1080_2400_90fps_vid")) {
         panel_data->tp_type = TP_JDI;
     }
-/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
     if (strstr(saved_command_line, "dsi_nt36672c_boe_video_display")) {
         panel_data->tp_type = TP_BOE;
     }
     if (strstr(saved_command_line, "dsi_nt36672c_jdi_video_display")) {
         panel_data->tp_type = TP_JDI;
     }
-/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
     if (panel_data->tp_type == TP_UNKNOWN) {
         pr_err("[TP]%s type is unknown\n", __func__);
         return 0;
@@ -101,7 +98,6 @@ int tp_util_get_vendor(struct hw_resource *hw_res, struct panel_info *panel_data
 
     pr_err("[TP]  type is %d \n", panel_data->tp_type);
     vendor = GET_TP_DEV_NAME(panel_data->tp_type);
-/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
     /*support for 19721 novat*/
     if (strstr(saved_command_line, "dsi_nt36672c_boe_video_display"))  {
         g_tp_dev_vendor = TP_BOE;
@@ -113,7 +109,6 @@ int tp_util_get_vendor(struct hw_resource *hw_res, struct panel_info *panel_data
               "tp/%x/LIMIT_%s_%s.img",
             g_tp_prj_id, panel_data->chip_name, vendor);
         }
-/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
     } else if (strstr(saved_command_line, "dsi_nt36672c_jdi_video_display")) {
         g_tp_dev_vendor = TP_JDI;
         snprintf(panel_data->fw_name, MAX_FW_NAME_LENGTH,
@@ -125,7 +120,6 @@ int tp_util_get_vendor(struct hw_resource *hw_res, struct panel_info *panel_data
             g_tp_prj_id, panel_data->chip_name, vendor);
         }
     } 
-/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
     if (vendor == NULL) {
         pr_err("[TP]%s can not get vendor\n", __func__);
         return 0;
@@ -194,7 +188,6 @@ int tp_util_get_vendor(struct hw_resource *hw_res, struct panel_info *panel_data
         memcpy(panel_data->manufacture_info.version, "focalt_", 7);
     }
     if(g_tp_prj_id == 19721){
-	/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
 		if (strstr(saved_command_line, "dsi_nt36672c_boe_video_display")) {
 			memcpy(panel_data->manufacture_info.version, "0xNVT_BOE", 9);
 			panel_data->firmware_headfile.firmware_data = FW_19721_NT36672C_BOE;
@@ -204,7 +197,6 @@ int tp_util_get_vendor(struct hw_resource *hw_res, struct panel_info *panel_data
 			panel_data->firmware_headfile.firmware_data = FW_19721_NT36672C_JDI;
 			panel_data->firmware_headfile.firmware_size = sizeof(FW_19721_NT36672C_JDI);
 		}
-	/*zhaifeibiao@ODM_LQ@BSP.touch,2020/11/03,Add for oppo project*/
     }else if (panel_data->tp_type == TP_DSJM) {
         memcpy(panel_data->manufacture_info.version, "HX_DSJM", 7);
         panel_data->firmware_headfile.firmware_data = FW_18621_HX83112A_NF_DSJM;

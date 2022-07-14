@@ -15,7 +15,6 @@
 #include "cam_sensor_soc.h"
 #include "cam_sensor_core.h"
 
-/* hongbo.dai@camera 20181122 add for at camera test */
 #ifdef VENDOR_EDIT
 struct cam_sensor_i2c_reg_setting_array {
 	struct cam_sensor_i2c_reg_array reg_setting[4600];
@@ -24,33 +23,36 @@ struct cam_sensor_i2c_reg_setting_array {
 	enum camera_sensor_i2c_type data_type;
 	unsigned short delay;
 };
-
 struct cam_sensor_settings {
 	struct cam_sensor_i2c_reg_setting_array imx586_setting;
 	struct cam_sensor_i2c_reg_setting_array imx471_setting;
 	struct cam_sensor_i2c_reg_setting_array imx319_setting;
 	struct cam_sensor_i2c_reg_setting_array s5km5_setting;
 	struct cam_sensor_i2c_reg_setting_array gc02m0b_setting;
-	struct cam_sensor_i2c_reg_setting_array gc2375_setting;
-	struct cam_sensor_i2c_reg_setting_array ov02a1b_setting;
 	struct cam_sensor_i2c_reg_setting_array hi846_setting;
+	struct cam_sensor_i2c_reg_setting_array ov02a1b_setting;
+	struct cam_sensor_i2c_reg_setting_array gc2375_setting;
 	struct cam_sensor_i2c_reg_setting_array s5kgw1_setting;
+	struct cam_sensor_i2c_reg_setting_array s5kgw1_2_setting;
+	struct cam_sensor_i2c_reg_setting_array s5kgd1sp_setting;
 };
 
 struct cam_sensor_settings sensor_settings = {
 #include "CAM_SENSOR_SETTINGS.h"
 };
-/*add by hongbo.dai@camera 20181213, for Camera AT current test*/
+#define S5KGW1_VERSION_REG (0x0002)  //s5kgw1 version register address(0x0002)
+#define SAMSUNG_SENSOR_MP1 (0xA101)  //s5kgw1 evt0.1(0xA101)
+#define SAMSUNG_SENSOR_MP2 (0xA201)  //s5kgw1 evt0.2(0xA201)
 static bool is_ftm_current_test = false;
 #endif
 
 static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 	unsigned int cmd, void *arg)
 {
-	int rc = 0;
+	int rc = 0, i = 0;
+	uint32_t sensor_version = 0;
 	struct cam_sensor_ctrl_t *s_ctrl =
 		v4l2_get_subdevdata(sd);
-	/* hongbo.dai@camera 20181122 add for at camera test */
 	#ifdef VENDOR_EDIT
 	struct cam_sensor_i2c_reg_setting sensor_setting;
 	#endif
@@ -60,7 +62,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 		rc = cam_sensor_driver_cmd(s_ctrl, arg);
 		break;
 	#ifdef VENDOR_EDIT
-	/* hongbo.dai@camera 20181122 add for at camera test */
 	case VIDIOC_CAM_FTM_POWNER_DOWN:
 		CAM_ERR(CAM_SENSOR, "FTM power down");
 		return cam_sensor_power_down(s_ctrl);
@@ -69,7 +70,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 		CAM_ERR(CAM_SENSOR, "FTM power up, sensor id 0x%x", s_ctrl->sensordata->slave_info.sensor_id);
 		rc = cam_sensor_power_up(s_ctrl);
 		if (rc < 0) {
-		    int i;
 			CAM_ERR(CAM_SENSOR, "ftm power up failed!");
 			/* add by fangyan @ Camera.Drv 20190713,for bugid : 2152434  */
 			for(i = 0 ;i < 5 ; i++) {
@@ -119,34 +119,55 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
 			sensor_setting.size = sensor_settings.gc02m0b_setting.size;
 			sensor_setting.delay = sensor_settings.gc02m0b_setting.delay;
-			CAM_ERR(CAM_SENSOR,"FTM GET gc02m0b setting");
-		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x2375) {
-			sensor_setting.reg_setting = sensor_settings.gc2375_setting.reg_setting;
-			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
-			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
-			sensor_setting.size = sensor_settings.gc2375_setting.size;
-			sensor_setting.delay = sensor_settings.gc2375_setting.delay;
-			CAM_ERR(CAM_SENSOR,"FTM GET gc2375 setting");
-		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x25) {
-			sensor_setting.reg_setting = sensor_settings.ov02a1b_setting.reg_setting;
-			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
-			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
-			sensor_setting.size = sensor_settings.ov02a1b_setting.size;
-			sensor_setting.delay = sensor_settings.ov02a1b_setting.delay;
-			CAM_ERR(CAM_SENSOR,"FTM GET ov02a1b setting");
 		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x4608) {
 			sensor_setting.reg_setting = sensor_settings.hi846_setting.reg_setting;
 			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_WORD;
 			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_WORD;
 			sensor_setting.size = sensor_settings.hi846_setting.size;
 			sensor_setting.delay = sensor_settings.hi846_setting.delay;
-			CAM_ERR(CAM_SENSOR,"FTM GET HI846 setting");
-		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x971) {
-			sensor_setting.reg_setting = sensor_settings.s5kgw1_setting.reg_setting;
+		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x25) {
+			sensor_setting.reg_setting = sensor_settings.ov02a1b_setting.reg_setting;
+			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
+			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
+			sensor_setting.size = sensor_settings.ov02a1b_setting.size;
+			sensor_setting.delay = sensor_settings.ov02a1b_setting.delay;
+		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x2375) {
+			sensor_setting.reg_setting = sensor_settings.gc2375_setting.reg_setting;
+			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
+			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_BYTE;
+			sensor_setting.size = sensor_settings.gc2375_setting.size;
+			sensor_setting.delay = sensor_settings.gc2375_setting.delay;
+		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x0841) {
+			sensor_setting.reg_setting = sensor_settings.s5kgd1sp_setting.reg_setting;
 			sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_WORD;
 			sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_WORD;
-			sensor_setting.size = sensor_settings.s5kgw1_setting.size;
-			sensor_setting.delay = sensor_settings.s5kgw1_setting.delay;
+			sensor_setting.size = sensor_settings.s5kgd1sp_setting.size;
+			sensor_setting.delay = sensor_settings.s5kgd1sp_setting.delay;
+		} else if(s_ctrl->sensordata->slave_info.sensor_id == 0x971) {
+			rc = camera_io_dev_read(
+				&(s_ctrl->io_master_info),
+				S5KGW1_VERSION_REG,
+				&sensor_version, CAMERA_SENSOR_I2C_TYPE_WORD,
+				CAMERA_SENSOR_I2C_TYPE_WORD);
+			if (rc) {
+				CAM_ERR(CAM_SENSOR, "fail to read sensor version ,rc = %d",rc);
+				return rc;
+			}
+			CAM_INFO(CAM_SENSOR, "s5kgw1 sensor_version: 0x%x",
+				sensor_version);
+			if (sensor_version == SAMSUNG_SENSOR_MP1) {
+				sensor_setting.reg_setting = sensor_settings.s5kgw1_setting.reg_setting;
+				sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_WORD;
+				sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_WORD;
+				sensor_setting.size = sensor_settings.s5kgw1_setting.size;
+				sensor_setting.delay = sensor_settings.s5kgw1_setting.delay;
+			} else if (sensor_version == SAMSUNG_SENSOR_MP2){
+				sensor_setting.reg_setting = sensor_settings.s5kgw1_2_setting.reg_setting;
+				sensor_setting.addr_type = CAMERA_SENSOR_I2C_TYPE_WORD;
+				sensor_setting.data_type = CAMERA_SENSOR_I2C_TYPE_WORD;
+				sensor_setting.size = sensor_settings.s5kgw1_2_setting.size;
+				sensor_setting.delay = sensor_settings.s5kgw1_2_setting.delay;
+			}
 			CAM_ERR(CAM_SENSOR,"FTM GET S5KGW1 setting");
 		} else if (s_ctrl->sensordata->slave_info.sensor_id == 0xFFFF) {
                         sensor_setting.reg_setting = sensor_settings.imx586_setting.reg_setting;
@@ -193,7 +214,6 @@ static int cam_sensor_subdev_close(struct v4l2_subdev *sd,
 
 	mutex_lock(&(s_ctrl->cam_sensor_mutex));
 	#ifdef VENDOR_EDIT
-	//add by hongbo.dai@camea 20181213,ftm test will do it by powerdown
 	if(!is_ftm_current_test)
 	#endif
 	cam_sensor_shutdown(s_ctrl);

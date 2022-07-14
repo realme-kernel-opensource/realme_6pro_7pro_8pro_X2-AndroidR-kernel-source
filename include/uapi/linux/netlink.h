@@ -34,33 +34,27 @@
 #define NETLINK_INET_DIAG	NETLINK_SOCK_DIAG
 
 #ifdef OPLUS_FEATURE_WIFI_LUCKYMONEY
-//HuangYuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/18, Add for WeChat lucky money recognition
 #define NETLINK_OPLUS_NF_HOOKS	32
 #endif /* OPLUS_FEATURE_WIFI_LUCKYMONEY */
 
 #ifdef OPLUS_FEATURE_HANS_FREEZE
-//#Kun.Zhou@ANDROID.RESCONTROL, 2019/09/23, add for hans freeze manager
 #define NETLINK_OPPO_HANS       28      /* Socket for freezing solution*/
 #endif /*OPLUS_FEATURE_HANS_FREEZE*/
 //#ifdef OPLUS_FEATURE_WIFI_SLA
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET.1197891, 2018/04/10,Add code for appo sla function
 #define NETLINK_OPLUS_SLA  33      /*SLA NETLINK SOCK*/
 //#endif /* OPLUS_FEATURE_WIFI_SLA */
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.212300, 2020/06/01
 *Add for classify glink wakeup services and count IPA wakeup
 */
 #define NETLINK_OPLUS_NWPOWERSTATE       36  /*OPLUS NW PowerState*/
 #endif /* OPLUS_FEATURE_MODEM_DATA_NWPOWER */
 
 //#ifdef OPLUS_FEATURE_DHCP
-//LianGenglin@CONNECTIVITY.WIFI.INTERNET, 2020/05/09, Add for Dhcp conflict
 #define NETLINK_OPLUS_DHCP 38
 //#endif /* OPLUS_FEATURE_DHCP */
 
-/*#Zhao.Pan@MULTIMEDIA.AUDIODRIVER.FEATURE.FEEDBACK, 2020.10.28, add for multimedia kevent*/
 /* #define OPLUS_NETLINK_MM_KEVENT 41  (defined in oplus_mm_kevent.h file) */
 
 //#define MAX_LINKS 40

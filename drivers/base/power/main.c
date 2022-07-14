@@ -134,7 +134,6 @@ void device_pm_add(struct device *dev)
 	device_pm_check_callbacks(dev);
 	mutex_lock(&dpm_list_mtx);
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (dev->parent && dev->parent->power.is_prepared)
 		dev_warn(dev, "parent %s should not be sleeping\n",
 			dev_name(dev->parent));

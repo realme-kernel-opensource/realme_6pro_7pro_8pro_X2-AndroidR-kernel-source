@@ -40,7 +40,6 @@
 			qcom,system-reset;
 			qcom,store-hard-reset-reason;
                         //#ifdef OPLUS_FEATURE_QCOM_PMICWD
-                        //shukai@BSP.Kernel.Stability, 2020/08/06, Add for qcom pmic watchdog
                         qcom,pmicwd;
 			qcom,s3-debounce = <128>;
 			qcom,s3-src = "kpdpwr-and-resin";
@@ -57,7 +56,6 @@
 			};
 
 //#ifdef VENDOR_EDIT
-//Qicai.gu@psw.bsp.tp,2020/07/29 add for config vol key
 			qcom,pon_2 {
 				qcom,pon-type = <PON_POWER_ON_TYPE_RESIN>;
 				qcom,pull-up;
@@ -66,7 +64,6 @@
 //#endif
 
 //#ifdef OPLUS_BUG_STABILITY
-//lijiang@BSP.Bootloader.Bootflow, 2020/09/16
 			qcom,pon_3 {
 				qcom,pon-type = <PON_POWER_ON_TYPE_KPDPWR_RESIN>;
 				qcom,support-reset = <1>;
@@ -525,12 +522,10 @@
 					<0x0 0xc1 0 IRQ_TYPE_NONE>,
 					<0x0 0xc2 0 IRQ_TYPE_NONE>,
 					<0x0 0xc3 0 IRQ_TYPE_NONE>,
-//#ifdef OPLUS_FEATURE_CHG_BASIC /* zhouhaikang@PSW.BSP.CHG.Basic, 2020/08/05, zhk Add for charging */
 					<0x0 0xc4 0 IRQ_TYPE_NONE>,
 //#endif
 					<0x0 0xc7 0 IRQ_TYPE_NONE>,
 					//#ifdef OPLUS_FEATURE_TP_BASIC
-					///oujinrong@BSP.Fingerprint.Secure 2020/02/25 add for aboard
 					<0x0 0xc8 0 IRQ_TYPE_NONE>,
 					<0x0 0xc9 0 IRQ_TYPE_NONE>;
 					//#else
@@ -538,8 +533,6 @@
 					//#endif
 			interrupt-names = "pm6150_gpio1", "pm6150_gpio2",
 					//#ifdef OPLUS_FEATURE_TP_BASIC
-					///lizhijie@BSP.CHG.Basic 2020/02/25 add for charging
-					//oujinrong@BSP.Fingerprint.Secure 2020/03/14, add for aboard matching
 					"pm6150_gpio3", "pm6150_gpio4", "pm6150_gpio5",
 					"pm6150_gpio8", "pm6150_gpio9", "pm6150_gpio10";
 					//#else
@@ -549,8 +542,6 @@
 			gpio-controller;
 			#gpio-cells = <2>;
 			//#ifndef OPLUS_FEATURE_TP_BASIC
-			///lizhijie@BSP.CHG.Basic 2020/02/25 add for charging
-			//oujinrong@BSP.Fingerprint.Secure 2020/03/14, add for aboard matching
 			//qcom,gpios-disallowed = <5 6 9 10>;
 			//#else
 			qcom,gpios-disallowed = <6 7>;

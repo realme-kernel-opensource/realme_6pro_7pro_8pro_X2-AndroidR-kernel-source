@@ -5,7 +5,6 @@
 ** Description : MM kevent fb data
 ** Version : 1.0
 ** Date : 2018/12/03
-** Author : Ling.Guo@PSW.MM.Display.Stability
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>

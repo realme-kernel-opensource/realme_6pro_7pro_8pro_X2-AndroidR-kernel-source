@@ -858,7 +858,6 @@ config QCOM_FSA4480_I2C
 	  modes, changing orientation.
 
 #ifdef OPLUS_ARCH_EXTENDS
-#Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, Add for max20328
 config QCOM_MAX20328_I2C
 	bool "Fairchild MAX20328 chip with I2C"
 	select REGMAP_I2C

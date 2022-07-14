@@ -34,10 +34,8 @@ proc-$(CONFIG_PROC_VMCORE)	+= vmcore.o
 proc-$(CONFIG_PRINTK)	+= kmsg.o
 proc-$(CONFIG_PROC_PAGE_MONITOR)	+= page.o
 #ifdef OPLUS_FEATURE_HEALTHINFO
-#Huacai.Zhou@PSW.BSP.kernel.Peformance, 2018/06/18, add foreground process opt support
 obj-y	+= oppo_healthinfo/
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 #ifdef OPLUS_FEATURE_TASK_CPUSTATS
-#Hailong.Liu@TECH.Kernel.CPU, 2019/10/24, stat cpu usage on each tick.
 proc-y  += task_cpustats.o
 #endif /* OPLUS_FEATURE_TASK_CPUSTATS */

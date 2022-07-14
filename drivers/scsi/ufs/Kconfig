@@ -133,7 +133,6 @@ config SCSI_UFS_HISI
 	  If unsure, say N.
 
 #ifdef VENDOR_EDIT
-#/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 config UFSFEATURE
 	bool "UFS feature activate"
 	depends on SCSI_UFSHCD

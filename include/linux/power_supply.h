@@ -177,7 +177,6 @@ enum {
 enum power_supply_property {
 	/* Properties of type `int' */
 //#ifdef VENDOR_EDIT
-/* LIZHIJIE@BSP.CHG.Basic, 2020/02/25, LZJ Add for charging */
 	POWER_SUPPLY_PROP_CHARGE_TECHNOLOGY = 0,
 	POWER_SUPPLY_PROP_FAST_CHARGE,
 	POWER_SUPPLY_PROP_MMI_CHARGING_ENABLE,
@@ -404,7 +403,6 @@ enum power_supply_property {
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_PROP_CHARGE_COUNTER_EXT,
 //#ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 	POWER_SUPPLY_PROP_ADAPTER_FW_UPDATE,
 	POWER_SUPPLY_PROP_VOOCCHG_ING,
 	POWER_SUPPLY_PROP_CHARGERID_VOLT,
@@ -427,7 +425,6 @@ enum power_supply_property {
 #endif /*CONFIG_OPPO_SHORT_USERSPACE*/
 //#endif /* VENDOR_EDIT */
 //#ifdef VENDOR_EDIT
-//lizhijie@PSW.BSP.CHG, 2020/02/25, Add for hw battery check
 #ifdef CONFIG_OPLUS_SHORT_HW_CHECK
 	POWER_SUPPLY_PROP_SHORT_C_HW_FEATURE,
 	POWER_SUPPLY_PROP_SHORT_C_HW_STATUS,
@@ -438,7 +435,6 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_SHORT_C_IC_OTP_VALUE,
 #endif
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* zhouhaikang@BSP.CHG.Basic, 2020/09/09, zhk Add for charging */
 	POWER_SUPPLY_PROP_TX_VOLTAGE_NOW,
 	POWER_SUPPLY_PROP_TX_CURRENT_NOW,
 	POWER_SUPPLY_PROP_CP_VOLTAGE_NOW,

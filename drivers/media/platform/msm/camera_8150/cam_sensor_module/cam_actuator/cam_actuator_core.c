@@ -162,7 +162,6 @@ static int32_t cam_actuator_i2c_modes_util(
 	uint32_t i, size;
 
 #ifdef VENDOR_EDIT
-	/* Add by xiaotao.Ding@Cam.Drv 20181122 for sem12152 */
 	uint32_t value;
 	if (i2c_list->i2c_settings.reg_setting[0].reg_addr == 0x0204)
 	{

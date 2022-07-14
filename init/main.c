@@ -99,7 +99,6 @@
 #include "do_mounts.h"
 
 //#ifdef OPLUS_FEATURE_PHOENIX
-// Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 #include "../drivers/soc/oplus/system/oppo_phoenix/oppo_phoenix.h"
 //#endif  //OPLUS_FEATURE_PHOENIX
 
@@ -604,7 +603,6 @@ asmlinkage __visible void __init start_kernel(void)
 	mm_init();
 
 //#ifdef OPLUS_FEATURE_PHOENIX
-	// Kun.Hu@PSW.TECH.RELIABILTY, 2018/11/15, add for project phoenix(hang oppo)
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_MM_INIT_DONE);
 //#endif //OPLUS_FEATURE_PHOENIX
@@ -662,7 +660,6 @@ asmlinkage __visible void __init start_kernel(void)
 	early_boot_irqs_disabled = false;
 	local_irq_enable();
 //#ifdef OPLUS_FEATURE_PHOENIX
-	// Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_LOCAL_IRQ_ENABLE);
 //#endif
@@ -738,7 +735,6 @@ asmlinkage __visible void __init start_kernel(void)
 	delayacct_init();
 
 //#ifdef OPLUS_FEATURE_PHOENIX
-	// Kun.Hu@PSW.TECH.RELIABILTY, 2018/11/15, add for project phoenix(hang oppo)
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DELAYACCT_INIT_DONE);
 //#endif
@@ -959,7 +955,6 @@ static void __init do_basic_setup(void)
 	shmem_init();
 	driver_init();
 //#ifdef OPLUS_FEATURE_PHOENIX
-	// Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DRIVER_INIT_DONE);
 //#endif
@@ -968,7 +963,6 @@ static void __init do_basic_setup(void)
 	usermodehelper_enable();
 	do_initcalls();
 //#ifdef OPLUS_FEATURE_PHOENIX
-	// Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DO_INITCALLS_DONE);
 //#endif
@@ -1078,7 +1072,6 @@ static int __ref kernel_init(void *unused)
 #endif
 
 //#ifdef OPLUS_FEATURE_PHOENIX
-        // Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
         if(phx_set_boot_stage)
                 phx_set_boot_stage(KERNEL_INIT_DONE);
 //#endif
@@ -1150,7 +1143,6 @@ static noinline void __init kernel_init_freeable(void)
 	do_basic_setup();
 
 //#ifdef OPLUS_FEATURE_PHOENIX
-	// Kun.Hu@TECH.BSP.Stability.PHOENIX_PROJECT 2019/06/11, Add for phoenix project
 	if(phx_set_boot_stage)
 		phx_set_boot_stage(KERNEL_DO_BASIC_SETUP_DONE);
 //#endif

@@ -1,6 +1,5 @@
 /*
  * oppo_mm_kevent.c - for kevent action upload,root action upload to user layer
- *	author by Deliang.Peng@MULTIMEDIA.Basic.Stability
  */
 #include <linux/init.h>
 #include <linux/kernel.h>
@@ -219,7 +218,7 @@ void __exit mm_kevent_module_exit(void) {
 module_init(mm_kevent_module_init);
 module_exit(mm_kevent_module_exit);
 
-MODULE_AUTHOR("deliang.peng <>");
+MODULE_AUTHOR("deliang.peng <pdl@oppo.com>");
 MODULE_DESCRIPTION("mm_kevent@1.0");
 MODULE_VERSION("1.0");
 MODULE_LICENSE("GPL");

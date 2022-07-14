@@ -404,7 +404,6 @@ static int cam_cci_platform_probe(struct platform_device *pdev)
 	new_cci_dev->v4l2_dev_str.name =
 		new_cci_dev->device_name;
 #ifdef VENDOR_EDIT
-	//modify by jiazhuang@camera, 2020/12/25 add google patch
 	new_cci_dev->v4l2_dev_str.sd_flags = V4L2_SUBDEV_FL_HAS_EVENTS;
 #else
 	new_cci_dev->v4l2_dev_str.sd_flags =

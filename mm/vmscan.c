@@ -139,9 +139,6 @@ struct scan_control {
 	struct vm_area_struct *target_vma;
 
 #if defined(OPLUS_FEATURE_PROCESS_RECLAIM) && defined(CONFIG_PROCESS_RECLAIM_ENHANCE)
-	/* robin.ren@PSW.BSP.Kernel.Performance, 2019-03-13,
-	 * use mm_walk to regonize the behaviour of process reclaim.
-	 */
 	struct mm_walk *walk;
 #endif
 };

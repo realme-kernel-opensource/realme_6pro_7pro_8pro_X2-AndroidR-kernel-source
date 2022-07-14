@@ -27,7 +27,6 @@
 #define MSM_ARCH_TIMER_FREQ	19200000
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats
 void __iomem *rpm_phys_addr = NULL;
 #endif /* OPLUS_FEATURE_POWERINFO_RPMH */
 
@@ -83,7 +82,6 @@ static inline u64 get_time_in_sec(u64 counter)
 	return counter;
 }
 #ifndef OPLUS_FEATURE_POWERINFO_RPMH
-//yunqing.zeng@bsp.power.basic 20190702 Modify for log info more accurate
 static inline u64 get_time_in_msec(u64 counter)
 {
 	do_div(counter, MSM_ARCH_TIMER_FREQ);
@@ -144,7 +142,6 @@ static inline int msm_rpmstats_append_data_to_buf(char *buf,
 }
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats
 static inline int  oplus_rpmstats_append_data_to_buf(char *buf,
 		struct msm_rpm_stats_data *data, int buflength,int i)
 {
@@ -222,7 +219,6 @@ static inline int msm_rpmstats_copy_stats(
 }
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats
 static inline int  oplus_rpmstats_copy_stats(
 			struct msm_rpmstats_private_data *prvdata)
 {
@@ -311,7 +307,6 @@ static ssize_t rpmstats_show(struct kobject *kobj,
 	return length;
 }
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/06/11 add for get rpm_stats
 static ssize_t  oplus_rpmstats_show(struct kobject *kobj,
 			struct kobj_attribute *attr, char *buf)
 {
@@ -345,7 +340,6 @@ static int msm_rpmstats_create_sysfs(struct platform_device *pdev,
 	struct msm_rpmstats_kobj_attr *rpms_ka = NULL;
 	int ret = 0;
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/05/23 add for get /sys/power/system_sleep/oppo_rpmh_stats
     struct msm_rpmstats_kobj_attr * oplus_rpms_ka = NULL;
 #endif /* OPLUS_FEATURE_POWERINFO_RPMH */
 
@@ -375,7 +369,6 @@ static int msm_rpmstats_create_sysfs(struct platform_device *pdev,
 	ret = sysfs_create_file(rpmstats_kobj, &rpms_ka->ka.attr);
 	platform_set_drvdata(pdev, rpms_ka);
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-//Nanwei.Deng@BSP.Power.Basic 2018/05/23 add for get /sys/power/system_sleep/oppo_rpmh_stats
      oplus_rpms_ka = kzalloc(sizeof(* oplus_rpms_ka), GFP_KERNEL);
 	if (! oplus_rpms_ka) {
 		kobject_put(rpmstats_kobj);
@@ -438,7 +431,6 @@ static int msm_rpmstats_probe(struct platform_device *pdev)
 	gpdata = pdata;
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-	//Nanwei.Deng@BSP.Power.Basic 2018/05/23 add for get /sys/power/system_sleep/ oplus_rpmh_stats
 	rpm_phys_addr= ioremap_nocache(pdata->phys_addr_base,
 							pdata->phys_size);
 	if (!rpm_phys_addr) {

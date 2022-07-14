@@ -71,7 +71,6 @@
 #ifndef VENDOR_EDIT
 #define CCI_I2C_MAX_READ 8192
 #else
-//add by yufeng@camera, 20190528 for read eeprom data
 #define CCI_I2C_MAX_READ 16384
 #endif
 #define CCI_I2C_MAX_WRITE 8192
@@ -322,7 +321,6 @@ static inline struct v4l2_subdev *cam_cci_get_subdev(int cci_dev_index)
 #endif
 
 #ifdef VENDOR_EDIT
-//modify by jiazhuang@camera, 2020/12/25 add google patch
 #define VIDIOC_MSM_CCI_CFG \
 	_IOWR('V', BASE_VIDIOC_PRIVATE + 23, struct cam_cci_ctrl)
 #else

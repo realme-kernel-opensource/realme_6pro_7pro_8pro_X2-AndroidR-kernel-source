@@ -202,7 +202,6 @@
 			hw-thd-sta = <35>;
 			hw-tbuf = <62>;
 			/*#ifdef VENDOR_EDIT*/
-			/*add by yufeng@camera 20190506*/
 			hw-scl-stretch-en = <1>;
 			/*#else*/
 			//hw-scl-stretch-en = <0>;
@@ -237,7 +236,6 @@
 			hw-thd-sta = <15>;
 			hw-tbuf = <24>;
 			/*#ifdef VENDOR_EDIT*/
-			/*add by yufeng@camera 20190506*/
 			hw-scl-stretch-en = <1>;
 			/*#else*/
 			//hw-scl-stretch-en = <0>;
@@ -270,10 +268,10 @@
 		clock-cntl-level = "lowsvs";
 		clock-rates = <0 37500000>;
 		pinctrl-names = "cam_default", "cam_suspend";
-		pinctrl-0 = <&cci2_active>;
-		pinctrl-1 = <&cci2_suspend>;
-		gpios = <&tlmm 27 0>,
-			<&tlmm 28 0>;
+		//pinctrl-0 = <&cci2_active>;
+		//pinctrl-1 = <&cci2_suspend>;
+		//gpios = <&tlmm 27 0>,
+			//<&tlmm 28 0>;
 		gpio-req-tbl-num = <0 1>;
 		gpio-req-tbl-flags = <1 1>;
 		gpio-req-tbl-label = "CCI_I2C_DATA2",

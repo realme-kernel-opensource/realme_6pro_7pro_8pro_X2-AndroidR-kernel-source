@@ -35,7 +35,6 @@ static int tty_port_default_receive_buf(struct tty_port *port,
 		return 0;
 
 	#ifdef OPLUS_BUG_STABILITY
-	/* zhangzongyu@PSW.BSP.Kernel.Statbility 2020/3/21 */
 	if(tty->driver_data != NULL)
 		ret = tty_ldisc_receive_buf(disc, p, (char *)f, count);
 	else {

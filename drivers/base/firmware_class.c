@@ -197,7 +197,6 @@ static int __fw_state_check(struct fw_state *fw_st, enum fw_status status)
 #define FW_OPT_NOCACHE	(1U << 4)
 
 #ifdef VENDOR_EDIT
-//Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 #define FW_OPT_COMPARE (1U << 5)
 #endif/*VENDOR_EDIT*/
 
@@ -402,7 +401,6 @@ module_param_string(path, fw_path_para, sizeof(fw_path_para), 0644);
 MODULE_PARM_DESC(path, "customized firmware image search path with a higher priority than default path");
 
 #ifdef VENDOR_EDIT
-//Wanghao@Bsp.Group.Tp,2018-02-13, Add to avoid direct pass encrypt tp firmware to driver
 static int fw_get_filesystem_firmware(struct device *device,
 				       struct firmware_buf *buf, unsigned int opt_flags)
 #endif
@@ -415,7 +413,6 @@ static int fw_get_filesystem_firmware(struct device *device,
 	size_t msize = INT_MAX;
 
 #ifdef VENDOR_EDIT
-	//Wanghao@Bsp.Group.Tp,2018-02-13, Add to avoid direct pass encrypt tp firmware to driver
 	if(opt_flags & FW_OPT_COMPARE) {
 		pr_err("%s opt_flags get FW_OPT_COMPARE!\n", __func__);
 		return rc;
@@ -1056,7 +1053,6 @@ static int _request_firmware_load(struct firmware_priv *fw_priv,
 	struct firmware_buf *buf = fw_priv->buf;
 
 	#ifdef VENDOR_EDIT
-	//Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 	char *envp[2]={"FwUp=compare", NULL};
 	#endif/*VENDOR_EDIT*/
 
@@ -1081,7 +1077,6 @@ static int _request_firmware_load(struct firmware_priv *fw_priv,
 		dev_set_uevent_suppress(f_dev, false);
 		dev_dbg(f_dev, "firmware: requesting %s\n", buf->fw_id);
 	#ifdef VENDOR_EDIT
-		//Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 		if (opt_flags & FW_OPT_COMPARE) {
 			kobject_uevent_env(&fw_priv->dev.kobj, KOBJ_CHANGE,envp);
 		} else {
@@ -1264,7 +1259,6 @@ _request_firmware(const struct firmware **firmware_p, const char *name,
 		goto out;
 
 #ifdef VENDOR_EDIT
-//Wanghao@Bsp.Group.Tp,2018-02-13, Add to avoid direct pass encrypt tp firmware to driver
 	ret = fw_get_filesystem_firmware(device, fw->priv, opt_flags);
 #endif
 	if (ret) {
@@ -1327,7 +1321,6 @@ request_firmware(const struct firmware **firmware_p, const char *name,
 EXPORT_SYMBOL(request_firmware);
 
 #ifdef VENDOR_EDIT
-//Tong.Han@Bsp.Group.Tp,2017-12-16,Add interface to get proper fw
 int request_firmware_select(const struct firmware **firmware_p, const char *name,
 		 struct device *device)
 {

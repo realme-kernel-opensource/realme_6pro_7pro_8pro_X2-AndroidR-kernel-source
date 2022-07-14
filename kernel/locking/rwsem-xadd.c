@@ -94,7 +94,6 @@ void __init_rwsem(struct rw_semaphore *sem, const char *name,
 	sem->m_count = 0;
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	sem->ux_dep_task = NULL;
 #endif /* OPLUS_FEATURE_UIFIRST */
 }
@@ -275,7 +274,6 @@ __rwsem_down_read_failed_common(struct rw_semaphore *sem, int state)
 		__rwsem_mark_wake(sem, RWSEM_WAKE_ANY, &wake_q);
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		rwsem_set_inherit_ux(current, waiter.task, READ_ONCE(sem->owner), sem);
 	}
@@ -297,14 +295,12 @@ __rwsem_down_read_failed_common(struct rw_semaphore *sem, int state)
 			break;
 		}
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		current->in_downread = 1;
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 		schedule();
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 		current->in_downread = 0;
 #endif
@@ -598,7 +594,6 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 		count = atomic_long_add_return(RWSEM_WAITING_BIAS, &sem->count);
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		rwsem_set_inherit_ux(waiter.task, current, READ_ONCE(sem->owner), sem);
 	}
@@ -617,14 +612,12 @@ __rwsem_down_write_failed_common(struct rw_semaphore *sem, int state)
 				goto out_nolock;
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 			current->in_downwrite = 1;
 #endif
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 			schedule();
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 			current->in_downwrite = 0;
 #endif
@@ -742,7 +735,6 @@ locked:
 		__rwsem_mark_wake(sem, RWSEM_WAKE_ANY, &wake_q);
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		rwsem_unset_inherit_ux(sem, current);
 	}

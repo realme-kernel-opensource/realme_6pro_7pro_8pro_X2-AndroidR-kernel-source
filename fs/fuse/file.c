@@ -8,7 +8,6 @@
 
 #include "fuse_i.h"
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 #include "fuse_shortcircuit.h"
 #endif /* VENDOR_EDIT */
 
@@ -24,7 +23,6 @@
 
 static const struct file_operations fuse_direct_io_file_operations;
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 static int fuse_send_open(struct fuse_conn *fc, u64 nodeid, struct file *file,
 			  int opcode, struct fuse_open_out *outargp,
 			  struct file **lower_file)
@@ -85,7 +83,6 @@ struct fuse_file *fuse_file_alloc(struct fuse_conn *fc)
 		return NULL;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	ff->rw_lower_file = NULL;
 #endif /* VENDOR_EDIT */
 	ff->fc = fc;
@@ -169,7 +166,6 @@ int fuse_do_open(struct fuse_conn *fc, u64 nodeid, struct file *file,
 		int err;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 		err = fuse_send_open(fc, nodeid, file, opcode, &outarg,
 				&(ff->rw_lower_file));
 #else
@@ -301,7 +297,6 @@ void fuse_release_common(struct file *file, bool isdir)
 	int opcode = isdir ? FUSE_RELEASEDIR : FUSE_RELEASE;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	fuse_shortcircuit_release(ff);
 #endif /* VENDOR_EDIT */
 	fuse_prepare_release(ff, file->f_flags, opcode);
@@ -974,7 +969,6 @@ static ssize_t fuse_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
 	struct inode *inode = iocb->ki_filp->f_mapping->host;
 	struct fuse_conn *fc = get_fuse_conn(inode);
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	struct fuse_file *ff = iocb->ki_filp->private_data;
 	ssize_t ret_val;
 #endif /* VENDOR_EDIT */
@@ -992,7 +986,6 @@ static ssize_t fuse_file_read_iter(struct kiocb *iocb, struct iov_iter *to)
 			return err;
 	}
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	if (ff && ff->rw_lower_file)
 		ret_val = fuse_shortcircuit_read_iter(iocb, to);
 	else
@@ -1240,7 +1233,6 @@ static ssize_t fuse_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
 	struct file *file = iocb->ki_filp;
 	struct address_space *mapping = file->f_mapping;
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	struct fuse_file *ff = file->private_data;
 #endif /* VENDOR_EDIT */
 	ssize_t written = 0;
@@ -1250,7 +1242,6 @@ static ssize_t fuse_file_write_iter(struct kiocb *iocb, struct iov_iter *from)
 	loff_t endbyte = 0;
 
 #ifdef VENDOR_EDIT
-//shubin@BSP.Kernel.FS 2020/08/20 improving fuse storage performance
 	if (ff && ff->rw_lower_file) {
 		/* Update size (EOF optimization) and mode (SUID clearing) */
 		err = fuse_update_attributes(mapping->host, file);

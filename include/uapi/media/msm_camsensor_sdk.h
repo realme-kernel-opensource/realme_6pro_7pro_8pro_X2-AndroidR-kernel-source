@@ -25,7 +25,6 @@
 //#ifndef VENDOR_EDIT
 //#define I2C_REG_DATA_MAX       (8*1024)
 //#else
-//add by lvchangfu@camera, 20191139 for read eeprom data
 #define I2C_REG_DATA_MAX       (16*1024)
 //#endif
 

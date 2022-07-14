@@ -686,7 +686,6 @@ static int __cam_isp_ctx_handle_buf_done_in_activated_state(
 		list_add(&req->list, &ctx->pending_req_list);
 		atomic_set(&ctx_isp->process_bubble, 0);
 #ifdef VENDOR_EDIT
-		//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 		ctx_isp->bubble_frame_cnt = 0;
 #endif
 		CAM_DBG(CAM_REQ,
@@ -930,7 +929,6 @@ static int __cam_isp_ctx_notify_sof_in_activated_state(
 	 * helps the state machine to catch up the delay.
 	 */
 #ifdef VENDOR_EDIT
-	//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 	if (atomic_read(&ctx_isp->process_bubble)) {
 		if (list_empty(&ctx->active_req_list)) {
 			CAM_ERR(CAM_ISP,
@@ -1352,7 +1350,6 @@ static int __cam_isp_ctx_epoch_in_bubble_applied(
 		notify.error = CRM_KMD_ERR_BUBBLE;
 		ctx->ctx_crm_intf->notify_err(&notify);
 #ifdef VENDOR_EDIT
-		//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 		atomic_set(&ctx_isp->process_bubble, 1);
 #endif
 		CAM_DBG(CAM_REQ,
@@ -2491,7 +2488,6 @@ static int __cam_isp_ctx_flush_req_in_top_state(
 
 		spin_lock_bh(&ctx->lock);
 #ifdef VENDOR_EDIT
-		//Shouyao.Xiong@cam 20200519 fix flush block issue by qcom case 04602392
 		/*
 		 * As HW is stopped already No request will move from
 		 * one list to other good time to flush reqs.
@@ -2521,7 +2517,6 @@ static int __cam_isp_ctx_flush_req_in_top_state(
 
 end:
 #ifdef VENDOR_EDIT
-	//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 	ctx_isp->bubble_frame_cnt = 0;
 #endif
 	ctx_isp->substate_activated = CAM_ISP_CTX_ACTIVATED_SOF;
@@ -3315,7 +3310,6 @@ static int __cam_isp_ctx_config_dev_in_top_state(
 			packet->header.request_id);
 
 #ifdef VENDOR_EDIT
-		//Shouyao.Xiong@cam 20200605 merge qcom patch to fix flush block issue case 04611022
 		rc = -EBADR;
 #else
 		rc = -EINVAL;
@@ -3857,7 +3851,6 @@ static int __cam_isp_ctx_start_dev_in_ready(struct cam_context *ctx,
 	ctx_isp->frame_id = 0;
 	ctx_isp->active_req_cnt = 0;
 #ifdef VENDOR_EDIT
-	//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 	ctx_isp->bubble_frame_cnt = 0;
 #endif
 	ctx_isp->req_info.reported_req_id = 0;
@@ -3999,7 +3992,6 @@ static int __cam_isp_ctx_stop_dev_in_activated_unlock(
 	ctx_isp->req_info.last_bufdone_time_stamp = 0;
 	ctx_isp->req_info.last_reported_id_time_stamp = 0;
 #ifdef VENDOR_EDIT
-	//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 	ctx_isp->bubble_frame_cnt = 0;
 #endif
 
@@ -4386,7 +4378,6 @@ int cam_isp_context_init(struct cam_isp_context *ctx,
 	ctx->frame_id = 0;
 	ctx->active_req_cnt = 0;
 #ifdef VENDOR_EDIT
-	//Shouyao.Xiong@cam 20200515 fix for bubble can't recovery case:04602392
 	ctx->bubble_frame_cnt = 0;
 #endif
 	ctx->req_info.reported_req_id = 0;

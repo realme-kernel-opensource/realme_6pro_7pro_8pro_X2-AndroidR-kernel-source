@@ -48,13 +48,11 @@
 #include "irq-gic-common.h"
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 #include "../../drivers/soc/oplus/owakelock/oplus_wakelock_profiler_qcom.h"
 #endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.2120730, 2019/07/11
 *Add for: print qrtr debug msg and fix QMI wakeup statistics for QCOM platforms using glink.
 */
 int qrtr_first_msg = 0;
@@ -466,7 +464,6 @@ static void gic_show_resume_irq(struct gic_chip_data *gic)
 		return;
 
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-	//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 	wakeup_reasons_statics(IRQ_NAME_WAKE_SUM, WS_CNT_SUM);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
@@ -492,7 +489,6 @@ static void gic_show_resume_irq(struct gic_chip_data *gic)
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 		/*
-		*Ruansong@PSW.NW.DATA.2120730, 2019/07/11
 		*Add for: print qrtr debug msg and fix QMI wakeup statistics for QCOM platforms using glink
 		*/
 		if(name != NULL)
@@ -504,7 +500,6 @@ static void gic_show_resume_irq(struct gic_chip_data *gic)
 #endif /* OPLUS_FEATURE_MODEM_DATA_NWPOWER */
 
 		#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-		//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 		do {
 			wakeup_reasons_statics(name, WS_CNT_MODEM|WS_CNT_WLAN|WS_CNT_ADSP|WS_CNT_CDSP|WS_CNT_SLPI);
 		} while(0);
@@ -737,7 +732,6 @@ static int __gic_populate_rdist(struct redist_region *region, void __iomem *ptr)
 		gic_data_rdist()->phys_base = region->phys_base + offset;
 
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-//Nanwei.Deng@BSP.power.Basic 2018/05/01
 		pr_info("CPU%d: found redistributor %lx region %d:%pa\n",
 			smp_processor_id(), mpidr,
 			(int)(region - gic_data.redist_regions),

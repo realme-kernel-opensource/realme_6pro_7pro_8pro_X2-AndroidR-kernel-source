@@ -48,7 +48,6 @@
 #include <linux/math64.h>
 
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 #include "oppo_foreground_io_opt/oppo_foreground_io_opt.h"
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 
@@ -64,7 +63,6 @@
 struct dentry *blk_debugfs_root;
 #endif
 
-/*Hank.liu@TECH.BSP Kernel IO Latency  2019-03-21,io information*/
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 extern void ohm_iolatency_record(struct request * req,unsigned int nr_bytes, int fg, u64 delta_us);
 extern unsigned long ufs_outstanding;
@@ -144,7 +142,6 @@ void blk_rq_init(struct request_queue *q, struct request *rq)
 
 	INIT_LIST_HEAD(&rq->queuelist);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	INIT_LIST_HEAD(&rq->fg_list);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 	INIT_LIST_HEAD(&rq->timeout_list);
@@ -939,7 +936,6 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 		return NULL;
 
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	INIT_LIST_HEAD(&q->fg_head);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 	q->id = ida_simple_get(&blk_queue_ida, 0, 0, gfp_mask);
@@ -964,7 +960,6 @@ struct request_queue *blk_alloc_queue_node(gfp_t gfp_mask, int node_id)
 	q->backing_dev_info->name = "block";
 	q->node = node_id;
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	fg_bg_max_count_init(q);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 	setup_timer(&q->backing_dev_info->laptop_mode_wb_timer,
@@ -1913,7 +1908,6 @@ void blk_init_request_from_bio(struct request *req, struct bio *bio)
 	if (bio->bi_opf & REQ_RAHEAD)
 		req->cmd_flags |= REQ_FAILFAST_MASK;
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	if (bio->bi_opf & REQ_FG)
 		req->cmd_flags |= REQ_FG;
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
@@ -2481,7 +2475,6 @@ blk_qc_t submit_bio(struct bio *bio)
 	if (workingset_read)
 		psi_memstall_enter(&pflags);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	if (high_prio_for_task(current))
 		bio->bi_opf |= REQ_FG;
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
@@ -2774,7 +2767,6 @@ struct request *blk_peek_request(struct request_queue *q)
 			 * not be passed by new incoming requests
 			 */
 			rq->rq_flags |= RQF_STARTED;
-/*Hank.liu@PSW.BSP Kernel IO Latency  2019-03-19,request start ktime */
 #if defined(VENDOR_EDIT)
 			rq-> block_io_start = ktime_get();
 #endif
@@ -2859,7 +2851,6 @@ static void blk_dequeue_request(struct request *rq)
 
 	list_del_init(&rq->queuelist);
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 	list_del_init(&rq->fg_list);
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 	/*
@@ -2871,7 +2862,6 @@ static void blk_dequeue_request(struct request *rq)
 		q->in_flight[rq_is_sync(rq)]++;
 		set_io_start_time_ns(rq);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// jiheng.xie@PSW.Tech.BSP.Performance, 2019/03/11
 // Add for ioqueue
 #ifdef CONFIG_OPPO_HEALTHINFO
 		ohm_ioqueue_add_inflight(q, rq);
@@ -2959,7 +2949,6 @@ bool blk_update_request(struct request *req, blk_status_t error,
 {
 	int total_bytes;
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
-/*Hank.liu@TECH.BSP Kernel IO Latency	2019-03-19,request complete ktime*/
 	ktime_t now;
 	u64 delta_us;
 	char rwbs[RWBS_LEN];
@@ -2971,7 +2960,6 @@ bool blk_update_request(struct request *req, blk_status_t error,
 	iomonitor_record_reqstats(req, nr_bytes);
 #endif /*OPLUS_FEATURE_IOMONITOR*/
 
-/*Hank.liu@TECH.BSP Kernel IO Latency	2019-03-19,request complete ktime*/
 #if defined(VENDOR_EDIT) && defined(CONFIG_OPPO_HEALTHINFO)
 			if(req->tag >= 0 && req->block_io_start > 0)
 			{

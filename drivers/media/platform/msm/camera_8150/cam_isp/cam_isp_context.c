@@ -527,7 +527,6 @@ end:
 static void __cam_isp_ctx_send_sof_boot_timestamp(
 	struct cam_isp_context *ctx_isp, uint64_t request_id,
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	uint32_t sof_event_status)
 #else
 	uint32_t sof_event_status, uint64_t delta_ts)
@@ -539,7 +538,6 @@ static void __cam_isp_ctx_send_sof_boot_timestamp(
 	req_msg.u.frame_msg.frame_id = ctx_isp->frame_id;
 	req_msg.u.frame_msg.request_id = request_id;
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	req_msg.u.frame_msg.timestamp = ctx_isp->boot_timestamp;
 #else
 	req_msg.u.frame_msg.timestamp = ctx_isp->prev_boot_timestamp + delta_ts;
@@ -548,7 +546,6 @@ static void __cam_isp_ctx_send_sof_boot_timestamp(
 	req_msg.u.frame_msg.sof_status = sof_event_status;
 
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	CAM_DBG(CAM_ISP,
 		"request id:%lld frame number:%lld boot time stamp:0x%llx",
 		 request_id, ctx_isp->frame_id,
@@ -569,7 +566,6 @@ static void __cam_isp_ctx_send_sof_boot_timestamp(
 			request_id);
 
 #ifdef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	ctx_isp->prev_boot_timestamp = req_msg.u.frame_msg.timestamp;
 #endif
 }
@@ -581,7 +577,6 @@ static void __cam_isp_ctx_send_sof_timestamp(
 {
 	struct cam_req_mgr_message   req_msg;
 #ifdef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	uint64_t delta_ts;
 #endif
 
@@ -593,7 +588,6 @@ static void __cam_isp_ctx_send_sof_timestamp(
 	req_msg.u.frame_msg.sof_status = sof_event_status;
 
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	CAM_DBG(CAM_ISP,
 		"request id:%lld frame number:%lld SOF time stamp:0x%llx",
 		 request_id, ctx_isp->frame_id,
@@ -613,14 +607,12 @@ static void __cam_isp_ctx_send_sof_timestamp(
 			request_id);
 
 #ifdef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	delta_ts = ctx_isp->sof_timestamp_val -
 			ctx_isp->prev_sof_timestamp_val;
 #endif
 
 	__cam_isp_ctx_send_sof_boot_timestamp(ctx_isp,
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 		request_id, sof_event_status);
 #else
 		request_id, sof_event_status,
@@ -1918,7 +1910,6 @@ static int __cam_isp_ctx_flush_req_in_top_state(
 	struct cam_isp_context *ctx_isp;
 
 #ifdef VENDOR_EDIT
-    /* jiangyi1@Cam.Drv 20190619 merge qcom patch for break long exposure snapshot */
     struct cam_isp_stop_args            stop_isp;
     struct cam_hw_stop_args             stop_args;
     struct cam_isp_start_args           start_isp;
@@ -1938,7 +1929,6 @@ static int __cam_isp_ctx_flush_req_in_top_state(
 	spin_unlock_bh(&ctx->lock);
 
 #ifdef VENDOR_EDIT
-    /* jiangyi1@Cam.Drv 20190619 merge qcom patch for break long exposure snapshot */
     if (flush_req->type == CAM_REQ_MGR_FLUSH_TYPE_ALL) {
         /* if active and wait list are empty, return */
         spin_lock_bh(&ctx->lock);
@@ -3408,7 +3398,6 @@ static int __cam_isp_ctx_stop_dev_in_activated_unlock(
 	ctx_isp->active_req_cnt = 0;
 	ctx_isp->reported_req_id = 0;
 #ifdef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	ctx_isp->prev_sof_timestamp_val = 0;
 	ctx_isp->prev_boot_timestamp = 0;
 #endif

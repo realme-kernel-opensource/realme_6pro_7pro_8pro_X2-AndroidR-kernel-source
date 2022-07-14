@@ -61,7 +61,6 @@ struct sugov_policy {
 
 	bool need_freq_update;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	unsigned int flags;
 #endif
 };
@@ -135,7 +134,6 @@ static bool sugov_should_update_freq(struct sugov_policy *sg_policy, u64 time)
 	 */
 
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	if (sg_policy->flags & SCHED_CPUFREQ_BOOST)
 		return true;
 #endif
@@ -151,7 +149,6 @@ static bool sugov_up_down_rate_limit(struct sugov_policy *sg_policy, u64 time,
 	delta_ns = time - sg_policy->last_freq_update_time;
 
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	if (sg_policy->flags & SCHED_CPUFREQ_BOOST)
 		return false;
 #endif
@@ -442,7 +439,6 @@ static void sugov_update_single(struct update_util_data *hook, u64 time,
 	sugov_set_iowait_boost(sg_cpu, time, flags);
 	sg_cpu->last_update = time;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	sg_policy->flags = flags;
 #endif
 	if (!sugov_should_update_freq(sg_policy, time))
@@ -582,7 +578,6 @@ static void sugov_update_shared(struct update_util_data *hook, u64 time,
 				max, sg_cpu->walt_load.nl,
 				sg_cpu->walt_load.pl, flags);
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	sg_policy->flags = flags;
 #endif
 	if (sugov_should_update_freq(sg_policy, time) &&
@@ -1061,7 +1056,6 @@ static int sugov_start(struct cpufreq_policy *policy)
 	sg_policy->need_freq_update = false;
 	sg_policy->cached_raw_freq = 0;
 #ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	sg_policy->flags	= 0;
 #endif
 	for_each_cpu(cpu, policy->cpus) {

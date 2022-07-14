@@ -6,12 +6,10 @@
 **
 ** Version: 1.0
 ** Date : 2018/04/03
-** Author: Junyuan.Huang@CONNECTIVITY.WIFI.INTERNET
 ** TAG: OPLUS_FEATURE_WIFI_SLA
 ** ------------------------------- Revision History: ----------------------------
 ** <author>                                <data>        <version>       <desc>
 ** ------------------------------------------------------------------------------
-**Junyuan.Huang@CONNECTIVITY.WIFI.INTERNET 2018/04/03     1.0      OPLUS_FEATURE_WIFI_SLA
  *******************************************************************************/
 
 #include <linux/types.h>
@@ -45,7 +43,6 @@
 #include <net/netfilter/ipv4/nf_conntrack_ipv4.h>
 #include <linux/netfilter_ipv4/ipt_REJECT.h>
 
-//Xiong.Li@TECH.CN.WiFi.Network.2022890,2019/06/14
 //Add for apps network monitors
 /*#include <net/oplus/oplus_apps_monitor.h>*/
 
@@ -354,7 +351,6 @@ enum{
 	SLA_NOTIFY_GAME_IN_FRONT = 0x32,
 	SLA_NOTIFY_PRIMARY_WIFI = 0x33,
 	SLA_NOTIFY_DUAL_STA_APP = 0x34,
-    //Xiao.Li@PSW.CN.WiFi.Connect.smartWifi.1058483,
     //Add for WLAN Assistant Four Issues
 	SLA_WEIGHT_BY_WLAN_ASSIST = 0x35,
     //end add
@@ -2612,7 +2608,6 @@ static void oplus_statistic_dev_rtt(struct sock *sk, long rtt)
 
 	if(-1 != index){
 		calc_rtt_by_dev_index(index, tmp_rtt, sk);
-		//Xiong.Li@TECH.CN.WiFi.Network.2022890,2019/06/14
 		//Add for apps network monitors
 		/* statistics_monitor_apps_rtt_via_uid(index, tmp_rtt, sk); */
 	}

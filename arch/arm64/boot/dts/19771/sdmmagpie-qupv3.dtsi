@@ -507,9 +507,12 @@
 		clocks = <&clock_gcc GCC_QUPV3_WRAP1_S2_CLK>,
 			<&clock_gcc GCC_QUPV3_WRAP_1_M_AHB_CLK>,
 			<&clock_gcc GCC_QUPV3_WRAP_1_S_AHB_CLK>;
-		pinctrl-names = "default", "sleep";
-		pinctrl-0 = <&qupv3_se8_spi_active>;
-		pinctrl-1 = <&qupv3_se8_spi_sleep>;
+//#ifdef VENDOR_EDIT
+/* Yichun.Chen  PSW.BSP.CHG  2019-06-03  for uart gpio */
+//		pinctrl-names = "default", "sleep";
+//		pinctrl-0 = <&qupv3_se8_spi_active>;
+//		pinctrl-1 = <&qupv3_se8_spi_sleep>;
+//#endif
 		interrupts = <GIC_SPI 355 0>;
 		spi-max-frequency = <50000000>;
 		qcom,wrapper-core = <&qupv3_1>;
@@ -519,7 +522,6 @@
 		status = "disabled";
 	};
 	/* #ifdef OPLUS_ARCH_EXTENDS */
-	/* Jianfeng.Qiu@MULTIMEDIA.AUDIODRIVER.MACHINE, 2018/04/23, Remove for audio to use lpi gpio */
 	/*
 	qupv3_se10_spi: spi@0xa90000 {
 		compatible = "qcom,spi-geni";

@@ -5,7 +5,6 @@
 ** Description : oppo kevent feedback data
 ** Version : 1.2
 ** Date : 2019/03/09
-** Author : Ling.Guo@PSW.MM.Display.Stability
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>

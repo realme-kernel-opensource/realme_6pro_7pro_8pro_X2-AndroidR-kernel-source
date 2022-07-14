@@ -87,7 +87,6 @@
 	atoll_snd: sound {
 		compatible = "qcom,kona-asoc-snd";
 		//#ifndef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Modify for use MI2S
 		//qcom,mi2s-audio-intf = <0>;
 		//#else /* OPLUS_ARCH_EXTENDS */
 		qcom,mi2s-audio-intf = <1>;
@@ -199,7 +198,6 @@
 		compatible = "qcom,fsa4480-i2c";
 		reg = <0x42>;
 		pinctrl-names = "default";
-		/* Hongwei.Di@BSP.CHG.Basic, 2020/09/17, remove fsa switch pinctrl for usb */
 		//pinctrl-0 = <&fsa_usbc_ana_en>;
 	};
 };

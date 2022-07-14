@@ -87,7 +87,6 @@
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.213600, 2020/06/01
 *Add for classify glink wakeup services
 */
 #include <net/oplus_nwpower.h>
@@ -1641,7 +1640,6 @@ int tcp_v4_rcv(struct sk_buff *skb)
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.213700, 2020/06/01.
 	*Add for classify glink wakeup services.
 	*/
 	struct timespec now_ts;
@@ -1696,7 +1694,6 @@ lookup:
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.213800, 2020/06/01.
 	*Add for classify glink wakeup services.
 	*/
 	if (atomic_read(&ipa_wakeup_hook_boot) == 1) {
@@ -1824,7 +1821,6 @@ bad_packet:
 discard_it:
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.213900, 2020/06/01.
 	*Add for classify glink wakeup services.
 	*/
 	if (atomic_read(&ipa_wakeup_hook_boot) == 1 && atomic_read(&oplus_tcp_is_input) == 1 && !sch_work) {
@@ -2577,7 +2573,6 @@ static int __net_init tcp_sk_init(struct net *net)
 	net->ipv4.sysctl_tcp_timestamps = 1;
 
 	#ifdef OPLUS_BUG_STABILITY
-        //PengHao@CONNECTIVITY.WIFI.INTERNET.1854960,2019/03/30,add for disable tcp random timestamp,some networks limit tcp syn before login
 	net->ipv4.sysctl_tcp_random_timestamp = 1;
 	#endif /* OPLUS_BUG_STABILITY */
 

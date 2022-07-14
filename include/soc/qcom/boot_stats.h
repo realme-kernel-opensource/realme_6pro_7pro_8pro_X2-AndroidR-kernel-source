@@ -52,7 +52,6 @@ static inline void measure_wake_up_time(void) { };
 
 
 #ifdef OPLUS_FEATURE_POWERINFO_RPMH
-/*#Nanwei.Deng@BSP.POWER.Basic   2010/10/15  for rpm debug */
 /*#ifdef CONFIG_QTI_RPM_STATS_LOG */
 uint64_t get_sleep_exit_time(void);
 #else

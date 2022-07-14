@@ -10,13 +10,11 @@
 **
 ** Version: 1.0
 ** Date :   2020-03-20
-** Author:  HuangJunyuan@CONNECTIVITY.WIFI.INTERNET
 ** TAG  :   OPLUS_FEATURE_WIFI_LIMMITBGSPEED
 **
 ** ---------------------Revision History: ---------------------
 **  <author>                      <data>     <version >   <desc>
 ** ---------------------------------------------------------------
-**  HuangJunyuan@CONNECTIVITY.WIFI  2020/03/20  1.0          build this module
 **
 ************************************************************************************/
 

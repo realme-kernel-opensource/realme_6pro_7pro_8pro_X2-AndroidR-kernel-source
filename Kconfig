@@ -6,7 +6,6 @@
 mainmenu "Linux/$ARCH $KERNELVERSION Kernel Configuration"
 
 #ifdef CONFIG_OPLUS_SYSTEM_KERNEL
-#Wen.Luo@Bsp.Kernel.Stability,2020/4/20,OPLUS_SYSTEM_KERNEL_QCOM/OPLUS_SYSTEM_KERNEL_MTK add for qcom/mtk platform
 config OPLUS_SYSTEM_KERNEL_QCOM
   bool "config oplus system feature "
   default y

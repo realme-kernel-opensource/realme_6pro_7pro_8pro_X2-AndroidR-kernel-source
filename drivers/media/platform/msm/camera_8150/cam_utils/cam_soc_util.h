@@ -37,7 +37,6 @@
 
 /* maximum number of device regulator */
 #ifndef VENDOR_EDIT
-/*Zhixian.Mai@Cam.Drv, 2019/06/22, modify for add main camera vaf crash problem*/
 #define CAM_SOC_MAX_REGULATOR       5
 #else
 #define CAM_SOC_MAX_REGULATOR       6

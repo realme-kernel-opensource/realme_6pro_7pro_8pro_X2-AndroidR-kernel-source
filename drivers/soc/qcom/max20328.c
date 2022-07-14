@@ -45,7 +45,6 @@
 #define MAX20328_OMTP_REF			(0xDF)
 
 #ifdef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, remove function check_bit_valid and add 10ms sleep*/
 #define MAX20328_SWITCH_DELAY_TIME			(10)  //ms
 #endif /* OPLUS_ARCH_EXTENDS */
 
@@ -127,7 +126,6 @@ static int max20328_read_reg(struct max20328_data *data,
 }
 
 #ifndef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, remove function check_bit_valid and add 10ms sleep*/
 static inline int check_bit_valid(u8 reg, u8 bit_mask, int delay_ms, int try_num, bool invert)
 {
 	int i= 0;
@@ -185,7 +183,6 @@ int max20328_enable_FM(int enable_flag)
 EXPORT_SYMBOL(max20328_enable_FM);
 
 #ifndef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, remove function check_bit_valid and add 10ms sleep*/
 int max20328_Device_RDY(void)
 {
 	return check_bit_valid(0x02, 0x02, 1, 20, false);
@@ -247,8 +244,6 @@ int max20328_swap_mic_gnd(void)
     if (s_max20328){
 		data = s_max20328;
         #ifdef OPLUS_ARCH_EXTENDS
-        /* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-         * change to Mic's voltage detection. */
         if (MAX20328_AUDIO_MODE != data->mode) {
             pr_err("%s: mode(%d) not audio mode, return\n", __func__, data->mode);
             return -1;
@@ -257,8 +252,6 @@ int max20328_swap_mic_gnd(void)
         val = 0x0D;
         max20328_read_reg(s_max20328, &val, 1);
         #ifndef OPLUS_ARCH_EXTENDS
-        /* Zhao.Pan@PSW.MM.AudioDriver.HeadsetDet, 2019/04/19,
-         * change to Mic's voltage detection. */
          if (val == 0x87){
             rc = max20328_write_reg(data, 0x0E, 0x10);
             rc = max20328_write_reg(data, 0x0D, 0x83);
@@ -294,7 +287,6 @@ int max20328_swap_mic_gnd(void)
         #endif /* OPLUS_ARCH_EXTENDS */
 
         #ifndef OPLUS_ARCH_EXTENDS
-        /* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, remove function check_bit_valid and add 10ms sleep*/
         if ( check_bit_valid(0x02, 0x02, MAX20328_INTERVAL_MS, MAX20328_CHK_TIMES, false) ) {       // switching finalized checking to max 5ms ~ 100ms delay
         }
         #else
@@ -308,8 +300,6 @@ int max20328_swap_mic_gnd(void)
 EXPORT_SYMBOL(max20328_swap_mic_gnd);
 
 #ifdef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
- * change to Mic's voltage detection. */
 int max20328_set_LR_cnt(bool state)
 {
 	int rc = -1;
@@ -359,22 +349,17 @@ int max20328_set_switch_mode(int mode)
 				rc = max20328_write_reg(data, 0x0E, 0x00);         //DEF register2 set 00
 				rc = max20328_write_reg(data, 0x0D, 0x40);         //DEF register1 set TOP side closed in data connection, bottom side is open
 				#ifdef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-				 * change to Mic's voltage detection. */
 				data->mode = MAX20328_USB_MODE;
 				#endif /* OPLUS_ARCH_EXTENDS */
 				rc = max20328_write_reg(data, 0x07, 0x00);         //CONTROL2 register, switch state NOT Force mode nor follow MODE[0:2]
 				rc = max20328_write_reg(data, 0x08, 0x00);         //CONTROL3 register, force value is not use, anyway default it.
 				#ifndef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-				 * change to Mic's voltage detection. */
 				rc = max20328_write_reg(data, 0x09, 0x30);         //ADC CONTROL1, ADC is always off on USB MODE
 				#else
 				rc = max20328_write_reg(data, 0x09, 0x40);         //ADC CONTROL1, ADC is always off on USB MODE
 				#endif /* OPLUS_ARCH_EXTENDS */
 				rc = max20328_write_reg(data, 0x06, 0x13);         //CONTROL1 register, switch enable, default programmable with registers 0x0D and 0x0E
 				#ifndef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, remove function check_bit_valid and add 10ms sleep*/
 				if ( check_bit_valid(0x02, 0x02, MAX20328_INTERVAL_MS, MAX20328_CHK_TIMES, false) ) {       // switching finalized checking to max 5ms ~ 100ms delay
 				}
 				#else
@@ -389,8 +374,6 @@ int max20328_set_switch_mode(int mode)
 				rc = max20328_write_reg(data, 0x0E, 0x10);         //DEF register2
 				rc = max20328_write_reg(data, 0x0D, 0x83);         //DEF register
 				#ifdef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-				 * change to Mic's voltage detection. */
 				data->mode = MAX20328_AUDIO_MODE;
 				#endif /* OPLUS_ARCH_EXTENDS */
 				/* rc = max20328_write_reg(data, 0x0A, 0xF0);         //ADC CONTROL2 */
@@ -399,15 +382,12 @@ int max20328_set_switch_mode(int mode)
 				/* rc = max20328_write_reg(data, 0x0B, MAX20328_HIHS_REF);         // High Impedance Threashold */
 				/* rc = max20328_write_reg(data, 0x0C, MAX20328_OMTP_REF);         // OMTP headset Detection Threshold */
 				#ifndef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-				 * change to Mic's voltage detection. */
 				rc = max20328_write_reg(data, 0x09, 0x00);         //ADC CONTROL1, ADC is always off on USB MODE
 				#else
 				rc = max20328_write_reg(data, 0x09, 0x40);         //ADC CONTROL1, ADC is always off on USB MODE
 				#endif /* OPLUS_ARCH_EXTENDS */
 				rc = max20328_write_reg(data, 0x06, 0x13);         // CONTROL1 register, switch enable, single Audio accessory
 				#ifndef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, remove function check_bit_valid and add 10ms sleep*/
 				if ( check_bit_valid(0x02, 0x02, MAX20328_INTERVAL_MS, MAX20328_CHK_TIMES, false) ) {       // switching finalized checking to max 5ms ~ 100ms delay
 				}
 				#else
@@ -419,8 +399,6 @@ int max20328_set_switch_mode(int mode)
 			case MAX20328_DISP_UART_MODE:
 				rc = max20328_write_reg(data, 0x06, 0x14);         //CONTROL1 register,  UART MODE Top side USB switchs connected.
 				#ifdef OPLUS_ARCH_EXTENDS
-				/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-				 * change to Mic's voltage detection. */
 				data->mode = MAX20328_DISP_UART_MODE;
 				#endif /* OPLUS_ARCH_EXTENDS */
 				break;
@@ -492,8 +470,6 @@ static int max20328_usbc_event_changed(struct notifier_block *nb,
 	switch (mode.intval) {
 	case POWER_SUPPLY_TYPEC_SINK_AUDIO_ADAPTER:
 		#ifdef OPLUS_ARCH_EXTENDS
-		/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-		 * solve hs detection fail when hs pluged and restart phone*/
 		if (false == data->hs_det_ready) {
 			pr_err("%s: hs connected but detection module not ready, just return\n",__func__);
 			return ret;
@@ -517,8 +493,6 @@ static int max20328_usbc_event_changed(struct notifier_block *nb,
 }
 
 #ifdef OPLUS_ARCH_EXTENDS
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
- * solve hs detection fail when hs pluged and restart phone*/
 void max20328_set_det_ready(void)
 {
 	if (!s_max20328)
@@ -596,8 +570,6 @@ static void max20328_usbc_analog_work_fn(struct work_struct *work)
 
 	if(atomic_read(&(data->usbc_mode)) == POWER_SUPPLY_TYPEC_SINK_AUDIO_ADAPTER){
 		#ifndef OPLUS_ARCH_EXTENDS
-		/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-		 * solve hs detection fail when hs pluged and restart phone*/
 		max20328_set_switch_mode(MAX20328_AUDIO_MODE);
 		blocking_notifier_call_chain(&data->max20328_notifier,POWER_SUPPLY_TYPEC_SINK_AUDIO_ADAPTER, NULL);
 		#else
@@ -882,7 +854,6 @@ static int max20328_probe(struct i2c_client *client,
 
 #ifdef OPLUS_ARCH_EXTENDS
 #define MAX20328_ADC_CTL2_5V_MASK (0xF0)
-/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11, Add for usb type-c audio */
 	recvData = MAX20328_ADC_CTL2;
 	err = max20328_read_reg(data, &recvData, 1);
 	if (err) {
@@ -988,13 +959,9 @@ static int max20328_probe(struct i2c_client *client,
 	/* INIT VAR */
 	max20328_initialize(data);
 	#ifdef OPLUS_ARCH_EXTENDS
-	/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-	 * solve hs detection fail when hs pluged and restart phone*/
 	data->hs_det_ready = false;
 	#endif /*OPLUS_ARCH_EXTENDS*/
 	#ifdef OPLUS_ARCH_EXTENDS
-	/* Richeng.Wang@MULTIMEDIA.AUDIODRIVER.HEADSETS, 2020/10/11,
-	 * change to Mic's voltage detection. */
 	data->mode = MAX20328_USB_MODE;
 	#endif /*OPLUS_ARCH_EXTENDS*/
 	max20328_usb_c_analog_init(data);

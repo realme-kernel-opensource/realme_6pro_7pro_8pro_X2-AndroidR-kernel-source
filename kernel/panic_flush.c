@@ -6,7 +6,6 @@
 **
 ** Version: 1.0
 ** Date : 2019/08/27
-** Author: yanwu@TECH.Storage.FS, add code to flush device cache in panic
 **
 ** ------------------ Revision History:------------------------
 ** <author> <data> <version > <desc>

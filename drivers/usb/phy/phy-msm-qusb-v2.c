@@ -27,12 +27,12 @@
 #include <linux/usb/phy.h>
 #include <linux/reset.h>
 #include <linux/debugfs.h>
+#include <soc/oplus/system/oppo_project.h>
 
 /* QUSB2PHY_PWR_CTRL1 register related bits */
 #define PWR_CTRL1_POWR_DOWN		BIT(0)
 
 #ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/08/12,CR#2591923,add for rerun CDP
 #define CLAMP_N_EN			BIT(1)
 #endif
 
@@ -83,7 +83,6 @@
 #define VSTATUS_PLL_LOCK_STATUS_MASK	BIT(0)
 
 #ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/08/12,CR#2591923,add for rerun CDP
 /* DEBUG_CTRL4 register bits  */
 #define FORCED_UTMI_DPPULLDOWN	BIT(2)
 #define FORCED_UTMI_DMPULLDOWN	BIT(3)
@@ -100,7 +99,6 @@ enum qusb_phy_reg {
 	DEBUG_CTRL1,
 	DEBUG_CTRL2,
 #ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/08/12,CR#2591923,add for rerun CDP
 	DEBUG_CTRL3,
 	DEBUG_CTRL4,
 #endif
@@ -160,6 +158,35 @@ struct qusb_phy {
 
 	bool			override_bias_ctrl2;
 };
+
+#ifdef VENDOR_EDIT
+/* Gang.Yan  PSW.BSP.CHG  2020-03-06  for usb eye */
+static int DEVICE_TUNE1;
+module_param_named(DEVICE_TUNE1, DEVICE_TUNE1, int, 0600);
+static int DEVICE_TUNE2;
+module_param_named(DEVICE_TUNE2, DEVICE_TUNE2, int, 0600);
+static int DEVICE_TUNE3;
+module_param_named(DEVICE_TUNE3, DEVICE_TUNE3, int, 0600);
+static int DEVICE_TUNE4;
+module_param_named(DEVICE_TUNE4, DEVICE_TUNE4, int, 0600);
+static int DEVICE_TUNE5;
+module_param_named(DEVICE_TUNE5, DEVICE_TUNE5, int, 0600);
+static int DEVICE_BIAS2;
+module_param_named(DEVICE_BIAS2, DEVICE_BIAS2, int, 0600);
+
+static int HOST_TUNE1;
+module_param_named(HOST_TUNE1, HOST_TUNE1, int, 0600);
+static int HOST_TUNE2;
+module_param_named(HOST_TUNE2, HOST_TUNE2, int, 0600);
+static int HOST_TUNE3;
+module_param_named(HOST_TUNE3, HOST_TUNE3, int, 0600);
+static int HOST_TUNE4;
+module_param_named(HOST_TUNE4, HOST_TUNE4, int, 0600);
+static int HOST_TUNE5;
+module_param_named(HOST_TUNE5, HOST_TUNE5, int, 0600);
+static int HOST_BIAS2;
+module_param_named(HOST_BIAS2, HOST_BIAS2, int, 0600);
+#endif
 
 static void qusb_phy_enable_clocks(struct qusb_phy *qphy, bool on)
 {
@@ -398,16 +425,26 @@ static void qusb_phy_get_tune1_param(struct qusb_phy *qphy)
 
 	qphy->tune_val = TUNE_VAL_MASK(qphy->tune_val,
 				qphy->efuse_bit_pos, bit_mask);
+	if (get_project() == 19771 || get_project() == 19671) {
+		if (qphy->phy.flags & PHY_HOST_MODE) {
+			HOST_TUNE1 = 0xf7;
+			writel_relaxed(HOST_TUNE1, qphy->base + qphy->phy_reg[PORT_TUNE1]);
+		} else {
+			DEVICE_TUNE1 = 0xf7;
+			writel_relaxed(DEVICE_TUNE1, qphy->base + qphy->phy_reg[PORT_TUNE1]);
+		}
+	}
 	reg = readb_relaxed(qphy->base + qphy->phy_reg[PORT_TUNE1]);
 #ifndef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/07/31,add of 19365 solve bad board
 	if (qphy->tune_val) {
 		reg = reg & 0x0f;
 		reg |= (qphy->tune_val << 4);
 	}
 #else
+	if((get_project() != 19721) || (get_project() != 19771)) {
 	reg = reg & 0x0f;
 	reg |= (qphy->tune_val << 4);
+	}
 #endif
 	qphy->tune_val = reg;
 }
@@ -426,7 +463,6 @@ static void qusb_phy_write_seq(void __iomem *base, u32 *seq, int cnt,
 	}
 }
 #ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/08/12,CR#2591923,add for rerun CDP
 static void msm_usb_write_readback(void __iomem *base, u32 offset,
 					const u32 mask, u32 val)
 {
@@ -486,7 +522,6 @@ static void qusb_phy_host_init(struct usb_phy *phy)
 	qusb_phy_write_seq(qphy->base, qphy->qusb_phy_host_init_seq,
 			qphy->host_init_seq_len, 0);
 #ifndef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/07/31,add of 19365 solve bad board
 	if (qphy->efuse_reg) {
 		if (!qphy->tune_val)
 			qusb_phy_get_tune1_param(qphy);
@@ -539,34 +574,9 @@ static void qusb_phy_host_init(struct usb_phy *phy)
 	}
 }
 
+
 #ifdef VENDOR_EDIT
 /* Gang.Yan  PSW.BSP.CHG  2020-03-06  for usb eye */
-static int DEVICE_TUNE1;
-module_param_named(DEVICE_TUNE1, DEVICE_TUNE1, int, 0600);
-static int DEVICE_TUNE2;
-module_param_named(DEVICE_TUNE2, DEVICE_TUNE2, int, 0600);
-static int DEVICE_TUNE3;
-module_param_named(DEVICE_TUNE3, DEVICE_TUNE3, int, 0600);
-static int DEVICE_TUNE4;
-module_param_named(DEVICE_TUNE4, DEVICE_TUNE4, int, 0600);
-static int DEVICE_TUNE5;
-module_param_named(DEVICE_TUNE5, DEVICE_TUNE5, int, 0600);
-static int DEVICE_BIAS2;
-module_param_named(DEVICE_BIAS2, DEVICE_BIAS2, int, 0600);
-
-static int HOST_TUNE1;
-module_param_named(HOST_TUNE1, HOST_TUNE1, int, 0600);
-static int HOST_TUNE2;
-module_param_named(HOST_TUNE2, HOST_TUNE2, int, 0600);
-static int HOST_TUNE3;
-module_param_named(HOST_TUNE3, HOST_TUNE3, int, 0600);
-static int HOST_TUNE4;
-module_param_named(HOST_TUNE4, HOST_TUNE4, int, 0600);
-static int HOST_TUNE5;
-module_param_named(HOST_TUNE5, HOST_TUNE5, int, 0600);
-static int HOST_BIAS2;
-module_param_named(HOST_BIAS2, HOST_BIAS2, int, 0600);
-
 static void override_phy_tune(struct usb_phy *phy)
 {
 	struct qusb_phy *qphy = container_of(phy, struct qusb_phy, phy);
@@ -882,7 +892,6 @@ static int qusb_phy_notify_disconnect(struct usb_phy *phy,
 }
 
 #ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/08/12,CR#2591923,add for rerun CDP
 static int msm_qusb_phy_drive_dp_pulse(struct usb_phy *phy,
 					unsigned int interval_ms)
 {
@@ -1340,7 +1349,6 @@ static int qusb_phy_probe(struct platform_device *pdev)
 	qphy->phy.notify_connect        = qusb_phy_notify_connect;
 	qphy->phy.notify_disconnect     = qusb_phy_notify_disconnect;
 #ifdef VENDOR_EDIT
-//Gang.Yan@BSP.CHG.Basic,2020/08/12,CR#2591923,add for rerun CDP
 	qphy->phy.drive_dp_pulse	= msm_qusb_phy_drive_dp_pulse;
 #endif
 	ret = usb_add_phy_dev(&qphy->phy);

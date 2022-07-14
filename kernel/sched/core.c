@@ -49,7 +49,6 @@
 #include <trace/events/sched.h>
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 #include <linux/uifirst/uifirst_sched_common.h>
 #endif /* OPLUS_FEATURE_UIFIRST */
 
@@ -3149,7 +3148,6 @@ unsigned long long task_sched_runtime(struct task_struct *p)
 unsigned int capacity_margin_freq = 1280; /* ~20% margin */
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 extern int sysctl_frame_rate;
 extern unsigned int sched_ravg_window;
 extern bool ux_task_misfit(struct task_struct *p, int cpu);
@@ -3226,7 +3224,6 @@ void scheduler_tick(void)
 	if (early_notif)
 		flag = SCHED_CPUFREQ_WALT | SCHED_CPUFREQ_EARLY_DET;
 	#ifdef OPLUS_FEATURE_UIFIRST
-	// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/08/18, Add for UIFirst(slide boost)
 	if (sysctl_uifirst_enabled && sysctl_slide_boost_enabled) {
 		if(rq->curr && rq->curr->static_ux == 2 && !ux_task_misfit(rq->curr, cpu)) {
 			ux_task_load[cpu] = calc_freq_ux_load(rq->curr, wallclock);
@@ -3613,7 +3610,6 @@ static void __sched notrace __schedule(bool preempt)
 	}
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	prev->enqueue_time = rq->clock;
 #endif /* OPLUS_FEATURE_UIFIRST */
 
@@ -6415,7 +6411,6 @@ void __init sched_init_smp(void)
 	free_cpumask_var(non_isolated_cpus);
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	ux_init_cpu_data();
 #endif /* OPLUS_FEATURE_UIFIRST */
 	init_sched_rt_class();
@@ -6538,7 +6533,6 @@ void __init sched_init(void)
 		init_rt_rq(&rq->rt);
 		init_dl_rq(&rq->dl);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 		ux_init_rq_data(rq);
 #endif /* OPLUS_FEATURE_UIFIRST */
 #ifdef CONFIG_FAIR_GROUP_SCHED
@@ -7660,7 +7654,6 @@ void sched_exit(struct task_struct *p)
 
 __read_mostly bool sched_predl = 1;
 #ifdef OPLUS_BUG_STABILITY
-/*fanhui@PhoneSW.BSP, 2016-06-23, get current task on one cpu*/
 struct task_struct *oppo_get_cpu_task(int cpu)
 {
 	return cpu_curr(cpu);

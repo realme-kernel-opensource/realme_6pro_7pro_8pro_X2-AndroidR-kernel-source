@@ -32,9 +32,9 @@ struct usb_temp {
 #define DETECT_INTERVAL_300MS		300	/* detect interval 300ms */
 #define VALID_LOW_TEMPERATURE		200	/* 20C - 100C */
 #define VALID_HIGH_TEMPERATURE		1000	/* 20C - 100C */
-#define CRITICAL_TEMPERATURE		570	/* 57C */
-#define CRITICAL_USBTEMP_ABOVE_BATTEMP	100	/* usb_temp - bat_temp >= 10C */
-#define CRITICAL_RISE_TEMPERATURE	30	/* rise 3Celsius in 1500ms */
+#define CRITICAL_TEMPERATURE		800	/* 57C */
+#define CRITICAL_USBTEMP_ABOVE_BATTEMP	200	/* usb_temp - bat_temp >= 10C */
+#define CRITICAL_RISE_TEMPERATURE	50	/* rise 3Celsius in 1500ms */
 #define CRITICAL_RISE_INTERVAL		1500	/* rise 3Celsius in 1500ms */
 #define TEMPERATURE_LIST_LENGTH		30	/* 1.5s / 50ms */
 
@@ -172,7 +172,6 @@ struct ntc_table ntc_table_100K[] = {
 	{2561, 1250},
 };
 /* ntc1 100Kohm when 25c */
-/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for usbtemp get*/
 struct ntc_table ntc_table_100K_19721[] = {
 	/* {ohm, 0.1*celsius} */
 	{4429000, -400},	{4133000, -390},	{3857000, -380},	{3595000, -370},	{3352000, -360},

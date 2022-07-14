@@ -223,7 +223,6 @@ source "drivers/input/serio/Kconfig"
 
 source "drivers/input/gameport/Kconfig"
 #ifdef VENDOR_EDIT
-#zoulian@BSP.Fingerprint.Basic, 2020/08/04, add for fingerprint driver
 source "drivers/input/oppo_fp_drivers/Kconfig"
 #endif
 

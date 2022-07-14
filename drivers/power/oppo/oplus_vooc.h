@@ -5,11 +5,9 @@
 *             Manage all charger IC and define abstarct function flow.
 * Version   : 1.0
 * Date      : 2015-05-22
-* Author    : fanhui@PhoneSW.BSP
 *           : Fanhong.Kong@ProDrv.CHG
 * ------------------------------ Revision History: --------------------------------
 * <version>           <date>                <author>                               <desc>
-* Revision 1.0        2015-05-22        fanhui@PhoneSW.BSP                 Created for new architecture
 * Revision 1.0        2015-05-22        Fanhong.Kong@ProDrv.CHG            Created for new architecture
 * Revision 2.0        2018-04-14        Fanhong.Kong@ProDrv.CHG            Upgrade for SVOOC
 ***********************************************************************************/
@@ -165,13 +163,11 @@ struct oplus_vooc_chip {
 	int adapter_update_report;
 	int dpdm_switch_mode;
 	bool support_vooc_by_normal_charger_path;
-/* wenbin.liu@BSP.CHG.Vooc, 2016/10/20*/
 /* Add for vooc batt 4.40*/
 	bool batt_type_4400mv;
 	bool vooc_fw_check;
 	bool support_single_batt_svooc;
 	int vooc_fw_type;
-//PengNan@BSP.CHG.Vooc, 2018/02/28, add for vooc fw update.
 	int fw_update_flag;
 	struct manufacture_info manufacture_info;
 	bool vooc_fw_update_newmethod;

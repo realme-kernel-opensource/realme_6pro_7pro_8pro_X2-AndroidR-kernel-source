@@ -185,7 +185,6 @@ struct cam_isp_context {
 	uint64_t                         sof_timestamp_val;
 	uint64_t                         boot_timestamp;
 #ifdef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	uint64_t                         prev_sof_timestamp_val;
 	uint64_t                         prev_boot_timestamp;
 #endif

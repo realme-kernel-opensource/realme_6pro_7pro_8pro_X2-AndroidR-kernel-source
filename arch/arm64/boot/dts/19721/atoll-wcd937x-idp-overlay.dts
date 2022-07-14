@@ -24,7 +24,6 @@
 	qcom,board-id = <34 1>;
 };
 //#ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/12, add for bring up 19721 NT36672C BOE panel */
 /*&dsi_rm69299_visionox_amoled_vid_display {
 	qcom,dsi-display-active;
 };*/

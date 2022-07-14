@@ -626,7 +626,6 @@ static void bcl_probe_soc(struct platform_device *pdev)
 	soc_data->ops.set_trips = bcl_set_soc;
 	INIT_WORK(&bcl_perph->soc_eval_work, bcl_evaluate_soc);
 #ifndef OPLUS_BUG_STABILITY
-//Nanwei.Deng@BSP.Power.Basic, 2018/08/06, Modify for 1+ patch
 	bcl_perph->psy_nb.notifier_call = battery_supply_callback;
 	ret = power_supply_reg_notifier(&bcl_perph->psy_nb);
 	if (ret < 0) {

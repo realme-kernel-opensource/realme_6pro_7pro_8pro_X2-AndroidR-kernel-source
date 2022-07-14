@@ -20,7 +20,6 @@
 
 &soc {
 	//#ifdef OPLUS_FEATURE_CONNFCSOFT
-	//#LinJunBin@Connectivity.NFC.BASIC, 2020/10/26, Modify for : RTCID:2896930 CON_NFC_SOFT
 	nfc_chipset {
 		compatible = "oppo-nfc-chipset";
 		chipset-20713 = "PN557";
@@ -35,7 +34,6 @@
 //#endif
 	};
     //#ifdef OPLUS_FEATURE_TP_BASIC
-    /* Qicai.Gu@BSP.TP, 2020/07/30, Add for sim detect */
 	oplus_sim_detect {
 		compatible = "oplus, sim_detect";
 		Hw,sim_det = <&tlmm 69 0>;
@@ -43,7 +41,6 @@
     //#endif /* OPLUS_FEATURE_TP_BASIC */
 
 	// #ifdef OPLUS_FEATURE_SENSOR_SMEM
-	/* Weizhi.Chen@BSP.Sensors.Config, 2020/07/25, Add for sensor dts */
 	/* physical sensor
 	enum sensor_id {
 			OPPO_ACCEL,
@@ -241,7 +238,6 @@
 	};
 	// #endif /* OPLUS_FEATURE_SENSOR_SMEM */
 	//#ifdef VENDOR_EDIT
-	/* ZhangKe@Network.RF 2020/11/11 modify for oppo rf cable monitor */
 	oplus_rf_cable {
 		compatible = "oplus,rf_cable";
 		interrupt-parent = <&tlmm>;
@@ -263,7 +259,6 @@
 };
 
 //#ifdef VENDOR_EDIT
-//tongfeng.huang@BSP.CHG.Basic  2019/11/20  add for board-id adc
 &pm6150_gpios{
 	gpio10_adc {
 		gpio10_adc_default: gpio10_adc_default {
@@ -331,7 +326,6 @@
 
 	pinctrl-names = "active", "sleep";
 //#ifndef VENDOR_EDIT
-//huyu@BSP.Storage.Sdcard,2020/08/12 Add for SDcard detect
 	//pinctrl-0 = <&sdc2_clk_on  &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on>;
 //#else
 	pinctrl-0 = <&sdc2_clk_on  &sdc2_cmd_on &sdc2_data_on &sdc2_cd_on &sd_detect_default>;
@@ -339,7 +333,6 @@
 	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
 
 //#ifndef VENDOR_EDIT
-//huyu@BSP.Storage.Sdcard,2020/08/12 Add for SDcard detect
 	//cd-gpios = <&tlmm 69 GPIO_ACTIVE_LOW>;
 //#else
     cd-gpios = <&tlmm 69 GPIO_ACTIVE_HIGH>;
@@ -366,7 +359,6 @@
 	qcom,qg-fast-chg-config;
 //#endif
 //#ifndef OPLUS_FEATURE_CHG_BASIC
-//zhouhaikang@BSP.CHG.Basic,2020/10/20
 	//qcom,hold-soc-while-full;
 //#endif
 	qcom,linearize-soc;
@@ -380,12 +372,10 @@
 		      <&pm6150_vadc ADC_CHG_TEMP>,
 		      <&pm6150_vadc ADC_DIE_TEMP>,
 //#ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.Basic 2020/04/14  for usbtemp */
 //		      <&pm6150_vadc ADC_AMUX_THM3_PU2>,
 //#endif
 		      <&pm6150_vadc ADC_SBUx>,
 //#ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic 2020/02/25  for usbtemp */
 		      <&pm6150_vadc ADC_AMUX_THM2_PU2>,
 		      <&pm6150_vadc ADC_AMUX_THM3_PU2>,
 //#endif
@@ -395,19 +385,16 @@
 			   "chg_temp",
 			   "die_temp",
 //#ifdef VENDOR_EDIT
-/*Gang.Yan@BSP.CHG.Basic 2020/04/14  for usbtemp */
 //			   "conn_temp",
 //#endif
 			   "sbux_res",
 //#ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic 2020/02/25  for usbtemp */
 			   "usb_temp_adc",
      		   "usb_supplementary_temp_adc",
 //#endif
 			   "vph_voltage";
 	qcom,battery-data = <&mtp_batterydata>;
 //#ifndef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic 2020/02/25  for charger */
 //	qcom,auto-recharge-soc = <98>;
 //	qcom,step-charging-enable;
 //	qcom,sw-jeita-enable;
@@ -418,7 +405,6 @@
 //			2500000 2000000 1500000 1000000 500000>;
 //#endif
 //#ifndef OPLUS_FEATURE_CHG_BASIC
-/* lizhijie@BSP.CHG.Basic 2020/02/25  for charger */
 //	dpdm-supply = <&qusb_phy0>;
 //	qcom,charger-temp-max = <800>;
 //	qcom,smb-temp-max = <800>;
@@ -430,7 +416,6 @@
 //#endif
 };
 //#ifdef VENDOR_EDIT
-//Qicai.gu@psw.bsp.tp,2020/07/29 add for config vol key
 /*
 &pm6150l_gpios {
 	key_vol_up {
@@ -452,14 +437,12 @@
 		pinctrl-names = "default";
 
 //#ifdef VENDOR_EDIT
-//Qicai.gu@psw.bsp.tp,2020/07/29 add for config vol key
 		pinctrl-0 = <&key_vol_down_default>;
 //#else
 		//pinctrl-0 = <&key_vol_up_default>;
 //#endif
 
 //#ifdef VENDOR_EDIT
-//Qicai.gu@psw.bsp.tp,2020/07/29 add for config vol key
 		/*vol_up {
 			label = "volume_up";
 			gpios = <&pm6150l_gpios 2 GPIO_ACTIVE_LOW>;
@@ -482,13 +465,11 @@
 //#endif
 	};
     // #ifdef OPLUS_FEATURE_SECURITY_COMMON
-    /* Rui.Tuo@BSP.Security.Basic 2020-10-01 add for oplus_secure_common */
     oplus_secure_common {
         compatible = "oplus,secure_common";
     };
     //#endif //OPLUS_FEATURE_SECURITY_COMMON
 //#ifdef OPLUS_FEATURE_FINGERPRINT
-//Shengwang.Luo@BSP.Fingerprint.Basic, 2020/10/23, add for goodix fingerprint driver
 	oplus_fp_common {
 		compatible = "oplus,fp_common";
 		oplus,fp_gpio_num = <1>; /* the gpio number of fingerprint id used */
@@ -552,7 +533,6 @@
 &qupv3_se7_i2c {
 	status = "ok";
         //#ifdef VENDOR_EDIT
-	//Qicai.gu@Bsp.Group.Tp, 2020/02/26, Add for TP
 	Goodix19365@5d {
 		compatible = "Goodix-gt9886";
 		reg = <0x5d>;
@@ -610,7 +590,6 @@
 		touchpanel,button-type = <4>;
 		touchpanel.button-TRx = <0 0>;
 	};
-	//lujiang.yu@Bsp.Group.Tp, 2020/03/02, Add for TP
 	s6sy771_19567@48 {
 		compatible = "sec-s6sy771";
 		reg = <0x48>;
@@ -827,7 +806,6 @@
 };
 
 //#ifdef OPLUS_NFC_BRINGUP
-//LinJunBin@CONNECTIVITY.NFC.HARDWARE, 2020/10/26
 //Mod for NXP PN557 NFC GPIO
 /*&qupv3_se0_i2c {
 	status = "ok";
@@ -876,18 +854,15 @@
 };
 //#endif /*OPLUS_NFC_BRINGUP*/
 
-/* Hongwei.Di@BSP.CHG.Basic, 2020/09/16, remove fsa switch for usb */
 /*	
 &sde_dp{
 	qcom,dp-aux-switch = <&fsa4480>;
 };*/
 
-/* Hongwei.Di@BSP.CHG.Basic, 2020/09/16, remove fsa switch for usb */
 &fsa4480{
 	status="disabled";
 };
 
 //#ifdef VENDOR_EDIT
-///* lizhijie@BSP.CHG.Basic  2020-02-25  oppo charge edit dts */
 #include "oppo-charge.dtsi"
 //endif

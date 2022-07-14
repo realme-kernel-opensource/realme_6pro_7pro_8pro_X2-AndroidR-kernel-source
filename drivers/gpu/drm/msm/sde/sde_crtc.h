@@ -438,9 +438,6 @@ struct sde_crtc_state {
 
 	struct sde_crtc_respool rp;
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Service.Feature,2018/11/21
- * For OnScreenFingerprint feature
-*/
 	bool fingerprint_mode;
 	bool fingerprint_pressed;
 	bool fingerprint_defer_sync;
@@ -860,9 +857,6 @@ int sde_crtc_calc_vpadding_param(struct drm_crtc_state *state,
 		uint32_t *padding_start, uint32_t *padding_height);
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability, 2020/3/31, for
- * decoupling display driver
-*/
 struct sde_kms *_sde_crtc_get_kms_(struct drm_crtc *crtc);
 #endif /* OPLUS_BUG_STABILITY */
 

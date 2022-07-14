@@ -5,11 +5,9 @@
 *              Manage all charger IC and define abstarct function flow.
 * Version   : 1.0
 * Date      : 2015-06-22
-* Author    : fanhui@PhoneSW.BSP
 * 			: Fanhong.Kong@ProDrv.CHG
 * ------------------------------ Revision History: --------------------------------
 * <version>       <date>        <author>              			<desc>
-* Revision 1.0    2015-06-22    fanhui@PhoneSW.BSP    			Created for new architecture
 * Revision 1.0    2015-06-22    Fanhong.Kong@ProDrv.CHG   		Created for new architecture
 ***********************************************************************************/
 

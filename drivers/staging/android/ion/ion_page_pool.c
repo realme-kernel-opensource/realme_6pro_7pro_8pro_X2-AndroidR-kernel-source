@@ -50,7 +50,6 @@ static int ion_page_pool_add(struct ion_page_pool *pool, struct page *page)
 {
 	mutex_lock(&pool->mutex);
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-09-25, add ion cached account*/
 	zone_page_state_add(1L << pool->order, page_zone(page),
 		NR_IONCACHE_PAGES);
 #endif  /* OPLUS_FEATURE_HEALTHINFO */
@@ -83,7 +82,6 @@ static struct page *ion_page_pool_remove(struct ion_page_pool *pool, bool high)
 		pool->low_count--;
 	}
 #ifdef OPLUS_FEATURE_HEALTHINFO
-/*Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-09-25, add ion cached account*/
 	zone_page_state_add(-(1L << pool->order), page_zone(page),
 			NR_IONCACHE_PAGES);
 #endif /* OPLUS_FEATURE_HEALTHINFO */

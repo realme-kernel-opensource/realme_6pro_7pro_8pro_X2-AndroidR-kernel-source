@@ -37,7 +37,6 @@
 #include <soc/qcom/boot_stats.h>
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-//Cong.Dai@psw.bsp.tp 2018/08/30 modified for stop system enter sleep before low irq handled
 #include <soc/oplus/system/oppo_project.h>
 __attribute__((weak)) int check_touchirq_triggered(void) {return 0;}
 #endif /* OPLUS_FEATURE_TP_BASIC */
@@ -332,14 +331,12 @@ static int suspend_test(int level)
 {
 #ifdef CONFIG_PM_DEBUG
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("%s pm_test_level:%d, level:%d\n", __func__,
 		pm_test_level, level);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG */
 	
 	if (pm_test_level == level) {
 		#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-		//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 		pr_info("suspend debug: Waiting for %d second(s).\n",
 				pm_test_delay);
 		#else
@@ -415,7 +412,6 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 
 	error = platform_suspend_prepare(state);
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (error)
 		goto Platform_finish;
 	#else
@@ -436,7 +432,6 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 	}
 	error = platform_suspend_prepare_late(state);
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (error)
 		goto Devices_early_resume;
 	#else
@@ -462,7 +457,6 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 	}
 	error = platform_suspend_prepare_noirq(state);
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (error)
 		goto Platform_wake;
 	#else
@@ -473,7 +467,6 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG */
 
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (suspend_test(TEST_PLATFORM))
 		goto Platform_wake;
 	#else
@@ -492,14 +485,12 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 	arch_suspend_disable_irqs();
 	BUG_ON(!irqs_disabled());
 #ifdef OPLUS_FEATURE_TP_BASIC
-//Cong.Dai@psw.bsp.tp 2018/08/30 modified for stop system enter sleep before low irq handled
 	if (check_touchirq_triggered()) {
 		error = -EBUSY;
 		goto Enable_irqs;
 	}
 #endif /* OPLUS_FEATURE_TP_BASIC */
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("%s syscore_suspend\n", __func__);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG */
 
@@ -521,7 +512,6 @@ static int suspend_enter(suspend_state_t state, bool *wakeup)
 	}
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-//Cong.Dai@psw.bsp.tp 2018/08/30 modified for stop system enter sleep before low irq handled
  Enable_irqs:
 #endif /* OPLUS_FEATURE_TP_BASIC */
 	arch_suspend_enable_irqs();
@@ -555,7 +545,6 @@ int suspend_devices_and_enter(suspend_state_t state)
 	bool wakeup = false;
 
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (!sleep_state_supported(state))
 		return -ENOSYS;
 	#else
@@ -569,7 +558,6 @@ int suspend_devices_and_enter(suspend_state_t state)
 
 	error = platform_suspend_begin(state);
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (error)
 		goto Close;
 	#else
@@ -590,7 +578,6 @@ int suspend_devices_and_enter(suspend_state_t state)
 	}
 	suspend_test_finish("suspend devices");
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (suspend_test(TEST_DEVICES))
 		goto Recover_platform;
 	#else
@@ -605,7 +592,6 @@ int suspend_devices_and_enter(suspend_state_t state)
 	} while (!error && !wakeup && platform_suspend_again(state));
 
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("suspend_enter end, error:%d, wakeup:%d\n", error, wakeup);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG */
 
@@ -641,7 +627,6 @@ static void suspend_finish(void)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-//Bin.Xu@BSP.Kernel.Stability,2020/4/11,add check-list screen on too slowly when press pwrkey
 /**
  * Sync the filesystem in seperate workqueue.
  * Then check it finishing or not periodically and
@@ -717,14 +702,12 @@ static int enter_state(suspend_state_t state)
 #endif
 	} else if (!valid_state(state)) {
 		#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-		//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 		pr_info("%s invalid_state\n", __func__);
 		#endif /* OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG */
 		return -EINVAL;
 	}
 
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (!mutex_trylock(&pm_mutex))
 		return -EBUSY;
 	#else
@@ -738,7 +721,6 @@ static int enter_state(suspend_state_t state)
 		s2idle_begin();
 
 #ifdef OPLUS_BUG_STABILITY
-//Bin.Xu@BSP.Kernel.Stability,2020/4/11,add check-list screen on too slowly when press pwrkey
 	if (sys_sync_queue())
 		goto Unlock;
 #else
@@ -755,7 +737,6 @@ static int enter_state(suspend_state_t state)
 	pm_suspend_clear_flags();
 	error = suspend_prepare(state);
 	#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	if (error)
 		goto Unlock;
 	#else
@@ -775,7 +756,6 @@ static int enter_state(suspend_state_t state)
 	error = suspend_devices_and_enter(state);
 	pm_restore_gfp_mask();
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-	//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("%s suspend_devices_and_enter end\n", __func__);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG */
 
@@ -796,7 +776,6 @@ static void pm_suspend_marker(char *annotation)
 	getnstimeofday(&ts);
 	rtc_time_to_tm(ts.tv_sec, &tm);
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("PM: suspend %s %d-%02d-%02d %02d:%02d:%02d.%09lu UTC\n",
 		annotation, tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
 		tm.tm_hour, tm.tm_min, tm.tm_sec, ts.tv_nsec);

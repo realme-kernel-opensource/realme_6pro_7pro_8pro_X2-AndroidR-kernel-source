@@ -110,7 +110,6 @@ int sch_direct_xmit(struct sk_buff *skb, struct Qdisc *q,
 void __qdisc_run(struct Qdisc *q);
 
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 struct sk_buff *qdisc_dequeue_skb(struct Qdisc *q, bool *validate);
 #endif /* OPLUS_FEATURE_WIFI_LIMMITBGSPEED */
 

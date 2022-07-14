@@ -262,7 +262,6 @@ struct cam_hw_dump_pf_args {
 };
 
 #ifdef VENDOR_EDIT
-/* Jianwei.luo@Cam.Drv 20190306 add it for bug:1877373, case:03906628 patch */
 
 /**
  * struct cam_hw_reset_args -hw reset arguments
@@ -348,7 +347,6 @@ struct cam_hw_mgr_intf {
 	int (*hw_close)(void *hw_priv, void *hw_close_args);
 	int (*hw_flush)(void *hw_priv, void *hw_flush_args);
 #ifdef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 add it for bug:1877373, case:03906628 patch */
     int (*hw_reset)(void *hw_priv, void *hw_reset_args);
 #endif
 };

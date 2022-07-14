@@ -46,7 +46,6 @@
 #include <uapi/linux/magic.h>
 
 #ifdef OPLUS_FEATURE_LOWMEM_DBG
-/* #Hailong.Liu@BSP.Kernel.MM, 2020/06/19, Add for dump memory */
 /* usage when lowmmem occurs. */
 #include <soc/oplus/lowmem_dbg.h>
 #endif /* OPLUS_FEATURE_LOWMEM_DBG */
@@ -492,7 +491,6 @@ static inline int is_dma_buf_file(struct file *file)
 }
 
 #ifdef OPLUS_FEATURE_LOWMEM_DBG
-/* #Hailong.Liu@BSP.Kernel.MM, 2020/06/19, Add for dump memory */
 /* usage when lowmmem occurs. */
 inline int oplus_is_dma_buf_file(struct file *file)
 {

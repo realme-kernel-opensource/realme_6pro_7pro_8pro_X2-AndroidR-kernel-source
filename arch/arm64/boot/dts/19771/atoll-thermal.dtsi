@@ -98,6 +98,22 @@
 	};
 };
 
+//#ifdef OPLUS_FEATURE_THERMAL_HORAE
+/{
+        shell_front {
+                compatible = "oplus,shell-temp";
+        };
+
+        shell_frame {
+                compatible = "oplus,shell-temp";
+        };
+
+        shell_back {
+                compatible = "oplus,shell-temp";
+        };
+};
+//#endif
+
 &thermal_zones {
 	aoss-0-usr {
 		polling-delay-passive = <0>;

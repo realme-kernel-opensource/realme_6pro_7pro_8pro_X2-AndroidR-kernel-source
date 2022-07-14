@@ -217,7 +217,6 @@ struct subsys_device {
 };
 
 #ifdef OPLUS_FEATURE_ADSP_RECOVERY
-/*Suresh.Alla@MULTIMEDIA.AUDIODRIVER.ADSP.2434874, 2020/08/14, Add for workaround fix adsp stuck issue*/
 static bool oplus_adsp_ssr = false;
 
 void oplus_set_ssr_state(bool ssr_state)
@@ -1274,7 +1273,6 @@ int subsystem_restart_dev(struct subsys_device *dev)
 	name = dev->desc->name;
 
 	#ifdef OPLUS_FEATURE_ADSP_RECOVERY
-	/*Suresh.Alla@MULTIMEDIA.AUDIODRIVER.ADSP.2434874, 2020/08/14, Add for workaround fix adsp stuck issue*/
 	if (name && !strcmp(name, "adsp")) {
 		if (oplus_get_ssr_state()) {
 			pr_err("%s: adsp restarting, Ignoring request\n", __func__);
@@ -1864,9 +1862,6 @@ struct subsys_device *subsys_register(struct subsys_desc *desc)
 	subsys->dev.release = subsys_device_release;
 	subsys->notif_state = -1;
 #ifdef OPLUS_BUG_STABILITY
-        /*YiXue.Ge@PSW.BSP.Kernel.Driver,2017/05/15,
-         * Add for init subsyst restart level as RESET_SUBSYS_COUPLED at mp build
-         */
         if(!oppo_daily_build() && !(get_eng_version() == AGING))
                 subsys->restart_level = RESET_SUBSYS_COUPLED;
 #endif /*OPLUS_BUG_STABILITY */

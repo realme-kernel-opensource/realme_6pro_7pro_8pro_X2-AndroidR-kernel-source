@@ -82,12 +82,10 @@ void (*enable_aggressive_segmentation_fn)(bool);
 #include "../oplus_vooc.h"
 #include "../oplus_gauge.h"
 #include <oplus_bq24190.h>
-/* Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/11/27, add for mt6771 charger */
 extern int oplus_get_rtc_ui_soc(void);
 extern int oplus_set_rtc_ui_soc(int value);
 static struct chip_bq24190 *charger_ic = NULL;
 static int aicl_result = 500;
-/* Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/12/12, Add for charger modefy */
 static struct delayed_work charger_modefy_work;
 
 static DEFINE_MUTEX(bq24190_i2c_access);
@@ -1195,7 +1193,6 @@ struct oplus_chg_operations  bq24190_chg_ops = {
 	#ifdef CONFIG_MTK_HAFG_20
 	.get_rtc_soc = get_rtc_spare_oplus_fg_value,
 	.set_rtc_soc = set_rtc_spare_oplus_fg_value,
-/*Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/11/29, add for mt6771 charger */
 	#elif defined(CONFIG_OPLUS_CHARGER_MTK6771)
     .get_rtc_soc = oplus_get_rtc_ui_soc,
 	.set_rtc_soc = oplus_set_rtc_ui_soc,
@@ -1377,7 +1374,6 @@ enum charger_type mt_charger_type_detection(void)
 	return MTK_CHR_Type_num;
 }
 #endif
-/* Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/12/12, Add for charger modefy */
 static void do_charger_modefy_work(struct work_struct *data)
 {
 	/*
@@ -1492,7 +1488,6 @@ static int bq24190_driver_probe(struct i2c_client *client, const struct i2c_devi
 	bq24190_irq_registration(chip);
 	atomic_set(&chip->charger_suspended, 0);
 	register_charger_devinfo();
-	/* Qiao.Hu@BSP.BaseDrv.CHG.Basic, 2017/12/12, Add for charger modefy */
 	usleep_range(1000, 1200);
 	INIT_DELAYED_WORK(&charger_modefy_work, do_charger_modefy_work);
 	schedule_delayed_work(&charger_modefy_work, 0);

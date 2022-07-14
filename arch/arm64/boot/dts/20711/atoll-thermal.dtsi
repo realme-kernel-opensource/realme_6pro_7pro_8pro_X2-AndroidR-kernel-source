@@ -646,7 +646,6 @@
 	};
 	
 /*#ifdef OPLUS_FEATURE_CHG_BASIC*/
-/*zhouhaikang@BSP.CHG.Basic,2020/10/20,for add usbtemp*/
 /*
 	conn-therm-usr {
 		polling-delay-passive = <0>;

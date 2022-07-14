@@ -152,7 +152,6 @@ struct cpufreq_policy {
 	/* For cpufreq driver's internal use */
 	void			*driver_data;
 #ifdef OPLUS_FEATURE_HEALTHINFO
-//Jiheng.Xie@TECH.BSP.Performance,2019-07-29,add for cpufreq limit info
 #ifdef CONFIG_OPPO_HEALTHINFO
 	/* For get changed freq info */
 	char 			change_comm[TASK_COMM_LEN];

@@ -20,11 +20,9 @@
 #include "cam_packet_util.h"
 
 #ifdef VENDOR_EDIT
-/*Zhixian.mai@cam ,20200417, add for oem hw controller*/
 static uint32_t g_oem_data[CAM_OEM_RW_SIZE_MAX];
 static struct cam_sensor_i2c_reg_array g_reg_setting[CAM_OEM_RW_SIZE_MAX];
 
-/*add by hongbo.dai@camera 20190221, get DPC Data for IMX471*/
 struct sony_dfct_tbl_t imx471_dfct_tbl;
 
 static int sensor_imx471_get_dpc_data(struct cam_sensor_ctrl_t *s_ctrl)
@@ -859,7 +857,6 @@ int cam_sensor_match_id(struct cam_sensor_ctrl_t *s_ctrl)
 	}
 
 	#ifdef VENDOR_EDIT
-	/*add by hongbo.dai@camera 20190221, get DPC Data for IMX471*/
 	if (slave_info->sensor_id == 0x0471) {
 		sensor_imx471_get_dpc_data(s_ctrl);
 	}
@@ -1212,7 +1209,6 @@ int32_t cam_sensor_driver_cmd(struct cam_sensor_ctrl_t *s_ctrl,
 	}
 		break;
 #ifdef VENDOR_EDIT
-/*Zhixian.mai@Cam.Drv 20200329 add for oem ioctl for read /write register*/
 	case CAM_OEM_RW_REG:{
 		struct cam_oem_rw_ctl oem_ctl;
 		struct camera_io_master oem_io_master_info;
@@ -1331,7 +1327,6 @@ int32_t cam_sensor_driver_cmd(struct cam_sensor_ctrl_t *s_ctrl,
 		}
 		break;
 	}
-	/*add by hongbo.dai@camera 20190221, get DPC Data for IMX471*/
 	case CAM_GET_DPC_DATA: {
 		if (0x0471 != s_ctrl->sensordata->slave_info.sensor_id) {
 			rc = -EFAULT;

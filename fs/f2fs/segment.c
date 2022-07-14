@@ -183,9 +183,6 @@ bool f2fs_need_SSR(struct f2fs_sb_info *sbi)
 			SM_I(sbi)->min_ssr_sections + reserved_sections(sbi));
 }
 
-/* VENDOR_EDIT yanwu@TECH.Storage.FS.oF2FS,
- * 2019/08/13, add code to optimize gc
- */
 block_t of2fs_seg_freefrag(struct f2fs_sb_info *sbi, unsigned int segno,
 				block_t* blocks, unsigned int n)
 {

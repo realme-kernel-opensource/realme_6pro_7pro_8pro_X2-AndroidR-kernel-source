@@ -29,7 +29,6 @@
 
 //#ifndef OPLUS_BUG_STABILITY
 /*
- * YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/04/16,
  * modify for 19031 lcd bringup
  */
 //&dsi_sw43404_amoled_video_display {

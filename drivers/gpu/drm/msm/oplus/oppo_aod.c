@@ -5,7 +5,6 @@
 ** Description : oppo aod feature
 ** Version : 1.0
 ** Date : 2020/04/23
-** Author : Qianxu@MM.Display.LCD Driver
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -47,7 +46,6 @@ int oppo_update_aod_light_mode_unlock(struct dsi_panel *panel)
 }
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 extern bool is_oppo_display_aod_mode(void);
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 int oppo_update_aod_light_mode(void)
@@ -79,7 +77,6 @@ int oppo_update_aod_light_mode(void)
 	mutex_lock(&display->panel->panel_lock);
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	if (display->panel->oppo_priv.is_aod_ramless &&
 			!is_oppo_display_aod_mode()) {
 		pr_err("not support update aod_light_mode at non-aod mode\n");

@@ -50,11 +50,9 @@
 #define CSID_CSI2_RX_ERROR_TG_FIFO_OVERFLOW       BIT(26)
 #define CSID_CSI2_RX_INFO_RST_DONE                BIT(27)
 
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch begin */
 #ifdef VENDOR_EDIT
 #define CSID_TOP_IRQ_DONE                         BIT(0)
 #endif
-/* Add by shengweiguang@Cam.Drv 20191204 for bug:2629061, case:04318901 patch end */
 #define CSID_PATH_INFO_RST_DONE                   BIT(1)
 #define CSID_PATH_ERROR_FIFO_OVERFLOW             BIT(2)
 #define CSID_PATH_INFO_SUBSAMPLED_EOF             BIT(3)
@@ -514,7 +512,6 @@ struct cam_ife_csid_hw {
 	uint32_t                         init_frame_drop;
 	uint32_t                         res_sof_cnt[CAM_IFE_PIX_PATH_RES_MAX];
 #ifdef VENDOR_EDIT
-	/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	uint32_t                         first_sof_ts;
 #endif
 };

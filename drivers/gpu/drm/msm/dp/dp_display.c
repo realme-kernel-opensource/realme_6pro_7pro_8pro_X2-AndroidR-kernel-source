@@ -22,7 +22,6 @@
 #include <linux/of_irq.h>
 #include <linux/extcon.h>
 #ifndef OPLUS_FEATURE_DP_MAX20328
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2018-11-05 support max20328 dp switch */
 #include <linux/soc/qcom/fsa4480-i2c.h>
 #else /* OPLUS_FEATURE_DP_MAX20328 */
 #include <linux/soc/qcom/max20328.h>
@@ -110,7 +109,6 @@ struct dp_display_private {
 	struct workqueue_struct *wq;
 	struct delayed_work hdcp_cb_work;
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 	struct delayed_work connect_work;
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 	struct work_struct connect_work;
@@ -946,7 +944,6 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
 	/* check for hpd high */
 	if (dp->hpd->hpd_high)
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 		queue_delayed_work(dp->wq, &dp->connect_work, 0);
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 		queue_work(dp->wq, &dp->connect_work);
@@ -1048,7 +1045,6 @@ static void dp_display_disconnect_sync(struct dp_display_private *dp)
 
 	/* wait for idle state */
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 	cancel_delayed_work(&dp->connect_work);
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 	cancel_work(&dp->connect_work);
@@ -1145,7 +1141,6 @@ static void dp_display_attention_work(struct work_struct *work)
 		} else {
 			if (!dp->mst.mst_active)
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 				queue_delayed_work(dp->wq, &dp->connect_work, 0);
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 				queue_work(dp->wq, &dp->connect_work);
@@ -1160,7 +1155,6 @@ static void dp_display_attention_work(struct work_struct *work)
 
 		dp->panel->video_test = true;
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 		queue_delayed_work(dp->wq, &dp->connect_work, 0);
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 		queue_work(dp->wq, &dp->connect_work);
@@ -1223,7 +1217,6 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
 		queue_work(dp->wq, &dp->attention_work);
 	else if (dp->process_hpd_connect || !dp->is_connected)
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 		queue_delayed_work(dp->wq, &dp->connect_work, 0);
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 		queue_work(dp->wq, &dp->connect_work);
@@ -1235,14 +1228,12 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
 }
 
 #ifdef OPLUS_FEATURE_DP_MAX20328
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-13 fix dp bootup timeout */
 extern int oppo_display_audio_ready;
 #endif /* OPLUS_FEATURE_DP_MAX20328 */
 static void dp_display_connect_work(struct work_struct *work)
 {
 	int rc = 0;
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 	struct delayed_work *dw = to_delayed_work(work);
 	struct dp_display_private *dp = container_of(dw,
 			struct dp_display_private, connect_work);
@@ -1262,7 +1253,6 @@ static void dp_display_connect_work(struct work_struct *work)
 	}
 
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 	if (!oppo_display_audio_ready) {
 		if (ktime_to_ms(ktime_get()) < 80000) {
 			queue_delayed_work(dp->wq, &dp->connect_work, 5*HZ);
@@ -2234,7 +2224,6 @@ static int dp_display_create_workqueue(struct dp_display_private *dp)
 
 	INIT_DELAYED_WORK(&dp->hdcp_cb_work, dp_display_hdcp_cb_work);
 	#ifdef OPLUS_FEATURE_DP_MAX20328
-	/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-04-14 fix dp connect timeout on bootup */
 	INIT_DELAYED_WORK(&dp->connect_work, dp_display_connect_work);
 	#else /* OPLUS_FEATURE_DP_MAX20328 */
 	INIT_WORK(&dp->connect_work, dp_display_connect_work);
@@ -2273,7 +2262,6 @@ static int dp_display_fsa4480_callback(struct notifier_block *self,
 }
 
 #ifdef OPLUS_FEATURE_DP_MAX20328
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2018-12-28 limit dp aux switch probe defer times*/
 static int dp_retry_times = 10;
 #endif /* OPLUS_FEATURE_DP_MAX20328 */
 static int dp_display_init_aux_switch(struct dp_display_private *dp)
@@ -2296,7 +2284,6 @@ static int dp_display_init_aux_switch(struct dp_display_private *dp)
 	}
 
 #ifndef OPLUS_FEATURE_DP_MAX20328
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2018-11-05 support max20328 dp switch */
 	nb.notifier_call = dp_display_fsa4480_callback;
 	nb.priority = 0;
 

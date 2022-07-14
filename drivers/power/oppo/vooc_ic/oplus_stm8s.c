@@ -13,7 +13,6 @@
 ** --------------------------- Revision History: ------------------------------------------------------------
 * <version>           <date>                <author>                                <desc>
 * Revision 1.0        2015-06-22        Fanhong.Kong@ProDrv.CHG            Created for new architecture
-* Revision 1.1        2016-05-09        wenbin.liu@SW.Bsp.Driver           Modify for code review
 ************************************************************************************************************/
 
 #define VOOC_MCU_STM8S
@@ -727,8 +726,6 @@ static int stm8s_driver_probe(struct i2c_client *client,
 	chip->vooc_fw_check = false;
 	mutex_init(&chip->pinctrl_mutex);
 
-/* wenbin.liu@BSP.CHG.Vooc, 2016/10/20 
-**    Modify for vooc batt 4.40   */
 	oplus_vooc_fw_type_dt(chip);
 	if (chip->batt_type_4400mv) {
 		chip->firmware_data = Stm8s_firmware_data_4400mv;

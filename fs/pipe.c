@@ -1054,7 +1054,6 @@ static inline unsigned int round_pipe_size(unsigned int size)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-//Weitao.Chen@AD.Stability, 2020/11/07, Add for avoiding critical process set pipe buffer error
 static inline bool is_zygote_process(struct task_struct *t)
 {
 	const struct cred *tcred = __task_cred(t);
@@ -1132,7 +1131,6 @@ static long pipe_set_size(struct pipe_inode_info *pipe, unsigned long arg)
 	 * if the user is currently over a limit.
 	 */
 	#ifndef OPLUS_BUG_STABILITY
-        //Weitao.Chen@AD.Stability, 2020/11/07, Add for avoiding critical process set pipe buffer error
 	if (nr_pages > pipe->buffers &&
 			size > pipe_max_size && !capable(CAP_SYS_RESOURCE))
 	#else /* OPLUS_BUG_STABILITY */
@@ -1143,7 +1141,6 @@ static long pipe_set_size(struct pipe_inode_info *pipe, unsigned long arg)
 
 	user_bufs = account_pipe_buffers(pipe->user, pipe->buffers, nr_pages);
 	#ifndef OPLUS_BUG_STABILITY
-        //Weitao.Chen@AD.Stability, 2020/11/07, Add for avoiding critical process set pipe buffer error
 	if (nr_pages > pipe->buffers &&
 			(too_many_pipe_buffers_hard(user_bufs) ||
 			 too_many_pipe_buffers_soft(user_bufs)) &&

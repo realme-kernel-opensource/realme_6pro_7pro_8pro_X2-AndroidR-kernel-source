@@ -74,7 +74,6 @@ drop_nopreempt_cpus(struct cpumask *lowest_mask)
 }
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 extern void drop_ux_task_cpus(struct task_struct *p, struct cpumask *lowest_mask);
 #endif /* OPLUS_FEATURE_UIFIRST */
 /**
@@ -99,7 +98,6 @@ int cpupri_find(struct cpupri *cp, struct task_struct *p,
 	int task_pri = convert_prio(p->prio);
 	bool drop_nopreempts = task_pri <= MAX_RT_PRIO;
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 	bool drop_uxtasks = sysctl_uifirst_enabled;
 #endif /* OPLUS_FEATURE_UIFIRST */
 	BUG_ON(task_pri >= CPUPRI_NR_PRIORITIES);
@@ -145,7 +143,6 @@ retry:
 			if (drop_nopreempts)
 				drop_nopreempt_cpus(lowest_mask);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 			if (drop_uxtasks)
 				drop_ux_task_cpus(p, lowest_mask);
 #endif /* OPLUS_FEATURE_UIFIRST */
@@ -172,7 +169,6 @@ retry:
 		goto retry;
 	}
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 	if (drop_uxtasks) {
 		drop_uxtasks = false;
 		goto retry;

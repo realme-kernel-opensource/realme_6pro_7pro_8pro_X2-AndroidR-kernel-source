@@ -19,7 +19,6 @@
 #include "sde_dbg.h"
 #include "sde_kms.h"
 #ifdef OPLUS_BUG_STABILITY
-/*Mark.Yao@PSW.MM.Display.LCD.Feature,2019-07-25 add for aod function */
 #include "oppo_dsi_support.h"
 #endif /* OPLUS_BUG_STABILITY */
 
@@ -168,9 +167,6 @@ static struct sde_pingpong_cfg *_pingpong_offset(enum sde_pingpong pp,
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.Lcd.Stability,2018/11/21
- * For solve te sync issue at doze
-*/
 extern int oppo_request_power_status;
 #endif /*OPLUS_BUG_STABILITY*/
 static int sde_hw_pp_setup_te_config(struct sde_hw_pingpong *pp,
@@ -188,9 +184,6 @@ static int sde_hw_pp_setup_te_config(struct sde_hw_pingpong *pp,
 		cfg |= BIT(20);
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Lcd.Stability,2018/11/21
- * For solve te sync issue at doze
- */
 {
 	int temp_vclks_line = te->vsync_count;
 

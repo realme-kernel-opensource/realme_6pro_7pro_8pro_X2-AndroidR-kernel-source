@@ -203,7 +203,6 @@ static const int version_table[] = {
 };
 
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 #define CABC_EN_DYN_INVALID  (-EINVAL)
 #define CABC_EN_DYN_ENABLED  (1)
 #define CABC_EN_DYN_DISABLED (0)
@@ -221,7 +220,6 @@ struct wled_config {
 	bool ext_pfet_sc_pro_en;
 	bool auto_calib_enabled;
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 	int cabc_en_dyn;
 	u32 cabc_en_dyn_brightness;
 #endif /* OPLUS_BUG_STABILITY */
@@ -438,7 +436,6 @@ static int wled5_sample_hold_control(struct wled *wled, u16 brightness,
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 static int wled5_cabc_config(struct wled *wled, bool enable);
 #endif /* OPLUS_BUG_STABILITY */
 static int wled5_set_brightness(struct wled *wled, u16 brightness)
@@ -447,7 +444,6 @@ static int wled5_set_brightness(struct wled *wled, u16 brightness)
 	u16 low_limit = wled->max_brightness * 1 / 1000;
 	u8 val, v[2], brightness_msb_mask;
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 	struct wled_config *cfg = &wled->cfg;
 	int cabc_en_dyn_tmp = CABC_EN_DYN_ENABLED;
 #endif /* OPLUS_BUG_STABILITY */
@@ -457,7 +453,6 @@ static int wled5_set_brightness(struct wled *wled, u16 brightness)
 		brightness = low_limit;
 
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 	if((CABC_EN_DYN_INVALID != cfg->cabc_en_dyn) && brightness) {
 		if(brightness <= cfg->cabc_en_dyn_brightness)
 			cabc_en_dyn_tmp = CABC_EN_DYN_DISABLED;
@@ -1412,7 +1407,6 @@ static const struct wled_config wled4_config_defaults = {
 	.ext_pfet_sc_pro_en = 0,
 	.auto_calib_enabled = 0,
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 	.cabc_en_dyn = CABC_EN_DYN_INVALID,
 	.cabc_en_dyn_brightness = 0,
 #endif /* OPLUS_BUG_STABILITY */
@@ -1430,7 +1424,6 @@ static const struct wled_config wled5_config_defaults = {
 	.ext_pfet_sc_pro_en = 0,
 	.auto_calib_enabled = 0,
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 	.cabc_en_dyn = CABC_EN_DYN_INVALID,
 	.cabc_en_dyn_brightness = 0,
 #endif /* OPLUS_BUG_STABILITY */
@@ -2347,7 +2340,6 @@ static int wled_configure(struct wled *wled, struct device *dev)
 	}
 
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/12/17, close cabc when low brightness */
 	if (is_wled5(wled)) {
 		rc = of_property_read_u32(dev->of_node, "qcom,cabc-en-brightness", &val);
 		if (!rc) {

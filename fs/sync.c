@@ -19,7 +19,6 @@
 #include "internal.h"
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// wenbin.liu@PSW.BSP.MM, 2018/05/02
 // Add for get cpu load
 #ifdef CONFIG_OPPO_HEALTHINFO
 #include <soc/oplus/oppo_healthinfo.h>
@@ -229,7 +228,6 @@ static int do_fsync(unsigned int fd, int datasync)
 	struct fd f = fdget(fd);
 	int ret = -EBADF;
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// wenbin.liu@PSW.BSP.MM, 2018/08/06
 // Add for record  fsync  time
 #ifdef CONFIG_OPPO_HEALTHINFO
     unsigned long fsync_time = jiffies;
@@ -245,7 +243,6 @@ static int do_fsync(unsigned int fd, int datasync)
 		inc_syscfs(current);
 	}
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// wenbin.liu@PSW.BSP.MM, 2018/08/06
 // Add for record  fsync  time
 #ifdef CONFIG_OPPO_HEALTHINFO
 	ohm_schedstats_record(OHM_SCHED_FSYNC, current, jiffies_to_msecs(jiffies - fsync_time));

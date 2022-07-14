@@ -646,7 +646,6 @@
 	};
 
 //#ifdef VENDOR_EDIT
-// Gang.Yan@BSP.CHG.Basic 2020/04/14  for add usbtemp
 /*
 	conn-therm-usr {
 		polling-delay-passive = <0>;
@@ -725,7 +724,6 @@
 		};
 	};
 /*#ifndef ODM_LQ_EDIT*/
-/*liujiawei@ODM_LQ.BSP.CHG,2020/07/22, modified for camera-therm */
 /*
 	camera-therm-usr {
 		polling-delay-passive = <0>;

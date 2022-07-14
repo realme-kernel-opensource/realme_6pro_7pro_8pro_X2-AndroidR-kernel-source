@@ -876,7 +876,6 @@ config PROCESS_RECLAIM_ENHANCE
 #endif /* OPLUS_FEATURE_PROCESS_RECLAIM */
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-#/* Huacai.Zhou@PSW.BSP.Kernel.MM, 2018-07-07, add alloc wait monitor support*/
 source "mm/oppo_healthinfo/Kconfig"
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 

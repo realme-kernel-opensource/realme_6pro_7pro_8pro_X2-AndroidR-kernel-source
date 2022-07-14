@@ -475,7 +475,6 @@ int nf_hook_slow(struct sk_buff *skb, struct nf_hook_state *state,
 				ret = -EPERM;
 			return ret;
 		#ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-		//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 		case NF_IMQ_QUEUE:
 			ret = nf_queue(skb, state, e, s, verdict);
 			if (ret == -ECANCELED)

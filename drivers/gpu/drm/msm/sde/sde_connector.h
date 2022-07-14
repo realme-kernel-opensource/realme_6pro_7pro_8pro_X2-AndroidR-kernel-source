@@ -803,9 +803,6 @@ static inline bool sde_connector_needs_offset(struct drm_connector *connector)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin@PSW.MM.Display.LCD.Feature,2020-06-08
- * Force enable dither on OnScreenFingerprint scene,add QCOM patch,fix BUG:49203
-*/
 /**
  * sde_connector_get_dither_cfg - get dither property data
  * @conn: Pointer to drm_connector struct
@@ -912,9 +909,6 @@ int sde_connector_get_panel_vfp(struct drm_connector *connector,
 int sde_connector_esd_status(struct drm_connector *connector);
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@MM.Display.LCD.Stability, 2020/3/31, for
- *decoupling display driver
-*/
 int _sde_connector_update_bl_scale_(struct sde_connector *c_conn);
 #endif /* OPLUS_BUG_STABILITY */
 

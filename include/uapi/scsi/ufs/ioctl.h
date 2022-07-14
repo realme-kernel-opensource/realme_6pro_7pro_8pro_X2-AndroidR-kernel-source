@@ -10,7 +10,6 @@
 #define UFS_IOCTL_QUERY			0x5388
 
 #if defined(VENDOR_EDIT) && defined(CONFIG_UFSFEATURE)
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #define UFSFEATURE_QUERY_OPCODE		0x5500
 #endif
 

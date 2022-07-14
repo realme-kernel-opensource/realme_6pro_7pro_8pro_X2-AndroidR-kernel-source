@@ -23,7 +23,6 @@
 
 //#ifndef OPLUS_BUG_STABILITY
 /*
- * YongPeng.Yi@PSW.MM.Display.LCD.Stability, 2019/04/16,
  * modify for 19031 lcd bringup
  */
 //&dsi_sw43404_amoled_video_display {
@@ -47,6 +46,10 @@
 };
 
 &dsi_oppo19111samsung_ams641rw16_1080_2340_cmd_display {
+	qcom,dsi-display-active;
+};
+
+&dsi_rm19771_samsung_ams641rw16_1080_2340_cmd_display {
 	qcom,dsi-display-active;
 };
 //#endif /*OPLUS_BUG_STABILITY*/

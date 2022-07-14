@@ -5012,7 +5012,6 @@ void smblib_usb_plugin_hard_reset_locked(struct smb_charger *chg)
 #endif
 	
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Cong.Dai@BSP.TP.Init, 2018/04/08, Add for notify touchpanel status */
 	if (vbus_rising) {
 		switch_usb_state(1);
 	} else {
@@ -5200,7 +5199,6 @@ void smblib_usb_plugin_locked(struct smb_charger *chg)
 #endif
 	
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Cong.Dai@BSP.TP.Init, 2018/04/08, Add for notify touchpanel status */
 	if (vbus_rising) {
 		switch_usb_state(1);
 	} else {
@@ -12485,7 +12483,6 @@ static bool opluschg_get_shortc_hw_gpio_status(void)
 #endif
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/* Dongru.Zhao@BSP.CHG.Basic, 2019/09/19, zdr Add for chargering PD 3A */
 static int oplus_chg_get_charger_subtype(void)
 {
 	struct smb_charger *chg = NULL;

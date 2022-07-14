@@ -1,6 +1,6 @@
 /*
  * oppo_kevent.h - for kevent action upload upload to user layer
- *	author by 
+ *	author by pdl@oppo.com
  */
 
 #include <linux/init.h>

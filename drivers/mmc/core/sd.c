@@ -21,7 +21,6 @@
 #include <linux/mmc/mmc.h>
 #include <linux/mmc/sd.h>
 #ifdef VENDOR_EDIT
-//Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 #include <linux/string_helpers.h>
 #include <soc/oppo/oppo_project.h>
 #endif /* VENDOR_EDIT */
@@ -40,7 +39,6 @@
 #define UHS_SDR25_MIN_DTR	(25 * 1000 * 1000)
 #define UHS_SDR12_MIN_DTR	(12.5 * 1000 * 1000)
 #ifdef VENDOR_EDIT
-//Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 struct menfinfo {
 	unsigned int manfid;
 	char *manfstring;
@@ -319,7 +317,6 @@ static int mmc_read_ssr(struct mmc_card *card)
 			es = UNSTUFF_BITS(card->raw_ssr, 408 - 384, 16);
 			et = UNSTUFF_BITS(card->raw_ssr, 402 - 384, 6);
 #ifdef VENDOR_EDIT
-//Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 			card->ssr.speed_class = UNSTUFF_BITS(card->raw_ssr, 440 - 384, 8);
 #endif /* VENDOR_EDIT */
 			if (es && et) {
@@ -780,7 +777,6 @@ out:
 }
 
 #ifdef VENDOR_EDIT
-//Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 const char *manfinfo_string(struct mmc_card *card) {
 	int i = 0;
 	for (i = 0; i < MANFINFS_SIZE ; i++) {
@@ -862,7 +858,6 @@ static DEVICE_ATTR(dsr, S_IRUGO, mmc_dsr_show, NULL);
 
 static struct attribute *sd_std_attrs[] = {
 #ifdef VENDOR_EDIT
-//Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 	&dev_attr_devinfo.attr,
 #endif /* VENDOR_EDIT */
 	&dev_attr_cid.attr,
@@ -1533,7 +1528,6 @@ int mmc_attach_sd(struct mmc_host *host)
 	WARN_ON(!host->claimed);
 
 #ifdef VENDOR_EDIT
-    //Lycan.Wang@Prd.BasicDrv, 2014-07-10 Add for retry 5 times when new sdcard init error
 	if (!host->detect_change_retry) {
         pr_err("%s have init error 5 times\n", __func__);
         return -ETIMEDOUT;
@@ -1579,7 +1573,6 @@ int mmc_attach_sd(struct mmc_host *host)
 	 */
 #ifdef CONFIG_MMC_PARANOID_SD_INIT
 #ifndef VENDOR_EDIT
-    //Lycan.Wang@Prd.BasicDrv, 2014-07-10 Modify for init retry only once when have init error before
     retries = 5;
 #else /* VENDOR_EDIT */
     if (host->detect_change_retry < 5) 
@@ -1626,7 +1619,6 @@ int mmc_attach_sd(struct mmc_host *host)
 	}
 
 #ifdef VENDOR_EDIT
-    //Tong.han@Bsp.group.Tp, 2015-02-03 Add for retry 5 times when new sdcard init error
     host->detect_change_retry = 5;
 #endif /* VENDOR_EDIT */
 	return 0;
@@ -1639,8 +1631,7 @@ err:
 	mmc_detach_bus(host);
 
 #ifdef VENDOR_EDIT
-    //Lycan.Wang@Prd.BasicDrv, 2014-07-10 Add for retry 5 times when new sdcard init error
-        if (err)//yh@bsp, 2016-03-17, this err could be caused by rescan disable, here reserve this aborted retry oppotunity.
+        if (err)
     host->detect_change_retry--;
     pr_err("detect_change_retry = %d !!!,err = %d\n", host->detect_change_retry,err);
 #endif /* VENDOR_EDIT */

@@ -374,7 +374,6 @@ int pstore_mkfile(struct dentry *root, struct pstore_record *record)
 			  record->psi->name, record->id);
 		break;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	case PSTORE_TYPE_DEVICE_INFO:
 		scnprintf(name, sizeof(name), "device-info-%s-%lld", record->psi->name, record->id);
 		break;

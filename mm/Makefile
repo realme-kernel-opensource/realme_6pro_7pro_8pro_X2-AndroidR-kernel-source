@@ -115,7 +115,6 @@ endif
 #endif /* OPLUS_FEATURE_PROCESS_RECLAIM */
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-#/* Jiheng.Xie@TECH.BSP.Kernel, 2019-12-11, add for slub debug*/
 obj-y += oppo_healthinfo/
 #endif /* OPLUS_FEATURE_HEALTHINFO */
 

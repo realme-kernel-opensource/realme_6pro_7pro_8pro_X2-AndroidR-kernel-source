@@ -11,7 +11,6 @@
 
 
 #ifdef VENDOR_EDIT
-//YanGang@BSP.CHG.Basic, 2020/01/16, add for new dischg plan.
 #define USB_20C 20
 #define USB_30C 30
 #define USB_40C	40
@@ -175,7 +174,6 @@ void oplus_usbtemp_recover_func(struct oplus_chg_chip *chip)
 	if (level == 1) {
 		oplus_set_usbtemp_wakelock(true);
 		do {
-		/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 			if (19721 != get_project()) {
 				get_usb_temp(chip);
 			} else {
@@ -285,7 +283,6 @@ int oplus_usbtemp_monitor_common(void *data)
 	struct smb_charger *chg = NULL;
 	chg = &chip->pmic_spmi.smb5_chip->chg;
 #endif
-/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 	project = get_project();
 
 	pr_err("[oplus_usbtemp_monitor_main]:run first!");
@@ -304,7 +301,6 @@ int oplus_usbtemp_monitor_common(void *data)
 			pr_err("[oplus_usbtemp_monitor_main]:get_usbtemp_volt is NULL");
 			return 0;
 		}
-/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 		if (project != 19721)
 			get_usb_temp(chip);
 		 else
@@ -333,7 +329,6 @@ int oplus_usbtemp_monitor_common(void *data)
 			for (i = 1; i < retry_cnt; i++) {
 				mdelay(RETRY_CNT_DELAY);
 
-			/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 				if (project != 19721)
 					get_usb_temp(chip);
 				 else
@@ -364,7 +359,6 @@ int oplus_usbtemp_monitor_common(void *data)
 			for (i = 1; i < retry_cnt; i++) {
 				mdelay(RETRY_CNT_DELAY);
 
-			/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 			if (project != 19721)
 				get_usb_temp(chip);
 			 else
@@ -409,7 +403,6 @@ int oplus_usbtemp_monitor_common(void *data)
 				for (i = 1; i < retry_cnt; i++) {
 					mdelay(RETRY_CNT_DELAY);
 
-					/*chenhongbin@BSP.CHG.usbtemp. 2020/11/14 add for project 19721 usbtemp read */
 					if (project != 19721)
 						get_usb_temp(chip);
 					 else

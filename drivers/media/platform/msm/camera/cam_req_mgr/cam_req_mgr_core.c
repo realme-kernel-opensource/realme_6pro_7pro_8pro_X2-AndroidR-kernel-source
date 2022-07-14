@@ -3312,7 +3312,6 @@ int cam_req_mgr_schedule_request(
 			"request %lld is flushed, last_flush_id to flush %u",
 			sched_req->req_id, link->last_flush_id);
 #ifdef VENDOR_EDIT
-		//Shouyao.Xiong@cam 20200605 merge qcom patch to fix flush block issue case 04611022
 		rc = -EBADR;
 #else
 		rc = -EINVAL;

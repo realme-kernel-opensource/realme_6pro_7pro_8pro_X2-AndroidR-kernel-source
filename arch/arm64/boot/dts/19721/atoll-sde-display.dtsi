@@ -17,12 +17,10 @@
 #include "dsi-panel-sim-dsc375-cmd.dtsi"
 #include "dsi-panel-nt36672c-fhd-plus-video.dtsi"
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for 19365 samsung cmd panel
 #include "dsi-panel-oppo19365samsung-ams644vk01-1080-2400-dsi-cmd.dtsi"
 #include "dsi-panel-oppo19365samsung-ams643xf01-1080-2400-dsi-cmd.dtsi"
 #include "dsi-panel-oppo19567samsung-amb655uv01-1080-2400-90fps.dtsi"
 #include "dsi-panel-oppo206B1samsung-ams643xy01-1080-2400-dsi-vid.dtsi"
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/10/27, add for bring up 19721 NT36672C JDI panel */
 #include "dsi-panel-nt36672c-jdi-fhd-plus-video.dtsi"
 #include "dsi-panel-nt36672c-boe-fhd-plus-video.dtsi"
 //#endif /* VENDOR_EDIT */
@@ -171,7 +169,6 @@
 	};
 
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for samsung cmd panel
 	dsi_oppo19365samsung_ams644vk01_1080_2400_cmd_display: qcom,dsi-display@6 {
 		label = "dsi_oppo19365samsung_ams644vk01_1080_2400_cmd_display";
 		qcom,display-type = "primary";
@@ -220,7 +217,6 @@
 //#endif /* VENDOR_EDIT */
 
 //#ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/10/27, add for bring up 19721 NT36672C JDI panel */
 	dsi_nt36672c_jdi_video_display: qcom,dsi-display@10 {
 		label = "dsi_nt36672c_jdi_video_display";
 		qcom,display-type = "primary";
@@ -271,7 +267,6 @@
 		pinctrl-0 = <&sde_te_active &disp_pins_default>;
 		pinctrl-1 = <&sde_te_suspend>;
 //#ifdef VENDOR_EDIT
-//Jiasong.Zhong@PSW.MM.Display.LCD.Stable, 2020/02/24, Add for 19365 samsung cmd panel
 		qcom,platform-te-gpio = <&tlmm 10 0>;
 		qcom,platform-reset-gpio = <&pm6150l_gpios 3 0>;
 		qcom,panel-te-source = <0>;
@@ -280,7 +275,6 @@
 
 		vdda-3p3-supply = <&L18A>;
 //#ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/06, add for bring up 19721 NT36672C JDI panel */
 		lab-supply = <&lcdb_ldo_vreg>;
 		ibb-supply = <&lcdb_ncp_vreg>;
 //#endif /* OPLUS_BUG_STABILITY */
@@ -297,7 +291,6 @@
 			&dsi_oppo19567samsung_amb655uv01_1080_2400_cmd_display
             &dsi_oppo206B1samsung_ams643xy01_1080_2400_vid_display
             /*#ifdef OPLUS_BUG_STABILITY*/
-            /* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/10/27, add for bring up 19721 NT36672C JDI panel */
 			&dsi_nt36672c_jdi_video_display
 			&dsi_nt36672c_boe_video_display>;
             /*#endif OPLUS_BUG_STABILITY*/
@@ -321,7 +314,6 @@
 &sde_dp {
 	qcom,dp-usbpd-detection = <&pm6150_pdphy>;
 //#ifdef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 	status = "disabled";
 //#endif
 	qcom,ext-disp = <&ext_disp>;
@@ -335,7 +327,6 @@
 
 &mdss_mdp {
 //#ifndef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 //	connectors = <&sde_wb &sde_dsi &sde_dp &sde_rscc>;
 //#else
 	connectors = <&sde_wb &sde_dsi &sde_rscc>;

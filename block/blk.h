@@ -164,7 +164,6 @@ static inline struct request *__elv_next_request(struct request_queue *q)
 
 	while (1) {
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 		if (likely(sysctl_fg_io_opt)
 #ifdef CONFIG_PM
 		    &&(q->rpm_status == RPM_ACTIVE)
@@ -181,7 +180,6 @@ static inline struct request *__elv_next_request(struct request_queue *q)
 			return rq;
 		}
 #if defined(OPLUS_FEATURE_FG_IO_OPT) && defined(CONFIG_OPPO_FG_IO_OPT)
-/*Huacai.Zhou@Tech.Kernel.MM, 2020-03-23,add foreground io opt*/
 		}
 #endif /*OPLUS_FEATURE_FG_IO_OPT*/
 		/*

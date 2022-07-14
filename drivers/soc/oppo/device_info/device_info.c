@@ -490,7 +490,7 @@ static int reinit_aboard_id(struct device *dev, struct manufacture_info *info)
 	struct device_node *np;
 	int32_t hw_mask = 0;
 	int i = 0, ret = 0;
-	int id_size = 0;
+	int id_size = 0, main_val_dt = 0,count_main_val_dt = 0;
 	uint32_t *main_val, *sub_val;
 	struct device_info *dev_info = g_dev_info;
 
@@ -527,7 +527,16 @@ static int reinit_aboard_id(struct device *dev, struct manufacture_info *info)
 	}
 
 	of_property_read_u32_array(np, "aboard-patterns", sub_val, id_size);
-	of_property_read_u32_array(np, "match-projects", main_val, id_size);
+	count_main_val_dt = of_property_count_elems_of_size(np, "hw-combs", sizeof(uint32_t));
+	if(count_main_val_dt == 0)
+	{
+		of_property_read_u32_array(np, "match-projects", main_val, id_size);
+		main_val_dt = get_project();
+	}
+	else{
+		of_property_read_u32_array(np, "hw-combs", main_val, id_size);
+		main_val_dt = get_Operator_Version();
+	}
 
 	if (of_property_read_bool(np, "use_pmic_adc")) {
 		hw_mask = pmic_get_submask(np, dev);
@@ -548,7 +557,7 @@ static int reinit_aboard_id(struct device *dev, struct manufacture_info *info)
 	dev_msg("aboard mask 0x%x\n", hw_mask);
 
 	for (i = 0; i < id_size; i++) {
-		if (*(main_val+i) == get_project())
+		if (*(main_val+i) == main_val_dt )
 			break;
 	}
 
@@ -651,4 +660,4 @@ device_initcall(device_info_init);
 
 MODULE_DESCRIPTION("OPPO device info");
 MODULE_LICENSE("GPL v2");
-MODULE_AUTHOR("Klus <>");
+MODULE_AUTHOR("Klus <Klus@oppo.com>");

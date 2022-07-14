@@ -75,7 +75,6 @@
 #include "ufshci.h"
 
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE)
 #include "ufsfeature.h"
 #endif
@@ -240,7 +239,6 @@ struct ufshcd_lrb {
 	bool req_abort_skip;
 
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE) && defined(CONFIG_UFSHPB)
 	int hpb_ctx_id;
 #endif
@@ -738,7 +736,6 @@ enum ufshcd_card_state {
 };
 
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSTW_DEBUGDRV)
 struct ufstwd_dev_info {
 	struct ufs_hba *hba;
@@ -1098,7 +1095,6 @@ struct ufs_hba {
 
 	int latency_hist_enabled;
 #ifdef VENDOR_EDIT
-//hank.liu@Tech.Storage.UFS, 2019-10-17 add latency_hist node for ufs latency calculate in sysfs.
 	struct io_latency_state io_lat_read;
 	struct io_latency_state io_lat_write;
 	struct io_latency_state io_lat_other;
@@ -1116,7 +1112,6 @@ struct ufs_hba {
 	bool restore;
 
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/ 
 #if defined(CONFIG_UFSFEATURE)
 	struct ufsf_feature ufsf;
 #endif
@@ -1398,7 +1393,6 @@ u32 ufshcd_get_local_unipro_ver(struct ufs_hba *hba);
 void ufshcd_scsi_block_requests(struct ufs_hba *hba);
 void ufshcd_scsi_unblock_requests(struct ufs_hba *hba);
 #ifdef VENDOR_EDIT
-/* Hank.liu@TECH.PLAT.Storage, 2019-10-31, add UFS+ hpb and tw driver*/
 #if defined(CONFIG_UFSFEATURE)
 int ufshcd_exec_dev_cmd(struct ufs_hba *hba,
 			enum dev_cmd_type cmd_type, int timeout);

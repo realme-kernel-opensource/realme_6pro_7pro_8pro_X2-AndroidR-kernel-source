@@ -68,7 +68,6 @@
 			<&clock_gcc GCC_QUPV3_WRAP_0_M_AHB_CLK>,
 			<&clock_gcc GCC_QUPV3_WRAP_0_S_AHB_CLK>;
 		//#ifndef OPLUS_ARCH_EXTENDS
-		//Suresh.Alla@MULTIMEDIA.AUDIODRIVER.MACHINE, 2020/07/30, Delete for audio use gpio34/35 as i2c
 		/*
 		pinctrl-names = "default", "sleep";
 		pinctrl-0 = <&qupv3_se0_spi_active>;

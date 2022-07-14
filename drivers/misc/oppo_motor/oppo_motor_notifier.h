@@ -8,11 +8,9 @@
 **
 ** Version: 1.0
 ** Date created: 2017/05/05
-** Author: Fei.Mo@PSW.BSP.Sensor
 **
 ** --------------------------- Revision History: -------------------------------------------
 * <version>	<date>		<author>					<desc>
-* Revision 1.0	    2018/04/27	      Fei.Mo@EXP.BSP.Sensor			Created
 **************************************************************************************/
 
 #ifndef _OPPO_MOTOR_NOTIFIER

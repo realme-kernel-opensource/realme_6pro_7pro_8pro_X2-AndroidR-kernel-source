@@ -554,7 +554,6 @@ int schedtune_cpu_boost(int cpu)
 }
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 extern bool test_task_ux(struct task_struct *task);
 #endif /* OPLUS_FEATURE_UIFIRST */
 int schedtune_task_boost(struct task_struct *p)
@@ -570,7 +569,6 @@ int schedtune_task_boost(struct task_struct *p)
 	st = task_schedtune(p);
 	task_boost = st->boost;
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/06/15, Add for UIFirst
 	if (sysctl_uifirst_enabled && sysctl_launcher_boost_enabled && p->static_ux == 2) {
 		task_boost = 60;
 	}
@@ -593,7 +591,6 @@ int schedtune_prefer_idle(struct task_struct *p)
 	st = task_schedtune(p);
 	prefer_idle = st->prefer_idle;
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled && sysctl_launcher_boost_enabled && test_task_ux(p)) {
 		prefer_idle = 1;
 	}

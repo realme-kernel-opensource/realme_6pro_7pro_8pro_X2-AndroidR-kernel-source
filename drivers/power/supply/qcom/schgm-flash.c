@@ -23,7 +23,6 @@
 #include <linux/printk.h>
 #include <linux/pmic-voter.h>
 //#ifdef VENDOR_EDIT
-/*lizhijie@BSP.CHG.Basic, 2020/02/25 lzj add for charger*/
 //#include "smb5-lib.h"
 //#endif
 #include "schgm-flash.h"

@@ -12,7 +12,6 @@ void *qcom_smem_get(unsigned host, unsigned item, size_t *size);
 int qcom_smem_get_free_space(unsigned host);
 phys_addr_t qcom_smem_virt_to_phys(void *addr);
 
-//Yong.Qian@bsp.kernel.stability, 2020/5/14, Add for dump reason
 #ifdef OPLUS_FEATURE_AGINGTEST
 #define DUMP_REASON_SIZE 256
 

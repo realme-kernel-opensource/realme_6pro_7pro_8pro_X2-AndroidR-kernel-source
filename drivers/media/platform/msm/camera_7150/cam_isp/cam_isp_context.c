@@ -1868,7 +1868,6 @@ static int __cam_isp_ctx_flush_req_in_top_state(
 	struct cam_isp_context *ctx_isp;
 
 #ifdef VENDOR_EDIT
-    /* jiangyi1@Cam.Drv 20190619 merge qcom patch for break long exposure snapshot */
     struct cam_isp_stop_args            stop_isp;
     struct cam_hw_stop_args             stop_args;
     struct cam_isp_start_args           start_isp;
@@ -1888,7 +1887,6 @@ static int __cam_isp_ctx_flush_req_in_top_state(
 	spin_unlock_bh(&ctx->lock);
 
 #ifdef VENDOR_EDIT
-    /* jiangyi1@Cam.Drv 20190619 merge qcom patch for break long exposure snapshot */
     if (flush_req->type == CAM_REQ_MGR_FLUSH_TYPE_ALL) {
         /* if active and wait list are empty, return */
         spin_lock_bh(&ctx->lock);

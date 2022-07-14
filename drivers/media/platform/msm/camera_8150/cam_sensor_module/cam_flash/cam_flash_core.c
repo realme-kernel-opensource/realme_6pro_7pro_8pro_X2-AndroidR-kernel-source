@@ -544,7 +544,6 @@ static int cam_flash_high(
 }
 
 #ifdef VENDOR_EDIT
-/*Add by hongbo.dai@Camera 20180319 for flash*/
 int cam_flash_on(struct cam_flash_ctrl *flash_ctrl,
 	struct cam_flash_frame_setting *flash_data,
 	int mode) {

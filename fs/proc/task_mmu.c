@@ -863,7 +863,7 @@ static int show_smap(struct seq_file *m, void *v, int is_pid)
 	/* mmap_sem is held in m_start */
 	walk_page_vma(vma, &smaps_walk);
 
-#ifdef VENDOR_EDIT //yixue.ge@bsp.drv modify for android.bg get pss too slow
+#ifdef VENDOR_EDIT
 	if (strcmp(current->comm, "android.bg") == 0) {
 		if ((unsigned long)(mss->pss >> (10 + PSS_SHIFT)) > 0) {
 			seq_printf(m,

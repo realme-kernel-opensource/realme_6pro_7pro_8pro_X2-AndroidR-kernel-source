@@ -33,9 +33,6 @@
 #include "dsi_parser.h"
 #include "dsi_phy.h"
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Lcd.Stability, 2018-05-31
- * add for drm notifier for display connect
-*/
 #include "oppo_mm_kevent_fb.h"
 #include <linux/msm_drm_notify.h>
 #include <linux/notifier.h>
@@ -46,7 +43,6 @@ extern int msm_drm_notifier_call_chain(unsigned long val, void *v);
 /* Don't panic if smmu fault*/
 extern int sde_kms_set_smmu_no_fatal_faults(struct drm_device *drm);
 #ifdef OPLUS_BUG_STABILITY
-//Sachin@PSW.BSP.TP, 2020/02/27, Add for notify TP display fps change
 __attribute__((weak)) void sec_refresh_switch(int fps)
 {
     return;
@@ -54,7 +50,6 @@ __attribute__((weak)) void sec_refresh_switch(int fps)
 #endif /* OPLUS_BUG_STABILITY */
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-//Qicai.gu@PSW.BSP.TP, 2020/08/21, Add for notify TP display fps change
 __attribute__((weak)) void lcd_tp_refresh_switch(int fps)
 {
     return;
@@ -83,9 +78,6 @@ extern int osc_count;
 #define MAX_TE_SOURCE_ID  2
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Lcd.Stability, 2018-05-31
- * add for drm notifier for display connect
-*/
 static struct dsi_display *primary_display;
 static struct dsi_display *secondary_display;
 #endif /* OPLUS_BUG_STABILITY */
@@ -250,9 +242,6 @@ int dsi_display_set_backlight(struct drm_connector *connector,
 		goto error;
 	}
 #ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Stable,2018-06-27
- * Add key log for debug
-*/
 	if ((bl_lvl == 0 && panel->bl_config.bl_level != 0) ||
 	    (bl_lvl != 0 && panel->bl_config.bl_level == 0))
 		pr_err("backlight level changed %d -> %d\n",
@@ -279,7 +268,6 @@ int dsi_display_set_backlight(struct drm_connector *connector,
 			goto error;
 		}
 
-		/* Gou shengjun@PSW.MM.Display.LCD.Stable,2018-10-25 fix ffl dsi abnormal on esd scene */
 		//oppo_start_ffl_thread();
 	}
 #endif /* OPLUS_BUG_STABILITY */
@@ -303,9 +291,6 @@ int dsi_display_set_backlight(struct drm_connector *connector,
 		goto error;
 	}
 #ifdef OPLUS_FEATURE_SAU
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/4/28
- * Add for silence/sau reboot
-*/
 	if(lcd_closebl_flag) {
 		pr_err("silence reboot we should set backlight to zero\n");
 		bl_temp = 0;
@@ -333,9 +318,6 @@ error:
 
 #ifndef OPLUS_BUG_STABILITY
 static int dsi_display_cmd_engine_enable(struct dsi_display *display)
-/* Sachin Shukla@PSW.MM.Display.LCD.Stability,2018/4/28
- * Add for public function
-*/
 #else
 int dsi_display_cmd_engine_enable(struct dsi_display *display)
 #endif /*OPLUS_BUG_STABILITY*/
@@ -385,9 +367,6 @@ done:
 #ifndef OPLUS_BUG_STABILITY
 static int dsi_display_cmd_engine_disable(struct dsi_display *display)
 #else
-/* Sachin Shukla@PSW.MM.Display.LCD.Stability,2018/4/28
- * Add for public function
-*/
 int dsi_display_cmd_engine_disable(struct dsi_display *display)
 #endif /*OPLUS_BUG_STABILITY*/
 {
@@ -687,7 +666,6 @@ static bool dsi_display_validate_reg_read(struct dsi_panel *panel)
 	}
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin@PSW.MM.Display.Lcd.Stability, 2018-12-04, add for solve esd fail */
 	{
 		unsigned char payload[150] = "";
 		int cnt = 0;
@@ -4149,7 +4127,6 @@ static void _dsi_display_calc_pipe_delay(struct dsi_display *display,
 	struct dsi_phy_cfg *cfg;
 	int phy_ver;
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2021/01/05, fix flicker when mipi clock is switched at low brightness */
 	u32 cust_pll_delay = display->panel->oppo_priv.pll_delay;
 #endif /* OPLUS_BUG_STABILITY */
 
@@ -4196,7 +4173,6 @@ static void _dsi_display_calc_pipe_delay(struct dsi_display *display,
 	phy_ver = dsi_phy_get_version(m_ctrl->phy);
 	if (phy_ver <= DSI_PHY_VERSION_3_0)
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2021/01/05, fix flicker when mipi clock is switched at low brightness */
 		delay->pll_delay = cust_pll_delay ? cust_pll_delay : 100;
 #else
 		delay->pll_delay = 100;
@@ -4207,7 +4183,6 @@ static void _dsi_display_calc_pipe_delay(struct dsi_display *display,
 	delay->pll_delay = (delay->pll_delay * esc_clk_rate_hz) / 1000000;
 
 #ifdef OPLUS_BUG_STABILITY
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2021/01/05, fix flicker when mipi clock is switched at low brightness */
 	pr_debug("cust_pll_delay = %d, pll_delay = %d\n", cust_pll_delay, delay->pll_delay);
 #endif /* OPLUS_BUG_STABILITY */
 }
@@ -4791,7 +4766,6 @@ static int dsi_display_set_mode_sub(struct dsi_display *display,
 	}
 
 #ifdef OPLUS_BUG_STABILITY
-/* LiPing-M@PSW.MM.Display.LCD.Stability,2020-05-08 Add for panel osc clk setting */
 	if (mode->dsi_mode_flags & DSI_MODE_FLAG_DYN_CLK) {
 		if(MSM_BOOT_MODE__NORMAL == get_boot_mode() && (osc_count != 0))
 			oppo_display_dynamic_clk_update_osc_clk(clk_rate);
@@ -5244,9 +5218,6 @@ static int dsi_display_bind(struct device *dev,
 		return 0;
 
 #ifdef OPLUS_FEATURE_SAU
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/06/05
- * Add for save select panel and give different feature SAU
-*/
 	if(0 != oppo_set_display_vendor(display)) {
 		pr_err("maybe send a null point to oppo display manager 1\n");
 		if(0 != set_oppo_display_vendor(display->name)) {
@@ -5541,7 +5512,6 @@ static int dsi_display_init(struct dsi_display *display)
 	int rc = 0;
 	struct platform_device *pdev = display->pdev;
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin@PSW.MM.Display.LCD.Machine, 2019/02/11,add for mm kevent fb. */
 	unsigned char payload[150] = "";
 #endif /*OPLUS_BUG_STABILITY*/
 
@@ -5556,7 +5526,6 @@ static int dsi_display_init(struct dsi_display *display)
 	rc = component_add(&pdev->dev, &dsi_display_comp_ops);
 
 #ifndef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Machine, 2019/02/11,add for mm kevent fb. */
 	if (rc)
 		pr_err("component add failed, rc=%d\n", rc);
 #else
@@ -5671,9 +5640,6 @@ int dsi_display_dev_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, display);
 
 #ifdef OPLUS_BUG_STABILITY
-/* Sachin Shukla@PSW.MM.Display.Lcd.Stability, 2020-08-05
- * add for drm notifier for display connect
-*/
 	if (!strcmp(dsi_type, "primary"))
 			primary_display = display;
 		else
@@ -6749,7 +6715,6 @@ int dsi_display_validate_mode_change(struct dsi_display *display,
 		if (dsi_display_mode_switch_dfps(cur_mode, adj_mode)) {
 			dsi_panel_get_dfps_caps(display->panel, &dfps_caps);
 			#ifdef OPLUS_BUG_STABILITY
-			/*liping-m@PSW.MM.Display.LCD,2019/6/20,for 90FPS LCD */
 			if (cur_mode->timing.refresh_rate != adj_mode->timing.refresh_rate) {
 				pr_err("dsi_cmd set fps: %d\n", adj_mode->timing.refresh_rate);
 			}
@@ -6890,12 +6855,10 @@ int dsi_display_set_mode(struct dsi_display *display,
 	}
 
 #ifdef OPLUS_BUG_STABILITY
-//yulujiang@PSW.BSP.TP, 2019/09/29, Add for notify TP display fps change
 	sec_refresh_switch(adj_mode.timing.refresh_rate);
 #endif /* OPLUS_BUG_STABILITY */
 
 #ifdef OPLUS_FEATURE_TP_BASIC
-//Qicai.gu@PSW.BSP.TP, 2020/08/21, Add for notify TP display fps change
         lcd_tp_refresh_switch(adj_mode.timing.refresh_rate);
 #endif /* OPLUS_FEATURE_TP_BASIC*/
 
@@ -7713,9 +7676,6 @@ int dsi_display_enable(struct dsi_display *display)
 
 		display->panel->panel_initialized = true;
 #ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/4/28
- * when continous splash enabled, we should set power mode to OPPO_DISPLAY_POWER_ON here
-*/
 		set_oppo_display_power_status(OPPO_DISPLAY_POWER_ON);
 #endif /* OPLUS_BUG_STABILITY */
 		pr_debug("cont splash enabled, display enable not required\n");
@@ -7795,7 +7755,6 @@ error:
 }
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2020-01-08 fix aod ramless fingerprint */
 extern ktime_t oppo_onscreenfp_pressed_time;
 extern u32 oppo_onscreenfp_vblank_count;
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
@@ -7815,7 +7774,6 @@ int dsi_display_post_enable(struct dsi_display *display)
 			dsi_panel_mode_switch_to_cmd(display->panel);
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2020-01-08 fix aod ramless fingerprint */
 		if (display->config.panel_mode == DSI_OP_VIDEO_MODE) {
 			if (display->panel->oppo_priv.is_aod_ramless &&
 					display->drm_conn && display->drm_conn->state &&
@@ -7857,11 +7815,7 @@ int dsi_display_pre_disable(struct dsi_display *display)
 	mutex_lock(&display->display_lock);
 
 #ifdef OPLUS_BUG_STABILITY
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-05-08 fix race on backlight and power change */
 	display->panel->need_power_on_backlight = false;
-/* Gou shengjun@PSW.MM.Display.LCD.Stable,2018-10-25
- * fix ffl dsi abnormal on esd scene
-*/
 	//oppo_stop_ffl_thread();
 #endif /* OPLUS_BUG_STABILITY */
 	/* enable the clk vote for CMD mode panels */
@@ -7890,9 +7844,6 @@ int dsi_display_disable(struct dsi_display *display)
 {
 	int rc = 0;
 #ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/4/13
- * Add a notify for when disable display
-*/
 	int blank;
 	struct msm_drm_notifier notifier_data;
 #endif /* OPLUS_BUG_STABILITY */
@@ -7928,9 +7879,6 @@ int dsi_display_disable(struct dsi_display *display)
 
 	if (!display->poms_pending) {
 		#ifdef OPLUS_BUG_STABILITY
-		/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/4/13
-		 * Add a notify for when disable display
-		 */
 		blank = MSM_DRM_BLANK_POWERDOWN;
 		notifier_data.data = &blank;
 		notifier_data.id = 0;
@@ -7944,9 +7892,6 @@ int dsi_display_disable(struct dsi_display *display)
 			       display->name, rc);
 
 		#ifdef OPLUS_FEATURE_SAU
-		/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/4/13
-		 * Add a notify for when disable display
-		 */
 		set_oppo_display_scene(OPPO_DISPLAY_NORMAL_SCENE);
 		msm_drm_notifier_call_chain(MSM_DRM_EVENT_BLANK,
 							&notifier_data);
@@ -8051,9 +7996,6 @@ int dsi_display_unprepare(struct dsi_display *display)
 }
 
 #ifdef OPLUS_BUG_STABILITY
-/* Gou shengjun@PSW.MM.Display.LCD.Stability,2018/4/28
- * Add for support aod,hbm,seed
-*/
 struct dsi_display *get_main_display(void) {
 		return primary_display;
 }

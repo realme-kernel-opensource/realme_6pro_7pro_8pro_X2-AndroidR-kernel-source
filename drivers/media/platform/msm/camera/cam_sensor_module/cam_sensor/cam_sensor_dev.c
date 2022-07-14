@@ -14,7 +14,6 @@
 #include "cam_req_mgr_dev.h"
 #include "cam_sensor_soc.h"
 #include "cam_sensor_core.h"
-/* hongbo.dai@camera 20181122 add for at camera test */
 #ifdef VENDOR_EDIT
 struct cam_sensor_i2c_reg_setting_array {
 	struct cam_sensor_i2c_reg_array reg_setting[4600];
@@ -46,7 +45,6 @@ struct cam_sensor_settings {
 struct cam_sensor_settings sensor_settings = {
 #include "CAM_SENSOR_SETTINGS.h"
 };
-/*add by hongbo.dai@camera 20181213, for Camera AT current test*/
 static bool is_ftm_current_test = false;
 #endif
 
@@ -56,7 +54,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 	int rc = 0;
 	struct cam_sensor_ctrl_t *s_ctrl =
 		v4l2_get_subdevdata(sd);
-/* hongbo.dai@camera 20181122 add for at camera test */
 #ifdef VENDOR_EDIT
 	struct cam_sensor_i2c_reg_setting sensor_setting;
 	int i = 0;
@@ -67,7 +64,6 @@ static long cam_sensor_subdev_ioctl(struct v4l2_subdev *sd,
 		rc = cam_sensor_driver_cmd(s_ctrl, arg);
 		break;
 #ifdef VENDOR_EDIT
-	/* hongbo.dai@camera 20181122 add for at camera test */
 	case VIDIOC_CAM_FTM_POWNER_DOWN:
 		CAM_ERR(CAM_SENSOR, "FTM power down");
 		return cam_sensor_power_down(s_ctrl);
@@ -231,7 +227,6 @@ static int cam_sensor_subdev_close(struct v4l2_subdev *sd,
 
 	mutex_lock(&(s_ctrl->cam_sensor_mutex));
 #ifdef VENDOR_EDIT
-	//add by hongbo.dai@camea 20181213,ftm test will do it by powerdown
 	if(!is_ftm_current_test)
 #endif
 	cam_sensor_shutdown(s_ctrl);

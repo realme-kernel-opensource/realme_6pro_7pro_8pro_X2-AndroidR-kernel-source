@@ -33,7 +33,6 @@
 #include "aw8697_reg.h"
 #include "aw8697_config.h"
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for config trig1 */
 #include <linux/proc_fs.h>
 #include <linux/pm_qos.h>
 #include <linux/vmalloc.h>
@@ -187,7 +186,6 @@ static char aw8697_ringtone_rtp_f0_170_name[][AW8697_RTP_NAME_MAX] ={
 static char aw8697_rtp_name[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_rtp.bin"},
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for config trig1 */
     {"aw8697_Hearty_channel_RTP_1.bin"},
     {"aw8697_Instant_channel_RTP_2.bin"},
     {"aw8697_Music_channel_RTP_3.bin"},
@@ -329,7 +327,6 @@ static char aw8697_rtp_name[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_rtp_lighthouse.bin"},
     {"aw8697_rtp_silk.bin"},
 #ifdef VENDOR_EDIT
-//zhengzhiwei@BSP.Kernel.Driver.Vibrator, 2019/08/1,
 //Add for vibrating of realme rings
 	{"aw8697_realme_tune_RTP_125.bin"},
 	{"aw8697_realme_jingle_RTP_126.bin"},
@@ -353,7 +350,6 @@ static char aw8697_ram_name_19696[5][30] ={
 static char aw8697_rtp_name_19081[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_rtp.bin"},
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for config trig1 */
     {"aw8697_Hearty_channel_RTP_1.bin"},
     {"aw8697_Instant_channel_RTP_2.bin"},
     {"aw8697_Music_channel_RTP_3.bin"},
@@ -474,7 +470,6 @@ static char aw8697_rtp_name_19081[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_reserved_108.bin"},
     {"aw8697_reserved_109.bin"},
 
-/* lliangliang.shan@BSP.CHG.Basic, 2019/11/29,  Add for config trig1 */
 	{"aw8697_reserved_110.bin"},
     {"aw8697_reserved_111.bin"},
     {"aw8697_reserved_112.bin"},
@@ -524,7 +519,6 @@ static char aw8697_rtp_name_19081[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_rtp_lighthouse.bin"},
     {"aw8697_rtp_silk_19081.bin"},
 #ifdef VENDOR_EDIT
-//zhengzhiwei@BSP.Kernel.Driver.Vibrator, 2019/08/1,
 //Add for vibrating of realme rings
 	{"aw8697_reserved_112.bin"},
 	{"aw8697_reserved_113.bin"},
@@ -548,7 +542,6 @@ static char aw8697_rtp_name_19081[][AW8697_RTP_NAME_MAX] = {
 static char aw8697_rtp_name_19696[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_rtp.bin"},
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for config trig1 */
     {"aw8697_Hearty_channel_RTP_1.bin"},
     {"aw8697_Instant_channel_RTP_2_235Hz.bin"},
     {"aw8697_Music_channel_RTP_3.bin"},
@@ -669,7 +662,6 @@ static char aw8697_rtp_name_19696[][AW8697_RTP_NAME_MAX] = {
     {"aw8697_reserved_108.bin"},
     {"aw8697_reserved_109.bin"},
 
-/* lliangliang.shan@BSP.CHG.Basic, 2019/11/29,  Add for config trig1 */
 	{"aw8697_reserved_110.bin"},
     {"aw8697_reserved_111.bin"},
     {"aw8697_reserved_112.bin"},
@@ -931,7 +923,6 @@ static void aw8697_rtp_loaded(const struct firmware *cont, void *context)
     /* aw8697 rtp update */
     mutex_lock(&aw8697->rtp_lock);
     #ifndef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2019/03/11,  Add for alloc memory */
     aw8697_rtp = kzalloc(cont->size+sizeof(int), GFP_KERNEL);
     if (!aw8697_rtp) {
         release_firmware(cont);
@@ -1601,7 +1592,6 @@ static int aw8697_haptic_trig_param_init(struct aw8697 *aw8697)
     pr_debug("%s enter\n", __func__);
 
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/01/7,  Add for disable trig */
     aw8697->trig[0].enable = 0;
 #else
     aw8697->trig[0].enable = AW8697_TRG1_ENABLE;
@@ -1611,7 +1601,6 @@ static int aw8697_haptic_trig_param_init(struct aw8697 *aw8697)
     aw8697->trig[0].frist_seq = AW8697_TRG1_FIRST_EDGE_SEQ;
     aw8697->trig[0].second_seq = AW8697_TRG1_SECOND_EDGE_SEQ;
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/01/7,  Add for disable trig*/
     aw8697->trig[1].enable = 0;
 #else
     aw8697->trig[1].enable = AW8697_TRG2_ENABLE;
@@ -1621,7 +1610,6 @@ static int aw8697_haptic_trig_param_init(struct aw8697 *aw8697)
     aw8697->trig[1].frist_seq = AW8697_TRG2_FIRST_EDGE_SEQ;
     aw8697->trig[1].second_seq = AW8697_TRG2_SECOND_EDGE_SEQ;
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/1/7,  Add for disable trig*/
     aw8697->trig[2].enable = 0;
 #else
     aw8697->trig[2].enable = AW8697_TRG3_ENABLE;
@@ -1840,7 +1828,6 @@ static int aw8697_haptic_read_f0(struct aw8697 *aw8697)
     ret = aw8697_i2c_read(aw8697, AW8697_REG_F_LRA_CONT_L, &reg_val);
     f0_reg |= (reg_val<<0);
 #ifndef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/1/18,  Add for coverity */
     f0_tmp = 1000000000/(f0_reg*AW8697_HAPTIC_F0_COEFF);
 #else
     if (f0_reg != 0) {
@@ -1872,7 +1859,6 @@ static int aw8697_haptic_read_cont_f0(struct aw8697 *aw8697)
     f0_reg |= (reg_val<<0);
 
 #ifndef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/1/7,  Add for coverity */
     f0_tmp = 1000000000/(f0_reg*AW8697_HAPTIC_F0_COEFF);
 #else
     if (f0_reg != 0) {
@@ -2193,7 +2179,6 @@ static int aw8697_rtp_osc_calibration(struct aw8697 *aw8697)
     aw8697->rtp_init = 0;
     mutex_lock(&aw8697->rtp_lock);//vincent
     #ifndef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2019/03/11,  Add for alloc memory */
     kfree(aw8697_rtp);
     aw8697_rtp = kzalloc(rtp_file->size+sizeof(int), GFP_KERNEL);
     if (!aw8697_rtp) {
@@ -2472,7 +2457,6 @@ static void aw8697_rtp_work_routine(struct work_struct *work)
 
     mutex_lock(&aw8697->rtp_lock);//vincent
     #ifndef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2019/03/11,  Add for alloc memory */
     kfree(aw8697_rtp);
     aw8697_rtp = kzalloc(rtp_file->size+sizeof(int), GFP_KERNEL);
     if (!aw8697_rtp) {
@@ -2552,7 +2536,6 @@ static void aw8697_rtp_single_cycle_routine(struct work_struct *work)
     }
     aw8697->rtp_init = 0;
     #ifndef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2019/03/11,  Add for alloc memory */
     kfree(aw8697_rtp);
     printk("%s---%d\n",__func__,__LINE__);
     aw8697_rtp = kzalloc(rtp_file->size+sizeof(int), GFP_KERNEL);
@@ -2655,7 +2638,6 @@ static void aw8697_rtp_regroup_routine(struct work_struct *work)
     rtp_len_tmp = 0;
     aw8697->rtp_init = 0;
     #ifndef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2019/03/11,  Add for alloc memory */
     kfree(aw8697_rtp);
     aw8697_rtp = kzalloc(aw8697_rtp_len+sizeof(int), GFP_KERNEL);
     if (!aw8697_rtp) {
@@ -3111,7 +3093,6 @@ static int aw8697_haptic_f0_calibration(struct aw8697 *aw8697)
         /* max and min limit */
         f0_limit = aw8697->f0;
 #ifdef VENDOR_EDIT
-/* Hang.Zhao@PSW.BSP.CHG.Basic,2019/10/25, Modify for different haptics */
         if (SHIPPING_API_LEVEL == 29) {
             if(aw8697->f0*100 < AW8697_19696_HAPTIC_F0_PRE*(100-AW8697_19696_HAPTIC_F0_CALI_PERCEN)) {
                 f0_limit = AW8697_19696_HAPTIC_F0_PRE*(100-AW8697_19696_HAPTIC_F0_CALI_PERCEN)/100;
@@ -3292,7 +3273,6 @@ static ssize_t aw8697_file_write(struct file* filp, const char* buff, size_t len
     ret = copy_from_user(pbuff, buff, len);
     if(ret) {
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/1/7,  Add for coverity*/
         if(pbuff != NULL) {
             kfree(pbuff);
         }
@@ -3455,7 +3435,6 @@ static int aw8697_haptic_init(struct aw8697 *aw8697)
     pr_err("%s get f0_pre=%d\n", __func__, aw8697->f0_pre);
 #endif
 #ifndef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2019/1/7,  Add for disable F0  in kernel*/
     aw8697_haptic_f0_calibration(aw8697);
 #endif
     mutex_unlock(&aw8697->lock);
@@ -3611,7 +3590,6 @@ static ssize_t aw8697_duration_store(struct device *dev,
         return rc;
 
 #ifdef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for mv voltage */
     pr_err("%s: value=%d\n", __FUNCTION__, val);
 #endif
     /* setting 0 on duration is NOP for now */
@@ -3703,7 +3681,6 @@ static ssize_t aw8697_activate_store(struct device *dev,
 
     aw8697->state = val;
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/12/27,  Add for vib */
     if (aw8697->state)
     {
         pr_err("%s: aw8697->gain=0x%02x\n", __FUNCTION__, aw8697->gain);
@@ -3842,7 +3819,6 @@ static ssize_t aw8697_vmax_store(struct device *dev,
 
     mutex_lock(&aw8697->lock);
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for mv voltage */
     if (val <= 255) {
         aw8697->gain = (val * AW8697_HAPTIC_RAM_VBAT_COMP_GAIN) / 255;
     }
@@ -4272,7 +4248,6 @@ static ssize_t aw8697_f0_show(struct device *dev, struct device_attribute *attr,
     mutex_unlock(&aw8697->lock);
 
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for old test */
     len += snprintf(buf+len, PAGE_SIZE-len, "%d\n", aw8697->f0);
 #else
     len += snprintf(buf+len, PAGE_SIZE-len, "aw8697 lra f0 = %d\n", aw8697->f0);
@@ -4603,7 +4578,6 @@ static ssize_t aw8697_lra_resistance_show(struct device *dev, struct device_attr
     aw8697->lra = 298 * reg_val;
 
 #ifdef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for old test */
     len += snprintf(buf+len, PAGE_SIZE-len, "%d\n", aw8697->lra);
 #else
     len += snprintf(buf+len, PAGE_SIZE-len, "r_lra=%dmohm\n", aw8697->lra);
@@ -4818,7 +4792,6 @@ static ssize_t aw8697_ram_vbat_comp_store(struct device *dev, struct device_attr
 }
 
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/02/19,  Add for old test */
 
 static ssize_t aw8697_osc_cali_show(struct device *dev, struct device_attribute *attr,
         char *buf)
@@ -4970,7 +4943,6 @@ static ssize_t aw8697_haptic_audio_time_store(struct device *dev, struct device_
 }
 
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for old test */
 static void oppo_motor_old_test_work(struct work_struct *work)
 {
     struct aw8697 *aw8697 = container_of(work, struct aw8697, motor_old_test_work);
@@ -5336,7 +5308,6 @@ static DEVICE_ATTR(prctmode, S_IWUSR | S_IRUGO, aw8697_prctmode_show, aw8697_prc
 static DEVICE_ATTR(trig, S_IWUSR | S_IRUGO, aw8697_trig_show, aw8697_trig_store);
 static DEVICE_ATTR(ram_vbat_comp, S_IWUSR | S_IRUGO, aw8697_ram_vbat_comp_show, aw8697_ram_vbat_comp_store);
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2019/02/19,  Add for old test */
 static DEVICE_ATTR(osc_cali, S_IWUSR | S_IRUGO, aw8697_osc_cali_show, aw8697_osc_cali_store);
 #endif
 
@@ -5344,7 +5315,6 @@ static DEVICE_ATTR(rtp_num, S_IWUSR | S_IRUGO, aw8697_rtp_num_show, aw8697_rtp_n
 static DEVICE_ATTR(haptic_audio, S_IWUSR | S_IRUGO, aw8697_haptic_audio_show, aw8697_haptic_audio_store);
 static DEVICE_ATTR(haptic_audio_time, S_IWUSR | S_IRUGO, aw8697_haptic_audio_time_show, aw8697_haptic_audio_time_store);
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for device file */
 static DEVICE_ATTR(motor_old, S_IWUSR | S_IRUGO, aw8697_motor_old_test_show, aw8697_motor_old_test_store);
 static DEVICE_ATTR(waveform_index, S_IWUSR | S_IRUGO, aw8697_waveform_index_show, aw8697_waveform_index_store);
 static DEVICE_ATTR(osc_data, S_IWUSR | S_IRUGO, aw8697_osc_data_show, aw8697_osc_data_store);
@@ -5383,7 +5353,6 @@ static struct attribute *aw8697_vibrator_attributes[] = {
     &dev_attr_haptic_audio.attr,
     &dev_attr_haptic_audio_time.attr,
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for device file */
     &dev_attr_motor_old.attr,
     &dev_attr_waveform_index.attr,
     &dev_attr_osc_data.attr,
@@ -5414,7 +5383,6 @@ static void aw8697_vibrator_work_routine(struct work_struct *work)
     struct aw8697 *aw8697 = container_of(work, struct aw8697, vibrator_work);
 
 #ifdef VENDOR_EDIT
-    /* tongfeng.Huang@BSP.CHG.Basic, 2018/12/27,  Add for  vibration run in ram mode */
     aw8697->activate_mode = AW8697_HAPTIC_ACTIVATE_RAM_MODE;
     pr_err("%s enter, aw8697->state[%d], aw8697->activate_mode[%d], aw8697->ram_vbat_comp[%d]\n",
                 __func__, aw8697->state, aw8697->activate_mode, aw8697->ram_vbat_comp);
@@ -5943,7 +5911,6 @@ static int aw8697_i2c_probe(struct i2c_client *i2c, const struct i2c_device_id *
 
     aw8697_ram_init(aw8697);
 #ifdef VENDOR_EDIT
-/* tongfeng.Huang@BSP.CHG.Basic, 2018/11/17,  Add for old test */
     INIT_WORK(&aw8697->motor_old_test_work, oppo_motor_old_test_work);
     aw8697->motor_old_test_mode = 0;
 #endif

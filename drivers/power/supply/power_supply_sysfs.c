@@ -226,7 +226,6 @@ static ssize_t power_supply_store_property(struct device *dev,
 static struct device_attribute power_supply_attrs[] = {
 	/* Properties of type `int' */
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 	POWER_SUPPLY_ATTR(charge_technology),
 	POWER_SUPPLY_ATTR(fastcharger),
 	POWER_SUPPLY_ATTR(mmi_charging_enable),
@@ -453,7 +452,6 @@ static struct device_attribute power_supply_attrs[] = {
 	/* Local extensions of type int64_t */
 	POWER_SUPPLY_ATTR(charge_counter_ext),
 #ifdef VENDOR_EDIT
-/* lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for charging */
 	POWER_SUPPLY_ATTR(adapter_fw_update),
 	POWER_SUPPLY_ATTR(voocchg_ing),
 	POWER_SUPPLY_ATTR(chargerid_volt),
@@ -477,7 +475,6 @@ static struct device_attribute power_supply_attrs[] = {
 #endif /*CONFIG_OPLUS_SHORT_USERSPACE*/
 #endif /* VENDOR_EDIT */
 #ifdef VENDOR_EDIT
-//lizhijie@BSP.CHG.Basic, 2020/02/25, lzj Add for hw battery check
 #ifdef CONFIG_OPLUS_SHORT_HW_CHECK
 	POWER_SUPPLY_ATTR(short_c_hw_feature),
 	POWER_SUPPLY_ATTR(short_c_hw_status),

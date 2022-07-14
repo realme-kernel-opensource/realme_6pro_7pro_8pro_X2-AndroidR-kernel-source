@@ -29,7 +29,6 @@
 #include <linux/task_io_accounting.h>
 
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 #include <linux/oppo_healthinfo/oppo_jank_monitor.h>
 #endif
@@ -211,16 +210,13 @@ struct task_group;
 #endif
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 extern int sysctl_uifirst_enabled;
 extern int sysctl_launcher_boost_enabled;
 #endif /* OPLUS_FEATURE_UIFIRST */
 #ifdef OPLUS_FEATURE_UIFIRST
-// Liujie.Xie@TECH.Kernel.Sched, 2020/02/26, add for heavy load task
 extern int sysctl_cpu_multi_thread;
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XuHaifeng@BSP.KERNEL.PERFORMANCE, 2020/06/23, Add for UIFirst(sldie boost)
 extern int sysctl_slide_boost_enabled;
 extern int sysctl_boost_task_threshold;
 #ifdef CONFIG_CAMERA_OPT
@@ -1395,7 +1391,6 @@ struct task_struct {
 	void				*security;
 #endif
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	int static_ux;
 	atomic64_t dynamic_ux;
 	struct list_head ux_entry;
@@ -1407,7 +1402,6 @@ struct task_struct {
 #endif 
 #endif /* OPLUS_FEATURE_UIFIRST */
 #ifdef OPLUS_FEATURE_HEALTHINFO
-// Liujie.Xie@TECH.Kernel.Sched, 2019/08/29, add for jank monitor
 #ifdef CONFIG_OPPO_JANK_INFO
 	int jank_trace;
 	struct oppo_jank_monitor_info oppo_jank_info;

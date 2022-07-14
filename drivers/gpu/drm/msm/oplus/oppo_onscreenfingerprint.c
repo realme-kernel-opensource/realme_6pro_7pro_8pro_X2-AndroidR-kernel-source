@@ -5,7 +5,6 @@
 ** Description : oppo onscreenfingerprint feature
 ** Version : 1.0
 ** Date : 2020/04/15
-** Author : Qianxu@MM.Display.LCD Driver
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -160,7 +159,8 @@ static int brightness_to_alpha(int brightness)
 {
 	int alpha;
 
-	if (brightness == 0 || brightness == 1) {
+	pr_debug("brightness=%d, oppo_last_backlight=%d\n", brightness, oppo_last_backlight);
+	if (brightness == 1) {
 		brightness = oppo_last_backlight;
 	}
 
@@ -197,7 +197,6 @@ static int oppo_get_panel_brightness_to_alpha(void)
 	return brightness_to_alpha(display->panel->bl_config.bl_level);
 }
 
-/*Mark.Yao@PSW.MM.Display.LCD.Stable,2019-10-24 add for fingerprint */
 int dsi_panel_parse_oppo_fod_config(struct dsi_panel *panel)
 {
 	int rc = 0;
@@ -280,6 +279,9 @@ static int dsi_panel_parse_oppo_backlight_remapping_config(struct dsi_panel *pan
 	panel->oppo_priv.bl_interpolate_nosub = utils->read_bool(utils->data,
 			"oppo,bl_interpolate_nosub");
 
+	panel->oppo_priv.bl_remap_brightness_show = utils->read_bool(utils->data,
+			"oplus,bl_remap_brightness_show");
+
 	arr = utils->get_property(utils->data, "oppo,dsi-brightness-remapping", &length);
 	if (!arr) {
 		DSI_DEBUG("[%s] oppo,dsi-brightness-remapping not found\n", panel->name);
@@ -291,7 +293,9 @@ static int dsi_panel_parse_oppo_backlight_remapping_config(struct dsi_panel *pan
 		return -EINVAL;
 	}
 
-	DSI_INFO("oppo,dsi-brightness-remapping's length = %d, interpolate_nosub = %d\n", length, panel->oppo_priv.bl_interpolate_nosub ? 1 : 0);
+	DSI_INFO("oppo,dsi-brightness-remapping's length = %d, interpolate_nosub = %d, brightness_show = %d\n",
+                 length, panel->oppo_priv.bl_interpolate_nosub ? 1 : 0, panel->oppo_priv.bl_remap_brightness_show ? 1 : 0);
+
 	length = length / sizeof(u32);
 	size = length * sizeof(u32);
 
@@ -360,20 +364,17 @@ int dsi_panel_parse_oppo_config(struct dsi_panel *panel)
 		panel->oppo_priv.is_pxlw_iris5 ? "true" : "false");
 
 #ifdef OPLUS_FEATURE_AOD_RAMLESS
-/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, sepolicy for aod ramless */
 	panel->oppo_priv.is_aod_ramless = utils->read_bool(utils->data,
 			"oppo,aod_ramless");
 	DSI_INFO("aod ramless mode: %s", panel->oppo_priv.is_aod_ramless ? "true" : "false");
 #endif /* OPLUS_FEATURE_AOD_RAMLESS */
 
 #ifdef OPLUS_BUG_STABILITY
-/* xupengcheng@MULTIMEDIA.DISPLAY.LCD, 2020/10/20,add for 19781 discard the first osc clock setting */
 	panel->oppo_priv.is_19781_lcd = utils->read_bool(utils->data,
 			"oplus,is_19781_lcd");
 	DSI_INFO("is_19781_lcd: %s",
 		panel->oppo_priv.is_19781_lcd ? "true" : "false");
 
-	/* Yuwei.Zhang@MULTIMEDIA.DISPLAY.LCD, 2021/01/05, fix flicker when mipi clock is switched at low brightness */
 	 {
 		u32 val = 0;
 		int rc;
@@ -388,7 +389,6 @@ int dsi_panel_parse_oppo_config(struct dsi_panel *panel)
 #endif /* OPLUS_BUG_STABILITY */
 
 #ifdef OPLUS_FEATURE_LCD_CABC
-/*xupengcheng@MULTIMEDIA.MM.Display.LCD.Stability,2020/09/18,add for 19696 LCD CABC feature*/
 	panel->oppo_priv.is_19696_lcd = utils->read_bool(utils->data,
                         "oplus,is_19696_lcd");
         DSI_INFO("is_19696_lcd: %s",
@@ -507,7 +507,6 @@ int dsi_panel_parse_oppo_mode_config(struct dsi_display_mode *mode,
 
 	return 0;
 }
-/* End of Mark.Yao@PSW.MM.Display.LCD.Stable,2019-10-24 add for fingerprint */
 
 bool sde_crtc_get_dimlayer_mode(struct drm_crtc_state *crtc_state)
 {
@@ -711,7 +710,6 @@ _sde_encoder_setup_dither_for_onscreenfingerprint(
 		return -EINVAL;
 
 	memcpy(&dither, dither_cfg, len);
-	/*Jian.Zhou@PSW.MM.Display.LCD.Stable,2020-01-16 add for fix green screen issue*/
 	dither.c0_bitdepth = 6;
 	dither.c1_bitdepth = 8;
 	dither.c2_bitdepth = 8;

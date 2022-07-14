@@ -85,7 +85,6 @@ static int in_panic;
 static struct kobject dload_kobj;
 static struct kobject dload_kobj;
 #ifndef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE
-//Bin.Xu@BSP.Kernel.Stability, 2020/4/4, add checklist: minidump
 static int dload_type = SCM_DLOAD_FULLDUMP;
 #else
 #if defined(CONFIG_OPPO_DEBUG_BUILD)
@@ -103,7 +102,6 @@ static void __iomem *kaslr_imem_addr;
 #endif
 static bool scm_dload_supported;
 #ifdef CONFIG_OPLUS_FEATURE_PANIC_FLUSH
-//Wanghao@BSP.Kernel.Function 2018/12/07, add for 5G modem dump issue
 int get_download_mode(void)
 {
 	return download_mode && (dload_type & SCM_DLOAD_FULLDUMP);
@@ -164,7 +162,6 @@ int scm_set_dload_mode(int arg1, int arg2)
 
 
 #ifdef OPLUS_BUG_STABILITY
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/4, add checklist: minidump
 bool is_fulldump_enable(void)
 {
 	return download_mode && (dload_type & SCM_DLOAD_FULLDUMP);
@@ -218,7 +215,6 @@ static void set_dload_mode(int on)
 		pr_err("Failed to set secure DLOAD mode: %d\n", ret);
 
 #ifdef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE
-// Bin.Xu@BSP.Kernel.Stability, 2020/4/4, add checklist: minidump
 	if(dload_type == SCM_DLOAD_MINIDUMP)
 		__raw_writel(EMMC_DLOAD_TYPE, dload_type_addr);
 	else
@@ -234,7 +230,6 @@ static bool get_dload_mode(void)
 }
 
 #ifdef OPLUS_FEATURE_ADSP_RECOVERY
-/*Suresh.Alla@MULTIMEDIA.AUDIODRVIER.ADSP.2434874, 2020/08/14, Add for adsp issue*/
 bool oem_is_fulldump(void)
 {
 	return download_mode && (dload_type & SCM_DLOAD_FULLDUMP);
@@ -389,7 +384,6 @@ static void msm_restart_prepare(const char *cmd)
 				(cmd != NULL && cmd[0] != '\0'));
 	}
 #ifdef OPLUS_BUG_STABILITY 
-//Fanhong.Kong@PSW.BSP.CHG,add 2018/3/25 panic reboot reason as kernel for hotfix 
 	if (in_panic){
 		//warm reset
 		qpnp_pon_system_pwr_off(PON_POWER_OFF_WARM_RESET);
@@ -439,7 +433,6 @@ static void msm_restart_prepare(const char *cmd)
 				PON_RESTART_REASON_KEYS_CLEAR);
 			__raw_writel(0x7766550a, restart_reason);
 		#ifdef OPLUS_FEATURE_AGINGTEST
-		//xiaofan.yang@PSW.TECH.AgingTest, 2019/01/07,Add for factory agingtest
 		} else if(!strcmp(cmd, "sbllowmemtest")){
 			qpnp_pon_set_restart_reason(
 					PON_RESTART_REASON_SBL_DDR_CUS);
@@ -467,7 +460,6 @@ static void msm_restart_prepare(const char *cmd)
 			enable_emergency_dload_mode();
 		} 
 #ifdef VENDOR_EDIT
-/*xing.xing@BSP.Bootloader.Bootflow, 2019/04/11, Add for oppo boot mode*/
 		else if (!strncmp(cmd, "rf", 2)) {
 			qpnp_pon_set_restart_reason(
 				PON_RESTART_REASON_RF);
@@ -507,7 +499,6 @@ static void msm_restart_prepare(const char *cmd)
 		}
 	}
 #ifdef VENDOR_EDIT
-/*xing.xing@BSP.Bootloader.Bootflow, 2019/04/11, Add for oppo boot mode*/
 	else {
 		qpnp_pon_set_restart_reason(
 				PON_RESTART_REASON_NORMAL);
@@ -694,7 +685,6 @@ static size_t store_dload_mode(struct kobject *kobj, struct attribute *attr,
 		return -EINVAL;
 	}
 
- 	/* yanghao@BSP.Kernel.Driver,  if open fulldump disable the pmic watchdog */
 	if(dload_type == SCM_DLOAD_FULLDUMP)
 		oppo_set_pmicWd_state(0);
 
@@ -749,7 +739,6 @@ static int msm_restart_probe(struct platform_device *pdev)
 	int ret = 0;
 	
 #ifdef CONFIG_OPLUS_FEATURE_QCOM_MINIDUMP_ENHANCE
-/* Fuchun.Liao@BSP.CHG.Basic 2020/04/08 add for minidump customized */
 #ifdef CONFIG_OPPO_USER_BUILD
 	if (get_eng_version() == AGING)
 		dload_type = SCM_DLOAD_FULLDUMP;

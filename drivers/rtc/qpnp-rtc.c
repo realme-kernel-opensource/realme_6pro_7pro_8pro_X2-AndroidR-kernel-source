@@ -25,7 +25,6 @@
 #include <linux/alarmtimer.h>
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.Power.Basic 2018/05/01  Add for case04863697*/
 #include "soc/oplus/system/boot_mode.h"
 #endif
 
@@ -624,7 +623,6 @@ static int qpnp_rtc_probe(struct platform_device *pdev)
 
 	device_init_wakeup(&pdev->dev, 1);
 	#ifdef OPLUS_FEATURE_POWERINFO_FTM
-	//Nanwei.Deng@BSP.Power.Basic 2018/05/01  Add for case04863697*/
 	if (get_boot_mode() == MSM_BOOT_MODE__FACTORY)
 	{
 		enable_irq(rtc_dd->rtc_alarm_irq);
@@ -729,7 +727,6 @@ static int qpnp_rtc_restore(struct device *dev)
 		else
 		{
 			#ifdef OPLUS_FEATURE_POWERINFO_FTM
-			//Nanwei.Deng@BSP.Power.Basic 2018/05/01  Add for case04863697*/
 			if (get_boot_mode() == MSM_BOOT_MODE__FACTORY)
 			{
 				enable_irq(rtc_dd->rtc_alarm_irq);

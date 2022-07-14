@@ -309,6 +309,9 @@
 	qcom,vbatt_num = <1>;
 	recharge_after_full;
 
+	qcom,vooc_show_ui_soc_decimal;
+	qcom,ui_soc_decimal_speedmin = <20>;//2A
+
 	qcom,normal_vterm_hw_inc = <18>;
 	qcom,non_normal_vterm_hw_inc = <18>;
 

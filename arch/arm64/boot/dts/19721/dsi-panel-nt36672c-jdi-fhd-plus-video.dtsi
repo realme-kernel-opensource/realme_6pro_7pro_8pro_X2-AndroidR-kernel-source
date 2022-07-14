@@ -121,7 +121,6 @@
 						29 01 00 00 00 00 02 09 AD
 
 						/*#ifdef ODM_LQ_EDIT*/
-						/*zhangjialong@ODM_LQ@Multimedia.Dispaly,2019/11/21,add cabc function */
 						15 01 00 00 00 00 02 FF 10
 						15 01 00 00 00 00 02 FB 01
 						15 01 00 00 00 00 02 51 FF   /*keep pwm high when cabc off*/
@@ -173,7 +172,6 @@
 					05 01 00 00 78 00 02 10 00
 					];
 				/*#ifdef ODM_LQ_EDIT*/
-				/*zhangjialong@ODM_LQ@Multimedia.Dispaly,2019/11/21,add cabc function */
 				qcom,mdss-dsi-cabc-off-command = [
 					15 01 00 00 00 00 02 FF 10
 					15 01 00 00 00 00 02 55 00

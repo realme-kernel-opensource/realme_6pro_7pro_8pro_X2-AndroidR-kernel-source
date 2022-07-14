@@ -5,7 +5,6 @@
 ** Description : display driver private management
 ** Version : 1.0
 ** Date : 2018/03/17
-** Author : Jie.Hu@PSW.MM.Display.Stability
 **
 ** ------------------------------- Revision History: -----------
 **  <author>        <data>        <version >        <desc>
@@ -35,12 +34,10 @@ enum oppo_display_support_list {
 	OPPO_SAMSUNG_AMS644VK01_DISPALY_FHD_PLUS_CMD_PANEL = 6,
 	OPPO_SAMSUNG_AMB655UV01_DISPALY_FHD_PLUS_90FPS_PANEL = 7,
 	OPPO_SAMSUNG_AMS643XF01_DISPALY_FHD_PLUS_CMD_PANEL = 8,
-	/* Chao.Zhang@PSW.MM.DISPLAY.LCD, 20200914, add for 19031 lcd bringup */
 	OPPO_SAMSUNG_AMS641RW01_DISPLAY_FHD_PLUS_CMD_PANEL = 9,
 	OPPO_SAMSUNG_AMS641RW01_DISPLAY_FHD_PLUS_61FPS_PANEL = 10,
 	OPPO_SAMSUNG_AMS655UE01_DISPLAY_FHD_PLUS_61FPS_PANEL = 11,
 	OPPO_SAMSUNG_AMS641RW16_DISPLAY_FHD_PLUS_CMD_PANEL = 12,
-	/* Chao.Zhang@MULTIMEDIA.DISPLAY.LCD, 2020/09/25, add for 19081 LCD */
 	OPPO_SAMSUNG_SOFEF03F_M_DISPLAY_FHD_DSC_CMD_PANEL = 13,
 	OPPO_DISPLAY_UNKNOW,
 };

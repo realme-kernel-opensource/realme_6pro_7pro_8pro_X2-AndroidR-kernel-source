@@ -416,13 +416,11 @@ static bool geni_wait_for_cmd_done(struct uart_port *uport, bool is_irq_masked)
 }
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Jiaochao.Shi@BSP.CHG.Basic 2018/05/01 add for console
 static struct pinctrl *serial_pinctrl = NULL;
 static struct pinctrl_state *serial_pinctrl_state_disable = NULL;
 #endif
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01  Add for debug console reg issue 969323*/
 extern bool oem_disable_uart(void);
 bool boot_with_console(void)
 {
@@ -981,7 +979,6 @@ __msm_geni_serial_console_write(struct uart_port *uport, const char *s,
 	int tx_wm = DEF_TX_WM;
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01 add for console
 	if (!boot_with_console()) {
 		return;
 	}
@@ -3179,11 +3176,9 @@ exit_ver_info:
 }
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Jiaochao.Shi@BSP.CHG.Basic 2018/05/01 add for console
 static bool oppo_charge_id_reconfig(struct platform_device *pdev, struct uart_driver *drv)
 {
 	//TODO: add charger id control here
-	//Jiaochao.Shi@BSP.CHG.Basic 2018/05/01 add for console
 	if (drv == &msm_geni_console_driver) {
 		pr_err("%s: console start get pinctrl\n", __FUNCTION__);
 		serial_pinctrl = devm_pinctrl_get(&pdev->dev);
@@ -3229,7 +3224,6 @@ static int msm_geni_serial_probe(struct platform_device *pdev)
 	}
 	
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01  Add for debug console reg issue 969323*/
    if (!boot_with_console() && oppo_charge_id_reconfig(pdev, drv)) { 
 		return -ENODEV; 
 	}
@@ -3773,7 +3767,6 @@ static int __init msm_geni_serial_init(void)
 	}
 
 #ifdef OPLUS_FEATURE_POWERINFO_FTM
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/01  Add for debug console reg issue 969323*/
 	if (!boot_with_console()) {
 		msm_geni_console_driver.cons = NULL;
 	}

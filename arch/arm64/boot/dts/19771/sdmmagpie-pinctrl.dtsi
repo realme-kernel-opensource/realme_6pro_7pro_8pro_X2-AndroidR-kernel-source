@@ -10,7 +10,6 @@
  * GNU General Public License for more details.
  */
 /*#ifdef VENDOR_EDIT */
-/* yufeng@camera.driver. 2019/04/03 */
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
 /*endif */
@@ -25,6 +24,36 @@
 		interrupt-controller;
 		#interrupt-cells = <2>;
 
+                //#ifdef /*VENDOR_EDIT*/
+                oplus_fp_common{
+                        gpio_id2_default: gpio_id2_default {
+                                mux {
+                                        pins = "gpio63";
+                                        function = "gpio";
+                                };
+                                config {
+                                        pins = "gpio63";
+                                        drive-strength = <2>;
+                                        bias-disable;
+                                        input-enable;
+                               };
+                        };
+                };
+                goodix_fp{
+                        gpio_goodix_irq_default: gpio_goodix_irq_default {
+                                mux {
+                                        pins = "gpio91";
+                                        function = "gpio";
+                                };
+                                config {
+                                        pins = "gpio91";
+                                        drive-strength = <2>;
+                                        bias-disable;
+                                        input-enable;
+                                };
+                        };
+                };
+                //#endif /*VENDOR_EDIT*/
 		ufs_dev_reset_assert: ufs_dev_reset_assert {
 			config {
 				pins = "ufs_reset";
@@ -204,7 +233,7 @@
 
 				config {
 					pins = "gpio34", "gpio35";
-					drive-strength = <6>; /*xiongxing@BSP.Kernel.Driver, 2019/06/28, Change from 2mA to 6mA*/
+					drive-strength = <6>;
 					bias-disable;
 				};
 			};
@@ -217,7 +246,7 @@
 
 				config {
 					pins = "gpio34", "gpio35";
-					drive-strength = <6>; /*xiongxing@BSP.Kernel.Driver, 2019/06/28, Change from 2mA to 6mA*/
+					drive-strength = <6>;
 					bias-pull-up;
 				};
 			};
@@ -725,7 +754,7 @@
 				config {
 					pins = "gpio44", "gpio45";
 					drive-strength = <2>;
-					bias-pull-down;  /*xing.xiong@BSP.Kernel.Debug, 2019/06/22, Modify for avoid noise, change from no-pull to bias-pull-down*/
+					bias-pull-down;
 				};
 			};
 
@@ -739,7 +768,7 @@
 					pins = "gpio44", "gpio45";
 					drive-strength = <2>;
 					input-enable;
-					bias-pull-down; /*xing.xiong@BSP.Kernel.Debug, 2019/06/22, Modify for avoid noise, change from no-pull to bias-pull-down*/
+					bias-pull-down;
 				};
 			};
 		};
@@ -1116,7 +1145,6 @@
 			};
 		};
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//xiang.fei@MULTIMEDIA.AUDIODRIVER.CODEC, 2018/10/29, Remove for dbmdx
 		/*
 		wsa_swr_clk_pin {
 			wsa_swr_clk_sleep: wsa_swr_clk_sleep {
@@ -1178,7 +1206,6 @@
 
 		/* WSA speaker reset pins */
 		//#ifdef OPLUS_ARCH_EXTENDS
-		//xiang.fei@MULTIMEDIA.AUDIODRIVER.CODEC, 2018/10/29, Remove for dbmdx
 		/*
 		spkr_1_sd_n {
 			spkr_1_sd_n_sleep: spkr_1_sd_n_sleep {
@@ -1329,34 +1356,31 @@
 				drive-strength = <2>; /* 2 MA */
 			};
 		};
-
-		cci2_active: cci2_active {
+		/*cci2_active: cci2_active {
 			mux {
-				/* CLK, DATA */
 				pins = "gpio27","gpio28";
 				function = "cci_i2c";
 			};
 
 			config {
 				pins = "gpio27","gpio28";
-				bias-pull-up; /* PULL UP*/
-				drive-strength = <2>; /* 2 MA */
+				bias-pull-up;
+				drive-strength = <2>;
 			};
-		};
+		};*/
 
-		cci2_suspend: cci2_suspend {
+		/*cci2_suspend: cci2_suspend {
 			mux {
-				/* CLK, DATA */
 				pins = "gpio27","gpio28";
 				function = "cci_i2c";
 			};
 
 			config {
 				pins = "gpio27","gpio28";
-				bias-pull-down; /* PULL DOWN */
-				drive-strength = <2>; /* 2 MA */
+				bias-pull-down;
+				drive-strength = <2>;
 			};
-		};
+		};*/
 
 		cam_sensor_mclk0_active: cam_sensor_mclk0_active {
 			/* MCLK0 */
@@ -1470,7 +1494,6 @@
 			};
 		};
 /*#ifdef VENDOR_EDIT */
-/* yufeng@camera.driver. 2019/04/03, add for gpio of camera */
 		cam_sensor_rear0_active: cam_sensor_rear0_active {
 			/* RESET */
 			mux {
@@ -1559,47 +1582,18 @@
 		cam_sensor_rear3_active: cam_sensor_rear3_active {
 			/* RESET  */
 			mux {
-				pins = "gpio23";
+				pins = "gpio93";
 				function = "gpio";
 			};
 
 			config {
-				pins = "gpio23";
+				pins = "gpio93";
 				bias-disable; /* No PULL */
 				drive-strength = <2>; /* 2 MA */
 			};
 		};
 
 		cam_sensor_rear3_suspend: cam_sensor_rear3_suspend {
-			/* RESET */
-			mux {
-				pins = "gpio23";
-				function = "gpio";
-			};
-
-			config {
-				pins = "gpio23";
-				bias-pull-down; /* PULL DOWN */
-				drive-strength = <2>; /* 2 MA */
-				output-low;
-			};
-		};
-		/* add for gc2375h fangyan@camera.driver. 2019/06/15 */
-		cam_sensor_rear4_active: cam_sensor_rear4_active {
-			/* RESET  */
-			mux {
-                                pins = "gpio93";
-                                function = "gpio";
-                        };
-
-                         config {
-                                 pins = "gpio93";
-                                 bias-disable; /* No PULL */
-                                 drive-strength = <2>; /* 2 MA */
-                         };
-		};
-
-		cam_sensor_rear4_suspend: cam_sensor_rear4_suspend {
 			/* RESET */
 			mux {
 				pins = "gpio93";
@@ -1768,7 +1762,6 @@
 		};
 
 		//#ifdef OPLUS_FEATURE_TP_BASIC
-		//ZhongWenjie@BSP.group 2019-03-29 add for enable tp function
 		pmx_ts_int_active {
 			ts_int_active: ts_int_active {
 				mux {
@@ -1801,7 +1794,6 @@
 		};
 
 		//#ifdef OPLUS_FEATURE_TP_BASIC
-		//ZhongWenjie@BSP.group 2019-03-29 add for enable tp function
 		pmx_ts_reset_active {
 			ts_reset_active: ts_reset_active {
 				mux {
@@ -1851,7 +1843,6 @@
 		};
 
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		/* Jianfeng.Qiu@MULTIMEDIA.AUDIODRIVER.MACHINE, 2018/04/18, Add for audio config */
 		/* speaker */
 		ter_mi2s {
 			ter_mi2s_sleep: ter_mi2s_sleep {
@@ -1942,7 +1933,6 @@
 		/* #endif OPLUS_ARCH_EXTENDS*/
 
 		/* #ifdef OPLUS_ARCH_EXTENDS */
-		/* xiang.fei@MULTIMEDIA.AUDIODRIVER.CODEC, 2018/10/29, Add for dbmdx */
 		dspg_wakeup_on: dspg_wakeup_on {
 			mux {
 				pins = "gpio5";
@@ -1999,7 +1989,6 @@
 		};
 	};
 //#ifdef VENDOR_EDIT
-//huyu@BSP.Storage.Sdcard, 2020/08/12, Add for SDcard detect	
 	sd_card_detect {
         sd_detect_default: sd_detect_default {
            pins = "gpio8"; /* GPIO 8 */

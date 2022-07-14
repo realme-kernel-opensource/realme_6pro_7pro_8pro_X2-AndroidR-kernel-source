@@ -2431,7 +2431,6 @@ static int cam_ife_mgr_config_hw(void *hw_mgr_priv,
 
 		if (cfg->init_packet) {
 #ifdef VENDOR_EDIT
-			/*Shouyao.Xiong@cam 20190923 change the threshold of timeout for bug:2355630*/
 			rc = wait_for_completion_timeout(
 				&ctx->config_done_complete,
 				msecs_to_jiffies(200));
@@ -2590,7 +2589,6 @@ static int cam_ife_mgr_pause_hw(struct cam_ife_hw_mgr_ctx *ctx)
 }
 
 #ifdef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 add it for bug:1877373, case:03906628 patch */
 static int cam_ife_mgr_resume_hw(struct cam_ife_hw_mgr_ctx *ctx)
 {
 	return cam_ife_mgr_bw_control(ctx, CAM_VFE_BW_CONTROL_INCLUDE);
@@ -2951,7 +2949,6 @@ start_only:
 	CAM_DBG(CAM_ISP, "START IFE OUT ... in ctx id:%d",
 		ctx->ctx_index);
 #ifdef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 add it for bug:1877373, case:03906628 patch */
 	if (start_isp->start_only)
 		cam_ife_mgr_resume_hw(ctx);
 #endif
@@ -3057,7 +3054,6 @@ static int cam_ife_mgr_write(void *hw_mgr_priv, void *write_args)
 }
 
 #ifdef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 add it for bug:1877373, case:03906628 patch */
 static int cam_ife_mgr_reset(void *hw_mgr_priv, void *hw_reset_args)
 {
 	struct cam_ife_hw_mgr            *hw_mgr       = hw_mgr_priv;
@@ -4099,7 +4095,6 @@ end:
 }
 
 #ifndef VENDOR_EDIT
-/* Jianwei.luo@Cam.Drv 20190306 remove it for bug:1877373, case:03906628 patch */
 static int cam_ife_mgr_resume_hw(struct cam_ife_hw_mgr_ctx *ctx)
 {
 	return cam_ife_mgr_bw_control(ctx, CAM_VFE_BW_CONTROL_INCLUDE);
@@ -4339,7 +4334,6 @@ static int cam_ife_mgr_cmd_get_sof_timestamp(
 	struct cam_csid_get_time_stamp_args   csid_get_time;
 
 #ifndef VENDOR_EDIT
-/* dengxin@camera, 20190927, add for ITS test, case:04217936 */
 	list_for_each_entry(hw_mgr_res, &ife_ctx->res_list_ife_csid, list) {
 		for (i = 0; i < CAM_ISP_HW_SPLIT_MAX; i++) {
 			if (!hw_mgr_res->hw_res[i])
@@ -5972,7 +5966,6 @@ int cam_ife_hw_mgr_init(struct cam_hw_mgr_intf *hw_mgr_intf, int *iommu_hdl)
 	hw_mgr_intf->hw_config = cam_ife_mgr_config_hw;
 	hw_mgr_intf->hw_cmd = cam_ife_mgr_cmd;
 #ifdef VENDOR_EDIT
-    /* Jianwei.luo@Cam.Drv 20190306 add it for bug:1877373, case:03906628 patch */
     hw_mgr_intf->hw_reset = cam_ife_mgr_reset;
 #endif
 

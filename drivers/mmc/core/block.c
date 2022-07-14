@@ -1422,7 +1422,6 @@ static int card_busy_detect(struct mmc_card *card, unsigned int timeout_ms,
 				mmc_hostname(card->host),
 				req->rq_disk->disk_name, __func__);
 #ifdef VENDOR_EDIT
-//yh@bsp, 2015-10-21 Add for special card compatible
 				card->host->card_stuck_in_programing_status = true;
 #endif /* VENDOR_EDIT */
 			return -ETIMEDOUT;
@@ -4289,7 +4288,6 @@ static int mmc_blk_probe(struct mmc_card *card)
 	 * Check that the card supports the command class(es) we need.
 	 */
 #ifndef VENDOR_EDIT
-//yh@bsp, 2015/08/03, remove for can not initialize specific sdcard(CSD info mismatch card real capability)
 	if (!(card->csd.cmdclass & CCC_BLOCK_READ))
 		return -ENODEV;
 #endif
@@ -4345,7 +4343,6 @@ static int mmc_blk_probe(struct mmc_card *card)
 }
 
 #ifdef VENDOR_EDIT
-//Chunyi.Mei@PSW.BSP.Storage.Sdcard, 2018-12-10, Add for SD Card device information
 char *capacity_string(struct mmc_card *card){
 	static char cap_str[10] = "unknown";
 	struct mmc_blk_data *md = (struct mmc_blk_data *)card->dev.driver_data;

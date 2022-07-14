@@ -20,7 +20,6 @@
 #include <linux/wakeup_reason.h>
 #include <trace/events/power.h>
 #ifdef OPLUS_FEATURE_LOGKIT
-//Yanzhen.Feng@ANDROID.DEBUG.702252, 2016/06/21, Add for Sync App and Kernel time
 #include <linux/rtc.h>
 #include <soc/oplus/system/oplus_sync_time.h>
 #endif /* OPLUS_FEATURE_LOGKIT */
@@ -29,12 +28,10 @@
 #include <linux/irqdesc.h>
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 #include "../../drivers/soc/oplus/owakelock/oplus_wakelock_profiler_qcom.h"
 #endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//SunFaliang@BSP.Power.Basic, 2020/11/18, add for standby monitor
 #include <linux/proc_fs.h>
 #endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 
@@ -601,7 +598,6 @@ static void wakeup_source_activate(struct wakeup_source *ws)
 		return;
 
 		#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-		//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 		//wakeup_get_start_hold_time();
 		wakeup_get_start_time();
 		#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
@@ -748,7 +744,6 @@ static void wakeup_source_deactivate(struct wakeup_source *ws)
 	split_counters(&cnt, &inpr);
 	if (!inpr && waitqueue_active(&wakeup_count_wait_queue)){
 		#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-		//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 		wakeup_get_end_hold_time();
 		#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 		wake_up(&wakeup_count_wait_queue);
@@ -900,7 +895,6 @@ void pm_get_active_wakeup_sources(char *pending_wakeup_source, size_t max)
 				len += scnprintf(pending_wakeup_source, max,
 						"Pending Wakeup Sources: ");
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 			len += scnprintf(pending_wakeup_source + len, max - len,
 				"%s ", ws->name);
 #else
@@ -917,7 +911,6 @@ void pm_get_active_wakeup_sources(char *pending_wakeup_source, size_t max)
 	}
 	if (!active && last_active_ws) {
 #ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 		scnprintf(pending_wakeup_source, max,
 				"Last active Wakeup Source: %s",
 				last_active_ws->name);
@@ -929,7 +922,6 @@ void pm_get_active_wakeup_sources(char *pending_wakeup_source, size_t max)
 	}
 	srcu_read_unlock(&wakeup_srcu, srcuidx);
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-//Nanwei.Deng@BSP.CHG.Basic 2018/05/03 modify for power debug
 	pr_info("%s, active: %d, pending: %s for debug\n", __func__, active, pending_wakeup_source);
 #endif
 }
@@ -945,7 +937,6 @@ void pm_print_active_wakeup_sources(void)
 	list_for_each_entry_rcu(ws, &wakeup_sources, entry) {
 		if (ws->active) {
 			#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-			//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 			pr_info("active wakeup source: %s, %ld, %ld\n", ws->name, ws->active_count, ktime_to_ms(ws->total_time));
 			#else
 			pr_debug("active wakeup source: %s\n", ws->name);
@@ -961,7 +952,6 @@ void pm_print_active_wakeup_sources(void)
 
 	if (!active && last_activity_ws) {
 		#ifdef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-		//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 		pr_info("last active wakeup source: %s, %ld, %ld\n",
 			last_activity_ws->name, last_activity_ws->active_count, ktime_to_ms(last_activity_ws->total_time));
 		#else
@@ -974,7 +964,6 @@ void pm_print_active_wakeup_sources(void)
 EXPORT_SYMBOL_GPL(pm_print_active_wakeup_sources);
 
 #ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 void get_ws_listhead(struct list_head **ws)
 {
 	if (ws)
@@ -1027,7 +1016,6 @@ bool pm_wakeup_pending(void)
 
 	if (ret) {
 		#ifndef OPLUS_FEATURE_POWERINFO_STANDBY_DEBUG
-		//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 		pr_debug("PM: Wakeup pending, aborting suspend\n");
 		#else
 		pr_info("PM: Wakeup pending, aborting suspend\n");
@@ -1079,7 +1067,6 @@ void pm_system_irq_wakeup(unsigned int irq_number)
 					irq_number, name);
 
 			#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-			//Nanwei.Deng@BSP.Power.Basic, 2020/07/27, add for wakelock profiler
 			pr_info("%s: resume caused by irq=%d, name=%s\n", __func__, irq_number, name);
 			wakeup_reasons_statics(name, WS_CNT_POWERKEY|WS_CNT_RTCALARM);
 			#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
@@ -1265,7 +1252,6 @@ static const struct file_operations wakeup_sources_stats_fops = {
 	.llseek = seq_lseek,
 	.release = single_release,
 #ifdef OPLUS_FEATURE_LOGKIT
-//Yanzhen.Feng@ANDROID.DEBUG.702252, 2016/06/21, Add for Sync App and Kernel time
 	.write          = watchdog_write,
 #endif /* OPLUS_FEATURE_LOGKIT */
 };
@@ -1273,7 +1259,6 @@ static const struct file_operations wakeup_sources_stats_fops = {
 static int __init wakeup_sources_debugfs_init(void)
 {
 	#ifndef OPLUS_FEATURE_LOGKIT
-	//Yanzhen.Feng@ANDROID.DEBUG.702252, 2016/06/21,  Modify for Sync App and Kernel time
 	wakeup_sources_stats_dentry = debugfs_create_file("wakeup_sources",
 			S_IRUGO, NULL, NULL, &wakeup_sources_stats_fops);
 	#else /* OPLUS_FEATURE_LOGKIT */
@@ -1282,7 +1267,6 @@ static int __init wakeup_sources_debugfs_init(void)
 	#endif /* OPLUS_FEATURE_LOGKIT */
 
 	#ifdef OPLUS_FEATURE_POWERINFO_STANDBY
-	//SunFaliang@BSP.Power.Basic, 2020/11/18, add for standby monitor
 	proc_create_data("wakeup_sources", 0444, NULL, &wakeup_sources_stats_fops, NULL);
 	#endif /* OPLUS_FEATURE_POWERINFO_STANDBY */
 	return 0;

@@ -43,7 +43,6 @@
  */
 
 #ifdef OPLUS_FEATURE_CHG_BASIC
-/*Murphy@BSP.Kernel.Driver, 2019/04/12, Modify for viber min*/
 #define QPNP_VIB_MIN_PLAY_MS		35
 #endif
 #define QPNP_VIB_PLAY_MS		5000
@@ -213,7 +212,6 @@ static enum hrtimer_restart vib_stop_timer(struct hrtimer *timer)
 	chip->state = 0;
 
 	#ifdef OPLUS_FEATURE_CHG_BASIC
-	//Murphy@BSP.Kernel.Driver, 2019/04/12, fix sometimes the vibrator shake long time issue
 	queue_work(system_unbound_wq, &chip->vib_work);
 	#else
 	schedule_work(&chip->vib_work);
@@ -346,12 +344,10 @@ static ssize_t qpnp_vib_store_activate(struct device *dev,
 	hrtimer_cancel(&chip->stop_timer);
 	chip->state = val;
 	#ifdef OPLUS_FEATURE_CHG_BASIC
-	/*Murphy@BSP.Kernel.Driver, 2019/04/12, Modify for viber log*/
 	pr_info("state = %d, time = %llums\n", chip->state, chip->vib_play_ms);
 	#endif
 	mutex_unlock(&chip->lock);
 	#ifdef OPLUS_FEATURE_CHG_BASIC
-	//Murphy@BSP.Kernel.Driver, 2019/04/12, fix sometimes the vibrator shake long time issue
 	queue_work(system_unbound_wq, &chip->vib_work);
 	#else
 	schedule_work(&chip->vib_work);

@@ -96,7 +96,6 @@ static inline void rwsem_set_reader_owned(struct rw_semaphore *sem)
 #define RWSEM_MAX_PREEMPT_ALLOWED 3000
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 extern bool test_task_ux(struct task_struct *task);
 #endif /* OPLUS_FEATURE_UIFIRST */
 /*
@@ -127,7 +126,6 @@ static inline bool rwsem_list_add_per_prio(struct rwsem_waiter *waiter_in,
 	}
 
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 	if (sysctl_uifirst_enabled) {
 		if (rwsem_list_add(waiter_in->task, &waiter_in->list, &sem->wait_list, sem)) {
 			return &waiter_in->list == head->next;
@@ -141,7 +139,6 @@ static inline bool rwsem_list_add_per_prio(struct rwsem_waiter *waiter_in,
 		list_for_each(pos, head) {
 			waiter = list_entry(pos, struct rwsem_waiter, list);
 #ifdef OPLUS_FEATURE_UIFIRST
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/05/25, Add for UIFirst
 			if (sysctl_uifirst_enabled && waiter_in->task->prio > MAX_RT_PRIO &&
 				test_task_ux(waiter->task)) {
 				continue;

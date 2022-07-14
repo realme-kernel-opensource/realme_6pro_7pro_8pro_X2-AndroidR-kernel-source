@@ -572,7 +572,6 @@ static inline int qdisc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
 }
 
 #ifdef OPLUS_FEATURE_WIFI_LIMMITBGSPEED
-//HuangJunyuan@CONNECTIVITY.WIFI.INTERNET, 2018/06/26, Add for limit speed function
 static inline int qdisc_enqueue_root(struct sk_buff *skb, struct Qdisc *sch,
 				      struct sk_buff **to_free)
 {

@@ -99,7 +99,6 @@ struct ramoops_platform_data {
 	unsigned long	ftrace_size;
 	unsigned long	pmsg_size;
 #ifdef OPLUS_FEATURE_DUMPDEVICE
-//zhangzongyu@BSP.Kernel.Stability, 2020/05/10, Add for dump device info
 	unsigned long	device_info_size;
 #endif /* OPLUS_FEATURE_DUMPDEVICE */
 	int		dump_oops;

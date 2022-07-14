@@ -38,7 +38,6 @@ static const u8 video_mode_format_map[DSI_PIXEL_FORMAT_MAX] = {
 	0x0, 0x1, 0x2, 0x3, 0x3, 0x3, 0x3 };
 
 // #ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/10, modified for bring up NT36672C JDI panel */
 extern u32 g_scramble_switch_value;
 // #endif /*OPLUS_BUG_STABILITY*/
 
@@ -108,7 +107,6 @@ void dsi_ctrl_hw_cmn_host_setup(struct dsi_ctrl_hw *ctrl,
 	dsi_split_link_setup(ctrl, cfg);
 
 	#ifdef OPLUS_BUG_STABILITY
-	/* Liping-M@PSW.MM.Display.LCD,2020/6/03, Modify for LCD MIPI timming */
 	DSI_W32(ctrl, DSI_TEST_PATTERN_GEN_VIDEO_ENABLE, 1);
 	#endif /* OPLUS_BUG_STABILITY */
 	/* Setup T_CLK_PRE extend register */
@@ -531,7 +529,6 @@ void dsi_ctrl_hw_cmn_video_engine_setup(struct dsi_ctrl_hw *ctrl,
 	/* Disable Timing double buffering */
 	DSI_W32(ctrl, DSI_DSI_TIMING_DB_MODE, 0x0);
 // #ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/06, modified for bring up NT36672C JDI panel */
 	if (1 == g_scramble_switch_value) {
 	    DSI_W32(ctrl, DSI_SCRAMBLE_CTRL, 0x1);
 	}

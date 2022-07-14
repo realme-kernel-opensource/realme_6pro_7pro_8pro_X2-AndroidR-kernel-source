@@ -437,7 +437,6 @@
 				"esc_clk";
 
 // #ifdef OPLUS_BUG_STABILITY
-/* Shusheng.Bei@MULTIMEDIA.DISPLAY.LCD, 2020/11/10, modified for bring up NT36672C JDI panel */
                 oplus,scramble-switch = <1>;
 // #endif /*OPLUS_BUG_STABILITY*/
 
@@ -510,7 +509,6 @@
 
 	sde_dp: qcom,dp_display@ae90000 {
 //#ifndef ODM_LQ_EDIT
-/*Hongbin.Chen@ODM_LQ.BSP.CHG 2019-11-25 close usb 3.0 */
 //		status = "ok";
 //#else
 		status = "disabled";

@@ -71,7 +71,6 @@
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 /*
-*Ruansong@PSW.NW.DATA.214200, 2020/06/01.
 *Add for classify glink wakeup services.
 */
 #include <net/oplus_nwpower.h>
@@ -1425,7 +1424,6 @@ static int tcp_v6_rcv(struct sk_buff *skb)
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.214200, 2020/06/01.
 	*Add for classify glink wakeup services.
 	*/
 	struct timespec now_ts;
@@ -1479,7 +1477,6 @@ lookup:
 
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.214300, 200/06/01.
 	*Add for classify glink wakeup services.
 	*/
 	if (atomic_read(&ipa_wakeup_hook_boot) == 1) {
@@ -1601,7 +1598,6 @@ bad_packet:
 discard_it:
 #ifdef OPLUS_FEATURE_MODEM_DATA_NWPOWER
 	/*
-	*Ruansong@PSW.NW.DATA.214400, 2020/06/01.
 	*Add for classify glink wakeup services.
 	*/
 	if (atomic_read(&ipa_wakeup_hook_boot) == 1 && atomic_read(&oplus_tcp_is_input) == 2 && !sch_work) {

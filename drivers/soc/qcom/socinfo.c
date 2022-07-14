@@ -35,7 +35,6 @@
 #include <linux/soc/qcom/smem.h>
 #include <soc/qcom/boot_stats.h>
 #ifdef OPLUS_ARCH_EXTENDS
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/09/03, Add for fake cpu id
 #include <soc/oplus/system/oppo_project.h>
 #endif
 
@@ -294,7 +293,6 @@ static union {
 /* max socinfo format version supported */
 #define MAX_SOCINFO_FORMAT SOCINFO_VERSION(0, 15)
 #ifdef OPLUS_ARCH_EXTENDS
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/09/03, Add for fake cpu id
 static char *fake_cpu_id = "SDM660";
 static char *real_cpu_id = "SDM720G";
 #endif
@@ -1850,7 +1848,6 @@ int __init socinfo_init(void)
 
 	cur_cpu = cpu_of_id[socinfo->v0_1.id].generic_soc_type;
 #ifdef OPLUS_ARCH_EXTENDS
-// XieLiujie@BSP.KERNEL.PERFORMANCE, 2020/09/03, Add for fake cpu id
 	if (is_confidential()) {
 		cpu_of_id[socinfo->v0_1.id].soc_id_string = fake_cpu_id;
 	} else {
@@ -1858,7 +1855,6 @@ int __init socinfo_init(void)
 	}
 #endif
 
-//Hongbin.Chen@ODM_LQ.BSP.cpuinfo, 2020/12/15, Add for Plato cpu id start
 	if (is_confidential()) {
 		if(get_project() == 19721)
 			{
@@ -1866,7 +1862,11 @@ int __init socinfo_init(void)
 				cpu_of_id[socinfo->v0_1.id].soc_id_string = "SDM720G";
 			}
 	}
-//Hongbin.Chen@ODM_LQ.BSP.cpuinfo, 2020/12/15, Add for Plato cpu id end
+	if(get_project() == 19771)
+	{
+		cpu_of_id[socinfo->v0_1.id].generic_soc_type = MSM_CPU_SDM660;
+		cpu_of_id[socinfo->v0_1.id].soc_id_string = "SDM730G AIE";
+	}
 	boot_stats_init();
 	socinfo_print();
 	arch_read_hardware_id = msm_read_hardware_id;
